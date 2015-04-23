@@ -1,24 +1,23 @@
 package my.kvizbiz;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
 import java.awt.GridBagLayout;
-
-import javax.swing.JTextField;
-
 import java.awt.GridBagConstraints;
 
 import javax.swing.JButton;
 
 import java.awt.Insets;
 
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class KvizBiz {
 
@@ -52,14 +51,48 @@ public class KvizBiz {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 250, 200);
+		frame.setBounds(100, 100, 300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0};
-		gridBagLayout.rowHeights = new int[]{0};
-		gridBagLayout.columnWeights = new double[]{Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{35, 0, 0};
+		gridBagLayout.rowHeights = new int[]{35, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
+		
+		JButton btnRegistrujSeKao = new JButton("Registruj se kao korisnik");
+		btnRegistrujSeKao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null,"Nije jos napravljeno, klikni donji :D","Porukica",JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		GridBagConstraints gbc_btnRegistrujSeKao = new GridBagConstraints();
+		gbc_btnRegistrujSeKao.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnRegistrujSeKao.insets = new Insets(0, 0, 5, 0);
+		gbc_btnRegistrujSeKao.gridx = 1;
+		gbc_btnRegistrujSeKao.gridy = 1;
+		frame.getContentPane().add(btnRegistrujSeKao, gbc_btnRegistrujSeKao);
+		
+		JButton btnRegistrujSeKao_1 = new JButton("Registruj se kao administrator");
+		btnRegistrujSeKao_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginAdmin frame = new LoginAdmin();
+				frame.setVisible(true);
+			}
+		});
+		GridBagConstraints gbc_btnRegistrujSeKao_1 = new GridBagConstraints();
+		gbc_btnRegistrujSeKao_1.gridx = 1;
+		gbc_btnRegistrujSeKao_1.gridy = 2;
+		frame.getContentPane().add(btnRegistrujSeKao_1, gbc_btnRegistrujSeKao_1);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenu mnPomo = new JMenu("Pomo\u0107");
+		menuBar.add(mnPomo);
 	}
 
 }
