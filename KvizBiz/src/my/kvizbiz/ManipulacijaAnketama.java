@@ -137,7 +137,7 @@ public class ManipulacijaAnketama extends JFrame {
 		panel.add(btnArhivirajOznaenu);
 		
 		JButton btnPregledajOznaenu = new JButton("Pregledaj ozna\u010Denu");
-		btnPregledajOznaenu.setBounds(10, 58, 147, 23);
+		btnPregledajOznaenu.setBounds(10, 58, 127, 23);
 		panel.add(btnPregledajOznaenu);
 		
 		JButton btnOk = new JButton("OK");
