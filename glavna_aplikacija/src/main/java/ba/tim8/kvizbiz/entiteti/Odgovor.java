@@ -1,8 +1,19 @@
 package ba.tim8.kvizbiz.entiteti;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "odgovor")
 public class Odgovor implements java.io.Serializable{
+	@Id
+	@Column(name = "idOdgovor", unique = true, nullable = false)
 	private long _id;
+	@Column(name = "tesktOdgovora", nullable = false)
 	private String _tekstOdgovora;
+	@Column(name = "idPitanje", nullable = false)
 	private Pitanje _pitanje;
 	
 	public long get_id() {

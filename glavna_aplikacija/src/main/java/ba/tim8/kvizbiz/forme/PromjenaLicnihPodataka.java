@@ -21,6 +21,8 @@ import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PromjenaLicnihPodataka {
 

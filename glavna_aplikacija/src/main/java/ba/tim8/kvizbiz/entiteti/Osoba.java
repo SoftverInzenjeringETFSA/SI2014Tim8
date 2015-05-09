@@ -3,20 +3,30 @@ package ba.tim8.kvizbiz.entiteti;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "osoba")
 public abstract class Osoba implements java.io.Serializable {
 	@Id
-	@Column(name = "id", unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "idOsoba", unique = true, nullable = false)
 	private long _id;
+	@Column(name = "ime", nullable = false)
 	private String _ime;
+	@Column(name = "prezime", nullable = false)
 	private String _prezime;
+	@Column(name = "spol", nullable = false)
 	private Spol _spol;
+	@Column(name = "adresa", nullable = false)
 	private String _adresa;
+	@Column(name = "datumRodjenja", nullable = false)
 	private Date _datumRodjenja;
+	//ne nzma kako bi izmapirao
 	private String _brojtelefona;
+	//ne nzma kako bi izmapirao
 	private String _eMail;
 	
 	public long get_id() {

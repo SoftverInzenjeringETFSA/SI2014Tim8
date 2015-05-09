@@ -3,9 +3,18 @@ package ba.tim8.kvizbiz.entiteti;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "klijent")
 public class Klijent extends Osoba implements java.io.Serializable{
+	@Column(name = "datumPrijave", nullable = false)
 	private Date _datumPrijave;
+	@Column(name = "idKviz", nullable = false)
 	private Kviz _popunjeniKviz;
+	
 	private List<Odgovor> _listaOdgovora;
 	
 	public Date get_datumPrijave() {

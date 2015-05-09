@@ -1,25 +1,29 @@
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 
-public class ManipulacijaAnketama extends JFrame {
+public class ManipulacijaAnketama {
 
-	private JPanel contentPane;
+	private JFrame frmManipulacijaAnketama;
 	private JTable tblAnkete;
 
 	/**
@@ -29,8 +33,8 @@ public class ManipulacijaAnketama extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ManipulacijaAnketama frame = new ManipulacijaAnketama();
-					frame.setVisible(true);
+					ManipulacijaAnketama window = new ManipulacijaAnketama();
+					window.frmManipulacijaAnketama.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -39,17 +43,23 @@ public class ManipulacijaAnketama extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public ManipulacijaAnketama() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 615, 398);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmManipulacijaAnketama = new JFrame();
+		frmManipulacijaAnketama.setTitle("Manipulacija anketama");
+		frmManipulacijaAnketama.setBounds(100, 100, 630, 430);
+		frmManipulacijaAnketama.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		frmManipulacijaAnketama.setJMenuBar(menuBar);
 		
 		JMenu mnAdmnistratori = new JMenu("Administratori");
 		menuBar.add(mnAdmnistratori);		
@@ -92,21 +102,16 @@ public class ManipulacijaAnketama extends JFrame {
 		JMenuItem mntmOdjava = new JMenuItem("Odjava");
 		mnProfil.add(mntmOdjava);
 		
-		JButton btnNewButton = new JButton("Statusna traka");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		getContentPane().add(btnNewButton, BorderLayout.SOUTH);
-		
-		/*getContentPane().setLayout(null);
-		contentPane.setLayout(null);
-		contentPane.setLayout(null);*/
+		JPanel panel1 = new JPanel();
+		frmManipulacijaAnketama.getContentPane().add(panel1, BorderLayout.CENTER);
+		panel1.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Ozna\u010Dite akciju i manipuli\u0161ite anketama", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 11, 579, 282);
-		contentPane.add(panel);
+		panel1.add(panel);
 		panel.setLayout(null);
+
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(167, 26, 402, 245);
@@ -144,17 +149,19 @@ public class ManipulacijaAnketama extends JFrame {
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.setBounds(500, 304, 89, 23);
-		contentPane.add(btnOk);
+		panel1.add(btnOk);
 		
 		JButton btnOtkai = new JButton("Otka\u017Ei");
 		btnOtkai.setBounds(401, 304, 89, 23);
-		contentPane.add(btnOtkai);
+		panel1.add(btnOtkai);
 		
-		/*JButton btnNewButton = new JButton("Statusna traka");
+		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
-		getContentPane().add(btnNewButton, BorderLayout.SOUTH);*/
+		frmManipulacijaAnketama.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		
+		
 	}
 
 }

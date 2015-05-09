@@ -1,27 +1,29 @@
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
-public class DodavanjePitanja extends JFrame {
+public class DodavanjePitanja {
 
-	private JPanel contentPane;
+	private JFrame frmDodavanjePitanja;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -34,8 +36,8 @@ public class DodavanjePitanja extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DodavanjePitanja frame = new DodavanjePitanja();
-					frame.setVisible(true);
+					DodavanjePitanja window = new DodavanjePitanja();
+					window.frmDodavanjePitanja.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,17 +46,24 @@ public class DodavanjePitanja extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public DodavanjePitanja() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 500);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmDodavanjePitanja = new JFrame();
+		frmDodavanjePitanja.setTitle("Dodavanje pitanja");
+		frmDodavanjePitanja.setBounds(100, 100, 490, 447);
+		frmDodavanjePitanja.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDodavanjePitanja.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		frmDodavanjePitanja.setJMenuBar(menuBar);
 		
 		JMenu mnAdmnistratori = new JMenu("Administratori");
 		menuBar.add(mnAdmnistratori);		
@@ -97,18 +106,14 @@ public class DodavanjePitanja extends JFrame {
 		JMenuItem mntmOdjava = new JMenuItem("Odjava");
 		mnProfil.add(mntmOdjava);
 		
-		JButton btnNewButton = new JButton("Statusna traka");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		contentPane.add(btnNewButton);
-		
-		contentPane.setLayout(null);
+		JPanel panel1 = new JPanel();
+		frmDodavanjePitanja.getContentPane().add(panel1, BorderLayout.CENTER);
+		panel1.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Unesite podatke o pitanju:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(30, 30, 420, 280);
-		contentPane.add(panel);
+		panel1.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblTekst = new JLabel("Tekst:");
@@ -171,11 +176,18 @@ public class DodavanjePitanja extends JFrame {
 		panel.add(chckbxObavezno);
 		
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(250, 330, 90, 23);
-		contentPane.add(btnOk);
+		btnOk.setBounds(360, 321, 90, 23);
+		panel1.add(btnOk);
 		
 		JButton btnOtkai = new JButton("Otka\u017Ei");
-		btnOtkai.setBounds(360, 330, 90, 23);
-		contentPane.add(btnOtkai);
+		btnOtkai.setBounds(260, 321, 90, 23);
+		panel1.add(btnOtkai);
+		
+		JButton btnNewButton = new JButton("Statusna traka");
+		btnNewButton.setEnabled(false);
+		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
+		btnNewButton.setForeground(SystemColor.textHighlight);
+		frmDodavanjePitanja.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 	}
+
 }

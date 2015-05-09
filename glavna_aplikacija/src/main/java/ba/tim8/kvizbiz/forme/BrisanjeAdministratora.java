@@ -18,7 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
 import java.awt.Choice;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BrisanjeAdministratora {
 
@@ -73,8 +76,7 @@ public class BrisanjeAdministratora {
 		JMenuItem mntmBrisanjeAdministratora = new JMenuItem("Brisanje");
 		mnAdmnistratori.add(mntmBrisanjeAdministratora);		
 		JMenuItem mntmPregledAdministratora = new JMenuItem("Pregled");
-		mnAdmnistratori.add(mntmPregledAdministratora);
-		
+		mnAdmnistratori.add(mntmPregledAdministratora);	
 		JMenu mnKlijenti = new JMenu("Klijenti");
 		menuBar.add(mnKlijenti);	
 		JMenuItem mntmPromjenaKlijenta = new JMenuItem("Promjena");

@@ -1,10 +1,23 @@
 package ba.tim8.kvizbiz.entiteti;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pitanje")
 public class Pitanje implements java.io.Serializable{
+	@Id
+	@Column(name = "idPitanje", unique = true, nullable = false)
 	private long _id;
+	@Column(name = "tekstPitanja", nullable = false)
 	private String _tekstPitanja;
+	//ovo
 	private TipPitanja _tipPitanja;
+	@Column(name = "obavezno", nullable = false)
 	private boolean obavezno;
+	//ovomi suhveli@Column(name = "tekstPitanja", nullable = false)
 	private Kviz _kviz;
 	
 	public long get_id() {

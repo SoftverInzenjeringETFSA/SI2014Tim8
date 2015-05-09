@@ -1,11 +1,23 @@
 package ba.tim8.kvizbiz.entiteti;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "kviz")
 public class Kviz implements java.io.Serializable{
-	
+	@Id
+	@Column(name = "idKviz", unique = true, nullable = false)
 	private long _id;
+	@Column(name = "naziv",nullable = false)
 	private String _naziv;
+	@Column(name = "vremenskoOgranicenje",nullable = false)
 	private int _vremenskoOgranicenje;
+	@Column(name = "aktivan",nullable = false)
 	private boolean _aktivan;
+	@Column(name = "arhiviran",nullable = false)
 	private boolean _arhiviran;
 	
 	public long get_id() {
