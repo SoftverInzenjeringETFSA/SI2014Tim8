@@ -76,8 +76,9 @@ public class KvizBiz {
 		JButton btnRegistrujSeKao_1 = new JButton("Registruj se kao administrator");
 		btnRegistrujSeKao_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginAdmin frame = new LoginAdmin();
-				frame.setVisible(true);
+				LoginAdmin frame1 = new LoginAdmin();
+				frame1.setVisible(true);			
+				frame.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnRegistrujSeKao_1 = new GridBagConstraints();
