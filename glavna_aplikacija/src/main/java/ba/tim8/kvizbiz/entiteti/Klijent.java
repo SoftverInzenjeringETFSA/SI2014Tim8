@@ -10,6 +10,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "klijent")
 public class Klijent extends Osoba implements java.io.Serializable{
+	@Column(name = "telefon", nullable = true)
+	private String _telefon;
+	@Column(name = "eMail", nullable = true)
+	private String _eMail;
 	@Column(name = "datumPrijave", nullable = false)
 	private Date _datumPrijave;
 	@Column(name = "idKviz", nullable = false)
@@ -41,6 +45,22 @@ public class Klijent extends Osoba implements java.io.Serializable{
 		this._listaOdgovora = _listaOdgovora;
 	}
 
+	public String get_telefon() {
+		return _telefon;
+	}
+
+	public void set_telefon(String _telefon) {
+		this._telefon = _telefon;
+	}
+
+	public String get_eMail() {
+		return _eMail;
+	}
+
+	public void set_eMail(String _eMail) {
+		this._eMail = _eMail;
+	}
+
 	public Klijent() {
 		super();
 	}
@@ -48,7 +68,9 @@ public class Klijent extends Osoba implements java.io.Serializable{
 	public Klijent(long _id, String _ime, String _prezime, Spol _spol,
 			String _adresa, Date _datumRodjenja, String _brojtelefona,
 			String _eMail, Date _datumPrijave, Kviz _popunjeniKviz, List<Odgovor> _listaOdgovora) {
-		super(_id,_ime,_prezime,_spol,_adresa,_datumRodjenja,_brojtelefona,_eMail);
+		super(_id,_ime,_prezime,_spol,_adresa,_datumRodjenja);
+		this._telefon=_brojtelefona;
+		this._eMail=_eMail;
 		this._datumPrijave=_datumPrijave;
 		this._popunjeniKviz=_popunjeniKviz;
 		this._listaOdgovora=_listaOdgovora;

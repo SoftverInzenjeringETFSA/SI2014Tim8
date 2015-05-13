@@ -19,9 +19,13 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import ba.tim8.kvizbiz.dao.AdministratorDao;
+import ba.tim8.kvizbiz.entiteti.Administrator;
+
 import java.awt.Choice;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Collection;
 
 public class BrisanjeAdministratora {
 
@@ -214,6 +218,17 @@ public class BrisanjeAdministratora {
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
 		frmBrisanjeAdministratora.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		
+		
+		//LOGIKA
+		
+		
+		AdministratorDao adao=new AdministratorDao();
+		Collection<Administrator> admini=adao.readAll();
+		
+		
+		
+		
 	}
 }
 

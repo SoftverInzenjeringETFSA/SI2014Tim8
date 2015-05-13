@@ -4,12 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "osoba")
+//@Inheritance(strategy=InheritanceType.JOINED)nesto ne valja
 public abstract class Osoba implements java.io.Serializable {
 	@Id
 	@Column(name = "idOsoba", unique = true, nullable = false)
@@ -19,15 +23,12 @@ public abstract class Osoba implements java.io.Serializable {
 	@Column(name = "prezime", nullable = false)
 	private String _prezime;
 	@Column(name = "spol", nullable = false)
+	@Enumerated(EnumType.ORDINAL) 
 	private Spol _spol;
 	@Column(name = "adresa", nullable = false)
 	private String _adresa;
 	@Column(name = "datumRodjenja", nullable = false)
 	private Date _datumRodjenja;
-	//ne nzma kako bi izmapirao
-	private String _brojtelefona;
-	//ne nzma kako bi izmapirao
-	private String _eMail;
 	
 	public long get_id() {
 		return _id;
@@ -65,24 +66,11 @@ public abstract class Osoba implements java.io.Serializable {
 	public void set_datumRodjenja(Date _datumRodjenja) {
 		this._datumRodjenja = _datumRodjenja;
 	}
-	public String get_brojtelefona() {
-		return _brojtelefona;
-	}
-	public void set_brojtelefona(String _brojtelefona) {
-		this._brojtelefona = _brojtelefona;
-	}
-	public String get_eMail() {
-		return _eMail;
-	}
-	public void set_eMail(String _eMail) {
-		this._eMail = _eMail;
-	}
 	
 	public Osoba(){}
 	
 	public Osoba(long _id, String _ime, String _prezime, Spol _spol,
-			String _adresa, Date _datumRodjenja, String _brojtelefona,
-			String _eMail) {
+			String _adresa, Date _datumRodjenja) {
 		super();
 		this._id = _id;
 		this._ime = _ime;
@@ -90,8 +78,6 @@ public abstract class Osoba implements java.io.Serializable {
 		this._spol = _spol;
 		this._adresa = _adresa;
 		this._datumRodjenja = _datumRodjenja;
-		this._brojtelefona = _brojtelefona;
-		this._eMail = _eMail;
 	}
 
 }

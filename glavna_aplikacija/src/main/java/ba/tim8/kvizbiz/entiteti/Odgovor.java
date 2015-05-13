@@ -1,8 +1,15 @@
 package ba.tim8.kvizbiz.entiteti;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,8 +20,13 @@ public class Odgovor implements java.io.Serializable{
 	private long _id;
 	@Column(name = "tesktOdgovora", nullable = false)
 	private String _tekstOdgovora;
-	@Column(name = "idPitanje", nullable = false)
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idPitanje", nullable = false)
 	private Pitanje _pitanje;
+	
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "_listaOdgovora")
+	private Set<Klijent> _klijenti = new HashSet<Klijent>();
 	
 	public long get_id() {
 		return _id;
@@ -33,6 +45,15 @@ public class Odgovor implements java.io.Serializable{
 	}
 	public void set_pitanje(Pitanje _pitanje) {
 		this._pitanje = _pitanje;
+	}
+	
+	public Set<Klijent> get_klijenti()
+	{
+		return _klijenti;
+	}
+	public void set_klijenti(Set<Klijent> _klijenti)
+	{
+		this._klijenti = _klijenti;
 	}
 	
 	public Odgovor() {}

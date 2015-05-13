@@ -1,8 +1,17 @@
 package ba.tim8.kvizbiz.entiteti;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -13,12 +22,21 @@ public class Pitanje implements java.io.Serializable{
 	private long _id;
 	@Column(name = "tekstPitanja", nullable = false)
 	private String _tekstPitanja;
-	//ovo
+	
+	@Column(name="idTipPitanja") // treba nam kolona za enum a ne preko posebne tabele kao sto je za spol
+	@Enumerated(EnumType.ORDINAL) 
 	private TipPitanja _tipPitanja;
+	
 	@Column(name = "obavezno", nullable = false)
 	private boolean obavezno;
-	//ovomi suhveli@Column(name = "tekstPitanja", nullable = false)
+	
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idKviz", nullable = false)
 	private Kviz _kviz;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje")
+	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>();
 	
 	public long get_id() {
 		return _id;
@@ -49,6 +67,14 @@ public class Pitanje implements java.io.Serializable{
 	}
 	public void set_kviz(Kviz _kviz) {
 		this._kviz = _kviz;
+	}
+	
+	public Set<Odgovor> get_listaOdgovora() {
+		return _listaOdgovora;
+	}
+
+	public void set_listaOdgovora(Set<Odgovor> _listaOdgovora) {
+		this._listaOdgovora = _listaOdgovora;
 	}
 	
 	public Pitanje(){}

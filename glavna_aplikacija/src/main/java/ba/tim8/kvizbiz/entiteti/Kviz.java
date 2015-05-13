@@ -1,9 +1,15 @@
 package ba.tim8.kvizbiz.entiteti;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "kviz")
@@ -19,6 +25,12 @@ public class Kviz implements java.io.Serializable{
 	private boolean _aktivan;
 	@Column(name = "arhiviran",nullable = false)
 	private boolean _arhiviran;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_popunjeniKviz")
+	private Set<Klijent> _klijenti = new HashSet<Klijent>();
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz")
+	private Set<Pitanje> _pitanja = new HashSet<Pitanje>();
 	
 	public long get_id() {
 		return _id;
@@ -49,6 +61,24 @@ public class Kviz implements java.io.Serializable{
 	}
 	public void set_arhiviran(boolean _arhiviran) {
 		this._arhiviran = _arhiviran;
+	}
+	
+	public Set<Klijent> get_klijenti()
+	{
+		return _klijenti;
+	}
+	public void set_klijenti(Set<Klijent> _klijenti)
+	{
+		this._klijenti = _klijenti;
+	}
+	
+	public Set<Pitanje> get_pitanja()
+	{
+		return _pitanja;
+	}
+	public void set_pitanja(Set<Pitanje> _pitanja)
+	{
+		this._pitanja = _pitanja;
 	}
 	
 	public Kviz(){}
