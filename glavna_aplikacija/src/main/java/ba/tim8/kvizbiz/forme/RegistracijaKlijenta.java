@@ -3,7 +3,9 @@ package ba.tim8.kvizbiz.forme;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
@@ -11,16 +13,25 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
+
 import java.awt.FlowLayout;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 import java.awt.Toolkit;
 import java.awt.Color;
+
 import javax.swing.JSeparator;
+
 import java.awt.Dimension;
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
+
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RegistracijaKlijenta {
 
@@ -30,26 +41,7 @@ public class RegistracijaKlijenta {
 	private JTextField txtJmbg;
 	private JTextField txtEmail;
 	private JTextField txtBrojTelefona;
-	private JTextField txtAdresa;
-
-	/**
-	 * Launch the application.
-	 */
-	
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegistracijaKlijenta window = new RegistracijaKlijenta();
-					window.frmRegistracijaKlijenta.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
+	private JTextField txtAdresa;	
 
 	/**
 	 * Create the application.
@@ -153,6 +145,13 @@ public class RegistracijaKlijenta {
 		panelRegistracija.add(btnOtkazi);
 		
 		JButton btnRegistrujSe = new JButton("Registruj se");
+		btnRegistrujSe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PocetnaKlijent noviFrame = new PocetnaKlijent();
+				noviFrame.setVisible(true);
+				frmRegistracijaKlijenta.dispose();
+			}
+		});	
 		btnRegistrujSe.setMargin(new Insets(2, 5, 2, 5));
 		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnRegistrujSe, -204, SpringLayout.EAST, panelRegistracija);
 		sl_panelRegistracija.putConstraint(SpringLayout.WEST, btnOtkazi, 8, SpringLayout.EAST, btnRegistrujSe);

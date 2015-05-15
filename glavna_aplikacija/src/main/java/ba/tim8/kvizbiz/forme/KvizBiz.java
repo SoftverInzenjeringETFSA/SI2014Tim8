@@ -22,6 +22,10 @@ import java.awt.event.ActionEvent;
 public class KvizBiz extends JFrame {
 
 	private JFrame frame;
+	
+	public JFrame get_frame () {
+		return frame;
+	}
 
 	/**
 	 * Launch the application.

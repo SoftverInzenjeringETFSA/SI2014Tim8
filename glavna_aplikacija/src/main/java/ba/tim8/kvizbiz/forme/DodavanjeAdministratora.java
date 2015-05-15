@@ -30,6 +30,10 @@ public class DodavanjeAdministratora extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_7;
+	
+	public JFrame get_frmDodavanjeAdministratora () {
+		return frmDodavanjeAdministratora;
+	}
 
 	/**
 	 * Launch the application.

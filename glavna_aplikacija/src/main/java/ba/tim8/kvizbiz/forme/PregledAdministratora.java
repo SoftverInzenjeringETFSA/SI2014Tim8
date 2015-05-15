@@ -31,6 +31,10 @@ public class PregledAdministratora extends JFrame {
 
 	private JFrame frmPregledAdministratora;
 	private JTable table;
+	
+	public JFrame get_frmPregledAdministratora() {
+		return frmPregledAdministratora;
+	}
 
 	/**
 	 * Launch the application.

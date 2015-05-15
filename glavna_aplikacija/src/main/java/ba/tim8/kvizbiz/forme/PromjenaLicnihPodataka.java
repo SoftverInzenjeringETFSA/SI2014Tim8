@@ -29,6 +29,8 @@ import java.awt.event.MouseEvent;
 
 public class PromjenaLicnihPodataka extends JFrame {
 
+	//TODO: Rename textField u smislene nazive
+	
 	private JFrame frmPromjenaLicnihPodataka;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -36,6 +38,10 @@ public class PromjenaLicnihPodataka extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	
+	public JFrame get_frmPromjenaLicnihPodataka () {
+		return frmPromjenaLicnihPodataka;
+	}
 
 	/**
 	 * Launch the application.

@@ -28,6 +28,10 @@ public class KreiranjeAnkete extends JFrame {
 	private JFrame frmKreiranjeAnkete;
 	private JTextField textField;
 	private JTable tblPitanja;
+	
+	public JFrame get_frmKreiranjeAnkete () {
+		return frmKreiranjeAnkete;
+	}
 
 	/**
 	 * Launch the application.

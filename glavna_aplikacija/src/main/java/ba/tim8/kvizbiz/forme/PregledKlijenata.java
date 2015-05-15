@@ -31,6 +31,10 @@ public class PregledKlijenata extends JFrame {
 
 	private JFrame frmPregledKlijenata;
 	private JTable table;
+	
+	public JFrame get_frmPregledKlijenata () {
+		return frmPregledKlijenata;
+	}
 
 	/**
 	 * Launch the application.

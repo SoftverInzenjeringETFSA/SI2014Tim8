@@ -36,6 +36,10 @@ public class BrisanjeAdministratora extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	
+	public JFrame get_frmBrisanjeAdministratora() {
+		return frmBrisanjeAdministratora;
+	}
 
 	/**
 	 * Launch the application.

@@ -20,11 +20,17 @@ import javax.swing.border.TitledBorder;
 
 public class PromjenaPassworda extends JFrame {
 
+	//TODO: Rename textField u smislena imena
+	
 	private JFrame frmPromjenaPassworda;
 	private JTextField textField;
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	
+	public JFrame get_frmPromjenaPassworda () {
+		return frmPromjenaPassworda;
+	}
 
 	/**
 	 * Launch the application.

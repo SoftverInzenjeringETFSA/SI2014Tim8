@@ -48,9 +48,13 @@ import java.awt.ComponentOrientation;
 
 public class StatistikaPoAnketama extends JFrame {
 	
-	//TODO: Rename obavezan, cuj glavna forma forma statistike
+	//TODO: Rename obavezan, cuj glavna forma forma statistike (rename i u klasi Menu!!!)
 	
 	private JFrame frmGlavnaForma;
+	
+	public JFrame get_frmGlavnaForma () {
+		return frmGlavnaForma;
+	}
 
 	/**
 	 * Launch the application.

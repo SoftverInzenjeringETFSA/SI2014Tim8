@@ -48,6 +48,10 @@ import javax.swing.DefaultComboBoxModel;
 public class StatistikaPoKlijentima extends JFrame {
 
 	private JFrame frmStatistikaPoKlijentimaForma;
+	
+	public JFrame get_frmStatistikaPoKlijentimaForma () {
+		return frmStatistikaPoKlijentimaForma;
+	}
 
 	/**
 	 * Launch the application.

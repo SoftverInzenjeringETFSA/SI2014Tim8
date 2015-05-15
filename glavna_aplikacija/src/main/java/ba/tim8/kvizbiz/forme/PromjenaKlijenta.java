@@ -26,6 +26,8 @@ import javax.swing.SwingConstants;
 
 public class PromjenaKlijenta extends JFrame {
 
+	//TODO: Promjeniti textField u smislene izraze
+	
 	private JFrame frmModifikacijaKlijenta;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -33,7 +35,11 @@ public class PromjenaKlijenta extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-
+	
+	public JFrame get_frmModifikacijaKlijenta() {
+		return frmModifikacijaKlijenta;
+	}
+	
 	/**
 	 * Launch the application.
 	 */

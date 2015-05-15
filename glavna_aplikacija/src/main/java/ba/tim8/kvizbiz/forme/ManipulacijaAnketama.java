@@ -25,6 +25,10 @@ public class ManipulacijaAnketama extends JFrame {
 
 	private JFrame frmManipulacijaAnketama;
 	private JTable tblAnkete;
+	
+	public JFrame get_frmManipulacijaAnketama () {
+		return frmManipulacijaAnketama;
+	}
 
 	/**
 	 * Launch the application.

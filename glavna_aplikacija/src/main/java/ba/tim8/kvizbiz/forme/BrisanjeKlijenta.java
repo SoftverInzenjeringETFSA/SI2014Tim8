@@ -23,7 +23,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class BrisanjeKlijenta extends JFrame {
-
+	
+	//TODO: Rename textField u smislene izraze
+	
 	private JFrame frmBrisanjeKlijenta;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -31,6 +33,10 @@ public class BrisanjeKlijenta extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	
+	public JFrame get_frmBrisanjeKlijenta () {
+		return frmBrisanjeKlijenta;
+	}
 
 	/**
 	 * Launch the application.
