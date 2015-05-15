@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class KvizBiz {
+public class KvizBiz extends JFrame {
 
 	private JFrame frame;
 
@@ -63,7 +63,9 @@ public class KvizBiz {
 		JButton btnRegistrujSeKao = new JButton("Registruj se kao korisnik");
 		btnRegistrujSeKao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null,"Nije jos napravljeno, klikni donji :D","Porukica",JOptionPane.WARNING_MESSAGE);
+				RegistracijaKlijenta noviFrame = new RegistracijaKlijenta();
+				noviFrame.frmRegistracijaKlijenta.setVisible(true);
+				frame.dispose();
 			}
 		});
 		GridBagConstraints gbc_btnRegistrujSeKao = new GridBagConstraints();
@@ -76,8 +78,8 @@ public class KvizBiz {
 		JButton btnRegistrujSeKao_1 = new JButton("Registruj se kao administrator");
 		btnRegistrujSeKao_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginAdmin frame1 = new LoginAdmin();
-				frame1.setVisible(true);			
+				LoginAdmin noviFrame = new LoginAdmin();
+				noviFrame.setVisible(true);			
 				frame.dispose();
 			}
 		});

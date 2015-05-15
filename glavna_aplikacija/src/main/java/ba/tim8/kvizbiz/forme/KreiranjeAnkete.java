@@ -23,7 +23,7 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class KreiranjeAnkete {
+public class KreiranjeAnkete extends JFrame {
 
 	private JFrame frmKreiranjeAnkete;
 	private JTextField textField;
@@ -62,49 +62,9 @@ public class KreiranjeAnkete {
 		frmKreiranjeAnkete.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmKreiranjeAnkete.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JMenuBar menuBar = new JMenuBar();
-		frmKreiranjeAnkete.setJMenuBar(menuBar);
-		
-		JMenu mnAdmnistratori = new JMenu("Administratori");
-		menuBar.add(mnAdmnistratori);		
-		JMenuItem mntmDodavanjeAdministratora = new JMenuItem("Dodavanje");
-		mnAdmnistratori.add(mntmDodavanjeAdministratora);		
-		JMenuItem mntmBrisanjeAdministratora = new JMenuItem("Brisanje");
-		mnAdmnistratori.add(mntmBrisanjeAdministratora);		
-		JMenuItem mntmPregledAdministratora = new JMenuItem("Pregled");
-		mnAdmnistratori.add(mntmPregledAdministratora);
-		
-		JMenu mnKlijenti = new JMenu("Klijenti");
-		menuBar.add(mnKlijenti);	
-		JMenuItem mntmPromjenaKlijenta = new JMenuItem("Promjena");
-		mnKlijenti.add(mntmPromjenaKlijenta);		
-		JMenuItem mntmBrisanjeKlijenta = new JMenuItem("Brisanje");
-		mnKlijenti.add(mntmBrisanjeKlijenta);		
-		JMenuItem mntmPregledKlijenata = new JMenuItem("Pregled");
-		mnKlijenti.add(mntmPregledKlijenata);
-		
-		JMenu mnAnkete = new JMenu("Ankete");
-		menuBar.add(mnAnkete);		
-		JMenuItem mntmDodavanje = new JMenuItem("Dodavanje");
-		mnAnkete.add(mntmDodavanje);		
-		JMenuItem mntmManipulacija = new JMenuItem("Manipulacija");
-		mnAnkete.add(mntmManipulacija);
-		
-		JMenu mnStatistika = new JMenu("Statistika");
-		menuBar.add(mnStatistika);
-		JMenuItem poAnketama = new JMenuItem("Po anketama");
-		JMenuItem poKlijentima = new JMenuItem("Po klijentima");
-		mnStatistika.add(poAnketama);
-		mnStatistika.add(poKlijentima);
-		
-		JMenu mnProfil = new JMenu("Profil");
-		menuBar.add(mnProfil);	
-		JMenuItem mntmPromjenaLicnihPodataka = new JMenuItem("Promjena li\u010Dnih podataka");
-		mnProfil.add(mntmPromjenaLicnihPodataka);		
-		JMenuItem mntmPromjenaPassworda = new JMenuItem("Promjena passworda");
-		mnProfil.add(mntmPromjenaPassworda);		
-		JMenuItem mntmOdjava = new JMenuItem("Odjava");
-		mnProfil.add(mntmOdjava);
+		// Kreiranje menija
+		Menu menu = new Menu();
+		menu.NapraviMenu(frmKreiranjeAnkete);
 		
 		JPanel panel1 = new JPanel();
 		frmKreiranjeAnkete.getContentPane().add(panel1, BorderLayout.CENTER);

@@ -24,7 +24,7 @@ import java.awt.Insets;
 
 public class RegistracijaKlijenta {
 
-	private JFrame frmRegistracijaKlijenta;
+	public JFrame frmRegistracijaKlijenta;
 	private JTextField txtIme;
 	private JTextField txtPrezime;
 	private JTextField txtJmbg;
@@ -35,6 +35,8 @@ public class RegistracijaKlijenta {
 	/**
 	 * Launch the application.
 	 */
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,6 +49,7 @@ public class RegistracijaKlijenta {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the application.
@@ -63,7 +66,7 @@ public class RegistracijaKlijenta {
 		frmRegistracijaKlijenta.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\MuhamedMujic\\Desktop\\ikonaKviz.png"));
 		frmRegistracijaKlijenta.setTitle("Registracija klijenta");
 		frmRegistracijaKlijenta.setBounds(100, 100, 450, 386);
-		frmRegistracijaKlijenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRegistracijaKlijenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmRegistracijaKlijenta.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelRegistracija = new JPanel();

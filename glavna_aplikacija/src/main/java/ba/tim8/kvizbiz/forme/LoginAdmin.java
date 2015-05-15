@@ -27,6 +27,8 @@ import javax.swing.JOptionPane;
 
 public class LoginAdmin extends JFrame {
 
+	//TODO: Dodati dugme vrati se nazad
+	
 	private JPanel contentPane;
 	private JTextField textField;
 	private JMenuBar menuBar;
