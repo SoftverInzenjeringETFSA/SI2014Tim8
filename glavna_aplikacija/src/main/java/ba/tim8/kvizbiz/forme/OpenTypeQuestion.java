@@ -28,7 +28,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.JSeparator;
 
-public class OpenTypeQuestion {
+public class OpenTypeQuestion extends JFrame {
 
 	private JFrame frmPopunjavanjeAnkete;
 	private final JProgressBar progressBar = new JProgressBar();

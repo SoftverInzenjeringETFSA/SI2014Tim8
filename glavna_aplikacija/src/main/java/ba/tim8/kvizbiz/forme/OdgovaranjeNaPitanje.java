@@ -25,7 +25,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 
-public class OdgovaranjeNaPitanje {
+public class OdgovaranjeNaPitanje extends JFrame {
 
 	private JFrame frmPopunjavanjeAnkete;
 	private final JProgressBar progressBar = new JProgressBar();

@@ -28,7 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.JSeparator;
 
-public class MultipleChoiceQuestion {
+public class MultipleChoiceQuestion extends JFrame {
 
 	private JFrame frmPopunjavanjeAnkete;
 	private final JProgressBar progressBar = new JProgressBar();

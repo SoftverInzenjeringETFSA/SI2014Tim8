@@ -18,20 +18,26 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Dimension;
+
 import javax.swing.JScrollBar;
 import javax.swing.BoxLayout;
+
 import java.awt.GridLayout;
 import java.awt.CardLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.RowSpec;
+
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
@@ -39,9 +45,13 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 
-public class StatistikaPoKlijentima {
+public class StatistikaPoKlijentima extends JFrame {
 
 	private JFrame frmStatistikaPoKlijentimaForma;
+	
+	public JFrame get_frmStatistikaPoKlijentimaForma () {
+		return frmStatistikaPoKlijentimaForma;
+	}
 
 	/**
 	 * Launch the application.
@@ -76,49 +86,9 @@ public class StatistikaPoKlijentima {
 		frmStatistikaPoKlijentimaForma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmStatistikaPoKlijentimaForma.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JMenuBar menuBar = new JMenuBar();
-		frmStatistikaPoKlijentimaForma.setJMenuBar(menuBar);
-		
-		JMenu mnAdmnistratori = new JMenu("Administratori");
-		menuBar.add(mnAdmnistratori);		
-		JMenuItem mntmDodavanjeAdministratora = new JMenuItem("Dodavanje");
-		mnAdmnistratori.add(mntmDodavanjeAdministratora);		
-		JMenuItem mntmBrisanjeAdministratora = new JMenuItem("Brisanje");
-		mnAdmnistratori.add(mntmBrisanjeAdministratora);		
-		JMenuItem mntmPregledAdministratora = new JMenuItem("Pregled");
-		mnAdmnistratori.add(mntmPregledAdministratora);
-		
-		JMenu mnKlijenti = new JMenu("Klijenti");
-		menuBar.add(mnKlijenti);	
-		JMenuItem mntmPromjenaKlijenta = new JMenuItem("Promjena");
-		mnKlijenti.add(mntmPromjenaKlijenta);		
-		JMenuItem mntmBrisanjeKlijenta = new JMenuItem("Brisanje");
-		mnKlijenti.add(mntmBrisanjeKlijenta);		
-		JMenuItem mntmPregledKlijenata = new JMenuItem("Pregled");
-		mnKlijenti.add(mntmPregledKlijenata);
-		
-		JMenu mnAnkete = new JMenu("Ankete");
-		menuBar.add(mnAnkete);		
-		JMenuItem mntmDodavanje = new JMenuItem("Dodavanje");
-		mnAnkete.add(mntmDodavanje);		
-		JMenuItem mntmManipulacija = new JMenuItem("Manipulacija");
-		mnAnkete.add(mntmManipulacija);
-		
-		JMenu mnStatistika = new JMenu("Statistika");
-		menuBar.add(mnStatistika);
-		JMenuItem poAnketama = new JMenuItem("Po anketama");
-		JMenuItem poKlijentima = new JMenuItem("Po klijentima");
-		mnStatistika.add(poAnketama);
-		mnStatistika.add(poKlijentima);
-		
-		JMenu mnProfil = new JMenu("Profil");
-		menuBar.add(mnProfil);	
-		JMenuItem mntmPromjenaLicnihPodataka = new JMenuItem("Promjena li\u010Dnih podataka");
-		mnProfil.add(mntmPromjenaLicnihPodataka);		
-		JMenuItem mntmPromjenaPassworda = new JMenuItem("Promjena passworda");
-		mnProfil.add(mntmPromjenaPassworda);		
-		JMenuItem mntmOdjava = new JMenuItem("Odjava");
-		mnProfil.add(mntmOdjava);
+		// Kreiranje menija
+		Menu menu = new Menu();
+		menu.NapraviMenu(frmStatistikaPoKlijentimaForma);
 		
 		JPanel panel = new JPanel();
 		frmStatistikaPoKlijentimaForma.getContentPane().add(panel, BorderLayout.CENTER);

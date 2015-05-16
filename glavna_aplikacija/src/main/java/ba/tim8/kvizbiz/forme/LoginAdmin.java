@@ -27,6 +27,8 @@ import javax.swing.JOptionPane;
 
 public class LoginAdmin extends JFrame {
 
+	//TODO: Dodati dugme vrati se nazad
+	
 	private JPanel contentPane;
 	private JTextField textField;
 	private JMenuBar menuBar;
@@ -95,7 +97,11 @@ public class LoginAdmin extends JFrame {
 		JButton btnPotvrdi = new JButton("Potvrdi");
 		btnPotvrdi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				JOptionPane.showMessageDialog(null,"Username koji ste unijeli je: " + textField.getText() + ", a password je: " + passwordField.getPassword() + " ... vec hashiran","Porukica",JOptionPane.WARNING_MESSAGE);
+				//JOptionPane.showMessageDialog(null,"Username koji ste unijeli je: " + textField.getText() + ", a password je: " + passwordField.getPassword() + " ... vec hashiran","Porukica",JOptionPane.WARNING_MESSAGE);
+				ManipulacijaAnketama noviProzor = new ManipulacijaAnketama ();
+				JFrame noviFrame = noviProzor.get_frmManipulacijaAnketama();
+				noviFrame.setVisible(true);
+				dispose();
 			}
 		});
 		GridBagConstraints gbc_btnPotvrdi = new GridBagConstraints();

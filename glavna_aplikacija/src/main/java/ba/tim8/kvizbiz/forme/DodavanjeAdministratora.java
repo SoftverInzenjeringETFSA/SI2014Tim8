@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+<<<<<<< HEAD
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Spol;
@@ -30,6 +31,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DodavanjeAdministratora {
+=======
+public class DodavanjeAdministratora extends JFrame {
+>>>>>>> origin/master
 
 	private JFrame frmDodavanjeAdministratora;
 	private JTextField textField_5;
@@ -40,6 +44,10 @@ public class DodavanjeAdministratora {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_7;
+	
+	public JFrame get_frmDodavanjeAdministratora () {
+		return frmDodavanjeAdministratora;
+	}
 
 	/**
 	 * Launch the application.
@@ -71,6 +79,7 @@ public class DodavanjeAdministratora {
 		frmDodavanjeAdministratora = new JFrame();
 		frmDodavanjeAdministratora.setTitle("Dodavanje administratora");
 		frmDodavanjeAdministratora.setBounds(100, 100, 470, 510);
+<<<<<<< HEAD
 		frmDodavanjeAdministratora
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDodavanjeAdministratora.getContentPane().setLayout(
@@ -121,6 +130,15 @@ public class DodavanjeAdministratora {
 		JMenuItem mntmOdjava = new JMenuItem("Odjava");
 		mnProfil.add(mntmOdjava);
 
+=======
+		frmDodavanjeAdministratora.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDodavanjeAdministratora.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		// Kreiranje menija
+		Menu menu = new Menu();
+		menu.NapraviMenu(frmDodavanjeAdministratora);
+		
+>>>>>>> origin/master
 		JPanel panel = new JPanel();
 		frmDodavanjeAdministratora.getContentPane().add(panel,
 				BorderLayout.CENTER);

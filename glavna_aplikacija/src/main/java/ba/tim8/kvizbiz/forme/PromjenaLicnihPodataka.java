@@ -16,16 +16,21 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.JComboBox;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class PromjenaLicnihPodataka {
+public class PromjenaLicnihPodataka extends JFrame {
 
+	//TODO: Rename textField u smislene nazive
+	
 	private JFrame frmPromjenaLicnihPodataka;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -33,6 +38,10 @@ public class PromjenaLicnihPodataka {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	
+	public JFrame get_frmPromjenaLicnihPodataka () {
+		return frmPromjenaLicnihPodataka;
+	}
 
 	/**
 	 * Launch the application.
@@ -67,49 +76,9 @@ public class PromjenaLicnihPodataka {
 		frmPromjenaLicnihPodataka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaLicnihPodataka.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JMenuBar menuBar = new JMenuBar();
-		frmPromjenaLicnihPodataka.setJMenuBar(menuBar);
-		
-		JMenu mnAdmnistratori = new JMenu("Administratori");
-		menuBar.add(mnAdmnistratori);		
-		JMenuItem mntmDodavanjeAdministratora = new JMenuItem("Dodavanje");
-		mnAdmnistratori.add(mntmDodavanjeAdministratora);		
-		JMenuItem mntmBrisanjeAdministratora = new JMenuItem("Brisanje");
-		mnAdmnistratori.add(mntmBrisanjeAdministratora);		
-		JMenuItem mntmPregledAdministratora = new JMenuItem("Pregled");
-		mnAdmnistratori.add(mntmPregledAdministratora);
-		
-		JMenu mnKlijenti = new JMenu("Klijenti");
-		menuBar.add(mnKlijenti);	
-		JMenuItem mntmPromjenaKlijenta = new JMenuItem("Promjena");
-		mnKlijenti.add(mntmPromjenaKlijenta);		
-		JMenuItem mntmBrisanjeKlijenta = new JMenuItem("Brisanje");
-		mnKlijenti.add(mntmBrisanjeKlijenta);		
-		JMenuItem mntmPregledKlijenata = new JMenuItem("Pregled");
-		mnKlijenti.add(mntmPregledKlijenata);
-		
-		JMenu mnAnkete = new JMenu("Ankete");
-		menuBar.add(mnAnkete);		
-		JMenuItem mntmDodavanje = new JMenuItem("Dodavanje");
-		mnAnkete.add(mntmDodavanje);		
-		JMenuItem mntmManipulacija = new JMenuItem("Manipulacija");
-		mnAnkete.add(mntmManipulacija);
-		
-		JMenu mnStatistika = new JMenu("Statistika");
-		menuBar.add(mnStatistika);
-		JMenuItem poAnketama = new JMenuItem("Po anketama");
-		JMenuItem poKlijentima = new JMenuItem("Po klijentima");
-		mnStatistika.add(poAnketama);
-		mnStatistika.add(poKlijentima);
-		
-		JMenu mnProfil = new JMenu("Profil");
-		menuBar.add(mnProfil);	
-		JMenuItem mntmPromjenaLicnihPodataka = new JMenuItem("Promjena li\u010Dnih podataka");
-		mnProfil.add(mntmPromjenaLicnihPodataka);		
-		JMenuItem mntmPromjenaPassworda = new JMenuItem("Promjena passworda");
-		mnProfil.add(mntmPromjenaPassworda);		
-		JMenuItem mntmOdjava = new JMenuItem("Odjava");
-		mnProfil.add(mntmOdjava);
+		// Kreiranje menija
+		Menu menu = new Menu();
+		menu.NapraviMenu(frmPromjenaLicnihPodataka);
 		
 		JPanel panel = new JPanel();
 		frmPromjenaLicnihPodataka.getContentPane().add(panel, BorderLayout.CENTER);
