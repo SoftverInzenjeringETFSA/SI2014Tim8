@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -21,11 +22,20 @@ import javax.swing.border.TitledBorder;
 
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
+import ba.tim8.kvizbiz.entiteti.Klijent;
 
 import java.awt.Choice;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class BrisanjeAdministratora extends JFrame {
 
@@ -91,10 +101,6 @@ public class BrisanjeAdministratora extends JFrame {
 		JLabel lblIzaberiteAdministratora = new JLabel("Izaberite administratora:");
 		lblIzaberiteAdministratora.setBounds(22, 35, 140, 14);
 		panel_1.add(lblIzaberiteAdministratora);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(170, 32, 195, 20);
-		panel_1.add(comboBox);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
@@ -187,13 +193,38 @@ public class BrisanjeAdministratora extends JFrame {
 		
 		//LOGIKA
 		
+		final JComboBox comboBox = new JComboBox();		
+		comboBox.setBounds(170, 32, 195, 20);
+		panel_1.add(comboBox);
 		
-		AdministratorDao adao=new AdministratorDao();
-		Collection<Administrator> admini=adao.readAll();
+		final AdministratorDao adao=new AdministratorDao();
+		Collection<Administrator> admini=(Collection<Administrator>)adao.readAll();	
+		for (Iterator<Administrator> iterator = admini.iterator(); iterator.hasNext();)
+		{
+			Administrator admin = (Administrator) iterator.next();
+			String zaDodati=admin.toString();
+			comboBox.addItem(zaDodati);
+		}
 		
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				Administrator a=(Administrator)comboBox.getSelectedItem();
+				textField.setText(a.get_ime());
+				textField_1.setText(a.get_prezime());
+				textField_2.setText(a.get_adresa());
+				textField_3.setText(a.get_datumRodjenja().toGMTString());
+				textField_4.setText(a.get_eMail());
+				textField_5.setText(a.get_telefon());
+			}
+		});
 		
-		
-		
+		btnObriiKlijenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Administrator a=(Administrator)comboBox.getSelectedItem();
+				adao.delete(a.get_id());
+			}
+		});
+	
 	}
 }
 
