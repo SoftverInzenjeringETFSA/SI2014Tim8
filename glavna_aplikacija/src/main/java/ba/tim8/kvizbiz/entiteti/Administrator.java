@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -12,6 +15,11 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "idAdministrator", referencedColumnName = "idOsoba")
 public class Administrator extends Osoba implements java.io.Serializable 
 {
+	
+	
+
+	
+
 	@Column(name = "telefon", nullable = false)
 	private String _telefon;
 	@Column(name = "eMail", nullable = false)
@@ -20,6 +28,10 @@ public class Administrator extends Osoba implements java.io.Serializable
 	private String _username;
 	@Column(name = "password", nullable = false)
 	private String _password;
+	
+	
+	
+	
 	
 	public String get_username() {
 		return _username;

@@ -23,7 +23,7 @@ public class Pitanje implements java.io.Serializable{
 	@Column(name = "tekstPitanja", nullable = false)
 	private String _tekstPitanja;
 	
-	@Column(name="idTipPitanja") // treba nam kolona za enum a ne preko posebne tabele kao sto je za spol
+	@Column(name="tipPitanja") 
 	@Enumerated(EnumType.ORDINAL) 
 	private TipPitanja _tipPitanja;
 	

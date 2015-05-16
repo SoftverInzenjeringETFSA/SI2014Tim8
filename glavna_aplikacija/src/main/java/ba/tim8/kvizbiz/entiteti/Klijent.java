@@ -1,14 +1,22 @@
 package ba.tim8.kvizbiz.entiteti;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "klijent")
+@PrimaryKeyJoinColumn(name = "idKlijent", referencedColumnName = "idOsoba")
 public class Klijent extends Osoba implements java.io.Serializable{
 	@Column(name = "telefon", nullable = true)
 	private String _telefon;
@@ -16,10 +24,16 @@ public class Klijent extends Osoba implements java.io.Serializable{
 	private String _eMail;
 	@Column(name = "datumPrijave", nullable = false)
 	private Date _datumPrijave;
-	@Column(name = "idKviz", nullable = false)
+	@Column(name = "idKviz", nullable = true)
 	private Kviz _popunjeniKviz;
 	
-	private List<Odgovor> _listaOdgovora;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="klijent_odgovor", joinColumns = { 
+			@JoinColumn(name = "idKlijent", nullable = true, updatable = true) }, 
+			inverseJoinColumns = { @JoinColumn(name = "idOdgovor", 
+					nullable = true, updatable = true) })
+	private Set<Odgovor> _listaOdgovora = new HashSet(0);
 	
 	public Date get_datumPrijave() {
 		return _datumPrijave;
@@ -37,11 +51,11 @@ public class Klijent extends Osoba implements java.io.Serializable{
 		this._popunjeniKviz = _popunjeniKviz;
 	}
 
-	public List<Odgovor> get_listaOdgovora() {
+	public Set<Odgovor> get_listaOdgovora() {
 		return _listaOdgovora;
 	}
 
-	public void set_listaOdgovora(List<Odgovor> _listaOdgovora) {
+	public void set_listaOdgovora(Set<Odgovor> _listaOdgovora) {
 		this._listaOdgovora = _listaOdgovora;
 	}
 
@@ -67,7 +81,7 @@ public class Klijent extends Osoba implements java.io.Serializable{
 	
 	public Klijent(long _id, String _ime, String _prezime, Spol _spol,
 			String _adresa, Date _datumRodjenja, String _brojtelefona,
-			String _eMail, Date _datumPrijave, Kviz _popunjeniKviz, List<Odgovor> _listaOdgovora) {
+			String _eMail, Date _datumPrijave, Kviz _popunjeniKviz, Set<Odgovor> _listaOdgovora) {
 		super(_id,_ime,_prezime,_spol,_adresa,_datumRodjenja);
 		this._telefon=_brojtelefona;
 		this._eMail=_eMail;

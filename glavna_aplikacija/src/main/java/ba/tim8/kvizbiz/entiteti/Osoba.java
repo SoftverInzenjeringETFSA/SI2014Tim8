@@ -7,16 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "osoba")
-//@Inheritance(strategy=InheritanceType.JOINED)nesto ne valja
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Osoba implements java.io.Serializable {
 	@Id
 	@Column(name = "idOsoba", unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long _id;
 	@Column(name = "ime", nullable = false)
 	private String _ime;

@@ -18,7 +18,7 @@ public class Odgovor implements java.io.Serializable{
 	@Id
 	@Column(name = "idOdgovor", unique = true, nullable = false)
 	private long _id;
-	@Column(name = "tesktOdgovora", nullable = false)
+	@Column(name = "tekstOdgovora", nullable = false)
 	private String _tekstOdgovora;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -58,11 +58,12 @@ public class Odgovor implements java.io.Serializable{
 	
 	public Odgovor() {}
 	
-	public Odgovor(long _id, String _tekstOdgovora, Pitanje _pitanje) {
+	public Odgovor(long _id, String _tekstOdgovora, Pitanje _pitanje, Set<Klijent> _klijenti) {
 		super();
 		this._id = _id;
 		this._tekstOdgovora = _tekstOdgovora;
 		this._pitanje = _pitanje;
+		this._klijenti = _klijenti;
 	}
 	
 }
