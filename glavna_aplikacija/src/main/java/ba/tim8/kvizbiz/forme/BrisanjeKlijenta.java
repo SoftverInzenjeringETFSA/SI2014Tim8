@@ -18,8 +18,20 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import ba.tim8.kvizbiz.dao.AdministratorDao;
+import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.entiteti.Administrator;
+import ba.tim8.kvizbiz.entiteti.Klijent;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.util.Collection;
+import java.util.Iterator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BrisanjeKlijenta {
 
@@ -30,6 +42,7 @@ public class BrisanjeKlijenta {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JTextField textField_6;
 
 	/**
 	 * Launch the application.
@@ -60,7 +73,7 @@ public class BrisanjeKlijenta {
 	private void initialize() {
 		frmBrisanjeKlijenta = new JFrame();
 		frmBrisanjeKlijenta.setTitle("Brisanje klijenta");
-		frmBrisanjeKlijenta.setBounds(100, 100, 470, 480);
+		frmBrisanjeKlijenta.setBounds(100, 100, 470, 520);
 		frmBrisanjeKlijenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBrisanjeKlijenta.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -128,18 +141,27 @@ public class BrisanjeKlijenta {
 		lblIzaberiteKlijenta.setBounds(22, 35, 140, 14);
 		panel_1.add(lblIzaberiteKlijenta);
 		
-		JComboBox comboBox = new JComboBox();
+		final KlijentDao kdao=new KlijentDao();
+		Collection<Klijent> klijenti=(Collection<Klijent>)kdao.readAll();
+	
+		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(170, 32, 195, 20);
 		panel_1.add(comboBox);
-		
+		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator.hasNext();)
+		{
+			Klijent klijent = (Klijent) iterator.next();
+			String zaDodati=klijent.toString();
+			comboBox.addItem(zaDodati);
+		}
+				
 		JButton btnObriiKlijenta = new JButton("Obri\u0161i klijenta");
-		btnObriiKlijenta.setBounds(240, 350, 180, 23);
+		btnObriiKlijenta.setBounds(241, 382, 180, 23);
 		panel.add(btnObriiKlijenta);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Li\u010Dni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(30, 110, 390, 230);
+		panel_2.setBounds(30, 111, 390, 261);
 		panel.add(panel_2);
 		
 		JLabel label = new JLabel("Prezime:");
@@ -213,6 +235,36 @@ public class BrisanjeKlijenta {
 		textField_5.setColumns(10);
 		textField_5.setBounds(140, 188, 230, 20);
 		panel_2.add(textField_5);
+		
+		JLabel label_7 = new JLabel("Datum prijave:");
+		label_7.setBounds(30, 216, 80, 14);
+		panel_2.add(label_7);
+		
+		textField_6 = new JTextField();
+		textField_6.setEditable(false);
+		textField_6.setColumns(10);
+		textField_6.setBounds(140, 213, 230, 20);
+		panel_2.add(textField_6);
+		
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				Klijent k=(Klijent)comboBox.getSelectedItem();
+				textField.setText(k.get_ime());
+				textField_1.setText(k.get_prezime());
+				textField_2.setText(k.get_adresa());
+				textField_3.setText(k.get_datumRodjenja().toGMTString());
+				textField_4.setText(k.get_eMail());
+				textField_5.setText(k.get_telefon());
+				textField_5.setText(k.get_datumPrijave().toGMTString());
+			}
+		});
+		
+		btnObriiKlijenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Klijent k=(Klijent)comboBox.getSelectedItem();
+				kdao.delete(k.get_id());
+			}
+		});
 	}
 }
 
