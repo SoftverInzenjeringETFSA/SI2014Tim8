@@ -28,6 +28,11 @@ public class DodavanjePitanja extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	
+	public JFrame get_frmDodavanjePitanja()
+	{ 
+		return frmDodavanjePitanja;
+	}
 
 	/**
 	 * Launch the application.

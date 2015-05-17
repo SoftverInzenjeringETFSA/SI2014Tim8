@@ -119,6 +119,15 @@ public class Menu {
 		});
 		mnAnkete.add(mntmManipulacija);
 		
+		JMenuItem mntmPregledAnketa = new JMenuItem("Pregled");
+		mntmPregledAnketa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PocetnaKlijent noviProzor = new PocetnaKlijent();
+				noviProzor.setVisible(true);
+				frame.dispose();
+			}
+		});
+		mnAnkete.add(mntmPregledAnketa);
 		
 		// Podmeni Statistika
 		JMenu mnStatistika = new JMenu("Statistika");
