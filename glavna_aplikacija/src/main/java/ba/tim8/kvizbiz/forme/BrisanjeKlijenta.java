@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -23,6 +24,8 @@ import javax.swing.border.TitledBorder;
 
 
 
+
+
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
@@ -32,6 +35,9 @@ import ba.tim8.kvizbiz.entiteti.Klijent;
 
 
 
+
+
+import ba.tim8.kvizbiz.entiteti.Spol;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -183,13 +189,19 @@ public class BrisanjeKlijenta extends JFrame {
 		label_4.setBounds(30, 87, 50, 14);
 		panel_2.add(label_4);
 		
-		JRadioButton radioButton = new JRadioButton("Mu\u0161ki");
+		final JRadioButton radioButton = new JRadioButton("Mu\u0161ki");
+		radioButton.setEnabled(false);
 		radioButton.setBounds(140, 86, 74, 23);
 		panel_2.add(radioButton);
 		
-		JRadioButton radioButton_1 = new JRadioButton("\u017Denski");
+		final JRadioButton radioButton_1 = new JRadioButton("\u017Denski");
+		radioButton_1.setEnabled(false);
 		radioButton_1.setBounds(220, 86, 74, 23);
 		panel_2.add(radioButton_1);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(radioButton);
+		group.add(radioButton_1);
 		
 		textField_4 = new JTextField();
 		textField_4.setEditable(false);
@@ -230,9 +242,15 @@ public class BrisanjeKlijenta extends JFrame {
 				textField_3.setText(k.get_datumRodjenja().toGMTString());
 				textField_4.setText(k.get_eMail());
 				textField_5.setText(k.get_telefon());
-				textField_5.setText(k.get_datumPrijave().toGMTString());
+				textField_6.setText(k.get_datumPrijave().toGMTString());
+				if (k.get_spol() == Spol.muski)
+					radioButton.setSelected(true);
+				else
+					radioButton_1.setSelected(true);
+			
 			}
 		});
+		
 		
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
