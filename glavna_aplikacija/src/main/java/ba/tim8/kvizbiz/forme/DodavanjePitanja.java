@@ -9,11 +9,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -21,13 +23,32 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import antlr.collections.List;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
 public class DodavanjePitanja extends JFrame {
 
 	private JFrame frmDodavanjePitanja;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField tbxTekstPitanja;
+	
+	private JPanel pnlPitanjePonudjeniOdgovori;
+	private JPanel pnlPitanjeVisestrukiIzbor;
+	
+	private JButton btnDodajIzbor;
+	private JButton btnUkloniIzbor;
+	private JButton btnDodajOdgovor;
+	private JButton btnUkloniOdgovor;
+	
+	// Ove varijable se koriste za monitoring broja Izbora/Odgovora
+	private int brojIzbor = 1;
+	private ArrayList<JLabel> labeleIzbor;
+	private ArrayList<JTextField> tbxiIzbor;
+	private int brojOdgovor = 1;
+	private ArrayList<JLabel> labeleOdgovor;
+	private ArrayList<JTextField> tbxiOdgovor;
 	
 	public JFrame get_frmDodavanjePitanja()
 	{ 
@@ -63,7 +84,7 @@ public class DodavanjePitanja extends JFrame {
 	private void initialize() {
 		frmDodavanjePitanja = new JFrame();
 		frmDodavanjePitanja.setTitle("Dodavanje pitanja");
-		frmDodavanjePitanja.setBounds(100, 100, 490, 447);
+		frmDodavanjePitanja.setBounds(100, 100, 600, 500);
 		frmDodavanjePitanja.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDodavanjePitanja.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -77,82 +98,179 @@ public class DodavanjePitanja extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Unesite podatke o pitanju:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(30, 30, 420, 280);
+		panel.setBounds(10, 11, 564, 344);
 		panel1.add(panel);
 		panel.setLayout(null);
+		
+		pnlPitanjeVisestrukiIzbor = new JPanel();
+		pnlPitanjeVisestrukiIzbor.setBorder(new TitledBorder(null, "Unesite podatke o pitanju s vi\u0161estrukim izborom:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlPitanjeVisestrukiIzbor.setBounds(10, 107, 544, 226);
+		pnlPitanjeVisestrukiIzbor.setVisible(false);
+		
+		pnlPitanjePonudjeniOdgovori = new JPanel();
+		pnlPitanjePonudjeniOdgovori.setBorder(new TitledBorder(null, "Unesite novo pitanje s ponu\u0111enim odgovorima:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlPitanjePonudjeniOdgovori.setBounds(10, 107, 544, 226);
+		panel.add(pnlPitanjePonudjeniOdgovori);
+		pnlPitanjePonudjeniOdgovori.setLayout(null);
+		
+		btnDodajOdgovor = new JButton("Dodaj odgovor");
+		btnDodajOdgovor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DodajOdgovor();
+			}
+		});
+		btnDodajOdgovor.setBounds(185, 112, 158, 23);
+		pnlPitanjePonudjeniOdgovori.add(btnDodajOdgovor);
+		panel.add(pnlPitanjeVisestrukiIzbor);
+		pnlPitanjeVisestrukiIzbor.setLayout(null);
+		
+		btnDodajIzbor = new JButton("Dodaj izbor");
+		btnDodajIzbor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DodajIzbor();
+				JOptionPane.showMessageDialog(null,labeleIzbor.size()+" ","Naslov",JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		btnDodajIzbor.setBounds(139, 112, 130, 23);
+		pnlPitanjeVisestrukiIzbor.add(btnDodajIzbor);
+		
+		btnUkloniIzbor = new JButton("Ukloni izbor");
+		btnUkloniIzbor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//UkloniIzbor();
+			}
+		});
+		btnUkloniIzbor.setBounds(279, 112, 130, 23);
+		pnlPitanjeVisestrukiIzbor.add(btnUkloniIzbor);
 		
 		JLabel lblTekst = new JLabel("Tekst:");
 		lblTekst.setBounds(10, 28, 46, 14);
 		panel.add(lblTekst);
 		
-		textField = new JTextField();
-		textField.setBounds(66, 25, 338, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		tbxTekstPitanja = new JTextField();
+		tbxTekstPitanja.setBounds(66, 25, 488, 20);
+		panel.add(tbxTekstPitanja);
+		tbxTekstPitanja.setColumns(10);
 		
 		JLabel lblTip = new JLabel("Tip:");
 		lblTip.setBounds(20, 53, 31, 14);
 		panel.add(lblTip);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Unesite novo pitanje s ponu\u0111enim odgovorima:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 107, 400, 160);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
-		
-		JLabel lblA = new JLabel("a)");
-		lblA.setBounds(33, 34, 23, 14);
-		panel_1.add(lblA);
-		
-		JLabel lblB = new JLabel("b)");
-		lblB.setBounds(33, 59, 23, 14);
-		panel_1.add(lblB);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(66, 31, 318, 20);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(66, 56, 318, 20);
-		panel_1.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblC = new JLabel("c)");
-		lblC.setBounds(33, 84, 23, 14);
-		panel_1.add(lblC);
-		
-		JButton btnDodajJoOdgovora = new JButton("Dodaj jo\u0161 odgovora");
-		btnDodajJoOdgovora.setBounds(33, 113, 158, 23);
-		panel_1.add(btnDodajJoOdgovora);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(66, 81, 318, 20);
-		panel_1.add(textField_3);
-		textField_3.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Otvoren odgovor", "Ponu\u0111eni odgovor", "Da/Ne", "Vi\u0161estruki izbor", "Ta\u010Dno/Neta\u010Dno"}));
-		comboBox.setBounds(66, 50, 154, 20);
-		panel.add(comboBox);
-		
-		JCheckBox chckbxObavezno = new JCheckBox("Obavezno");
-		chckbxObavezno.setBounds(66, 77, 97, 23);
-		panel.add(chckbxObavezno);
+		JCheckBox chbObaveznoPitanje = new JCheckBox("Obavezno");
+		chbObaveznoPitanje.setBounds(66, 77, 97, 23);
+		panel.add(chbObaveznoPitanje);
 		
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(360, 321, 90, 23);
+		btnOk.setBounds(484, 366, 90, 23);
 		panel1.add(btnOk);
 		
-		JButton btnOtkai = new JButton("Otka\u017Ei");
-		btnOtkai.setBounds(260, 321, 90, 23);
-		panel1.add(btnOtkai);
+		JButton btnOtkazi = new JButton("Otka\u017Ei");
+		btnOtkazi.setBounds(384, 366, 90, 23);
+		panel1.add(btnOtkazi);
 		
 		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setEnabled(false);
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		frmDodavanjePitanja.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		
+		final JComboBox cbbTipPitanja = new JComboBox();
+		cbbTipPitanja.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int odabraniId = (int)cbbTipPitanja.getSelectedIndex();
+				if (odabraniId == 0) {
+					RefreshTipovaPitanja();
+					pnlPitanjePonudjeniOdgovori.setVisible(true);
+					PopuniOdgovore();
+				}
+				else if (odabraniId == 1) {
+					RefreshTipovaPitanja();
+				}
+				else if (odabraniId == 2) {
+					RefreshTipovaPitanja();
+				}
+				else if (odabraniId == 3) {
+					RefreshTipovaPitanja();
+					pnlPitanjeVisestrukiIzbor.setVisible(true);
+					PopuniIzbore();
+				}
+				else if (odabraniId == 4) {
+					RefreshTipovaPitanja();
+				}
+			}
+		});
+		cbbTipPitanja.setModel(new DefaultComboBoxModel(new String[] {"Ponu\u0111eni odgovor", "Otvoren odgovor", "Da/Ne", "Vi\u0161estruki izbor", "Ta\u010Dno/Neta\u010Dno"}));
+		cbbTipPitanja.setBounds(66, 50, 154, 20);
+		panel.add(cbbTipPitanja);
+		
+		PopuniOdgovore();
 	}
 
+	// Metoda za postavljanje tipova pitanja na njihove defaultne vrijednosti
+	
+	private void RefreshTipovaPitanja() {
+		pnlPitanjePonudjeniOdgovori.setVisible(false);
+		pnlPitanjeVisestrukiIzbor.setVisible(false);
+		brojIzbor = 1;
+		brojOdgovor = 1;		
+	}
+	
+	private void DodajIzbor() {
+		JLabel novaLabela = new JLabel();
+		novaLabela.setText(brojIzbor + ". izbor:");
+		novaLabela.setBounds(20, 34 + (brojIzbor - 1) * 25, 61, 14);
+		pnlPitanjeVisestrukiIzbor.add(novaLabela);
+		labeleIzbor.add(novaLabela);
+		
+		JTextField noviTbx = new JTextField();
+		noviTbx.setBounds(91, 31 + (brojIzbor - 1) * 25, 443, 20);
+		noviTbx.setColumns(10);
+		pnlPitanjeVisestrukiIzbor.add(noviTbx);
+		tbxiIzbor.add(noviTbx);
+		
+		btnDodajIzbor.setBounds(139, 37 + (brojIzbor) * 25, 140, 23);
+		btnUkloniIzbor.setBounds(289, 37 + (brojIzbor) * 25, 140, 23);
+		
+		brojIzbor++;
+	}
+	
+	private void DodajOdgovor() {
+		JLabel novaLabela = new JLabel();
+		novaLabela.setText(Character.toString((char)('a' + (brojOdgovor-1))) + ")");
+		novaLabela.setBounds(33, 34 + (brojOdgovor - 1) * 25, 23, 14);
+		novaLabela.setOpaque(true);
+		novaLabela.setBackground(Color.red);
+		novaLabela.setVisible(true);
+		pnlPitanjePonudjeniOdgovori.add(novaLabela);
+		labeleOdgovor.add(novaLabela);
+		
+		JTextField noviTbx = new JTextField();
+		noviTbx.setBounds(66, 31 + (brojOdgovor - 1) * 25, 468, 20);
+		noviTbx.setColumns(10);
+		pnlPitanjePonudjeniOdgovori.add(noviTbx);
+		tbxiOdgovor.add(noviTbx);
+		
+		btnDodajOdgovor.setBounds(139, 37 + (brojOdgovor) * 25, 140, 23);
+		//btnUkloniOdgovor.setBounds(279, 37 + (brojOdgovor) * 25, 130, 23);
+		
+		brojOdgovor++;
+	}
+	
+	private void PopuniOdgovore() {
+		labeleOdgovor = new ArrayList<JLabel>();
+		tbxiOdgovor = new ArrayList<JTextField>();
+		
+		DodajOdgovor();
+		DodajOdgovor();
+		DodajOdgovor();
+	}
+	
+	private void PopuniIzbore() {
+		labeleIzbor = new ArrayList<JLabel>();
+		tbxiIzbor = new ArrayList<JTextField>();
+		
+		DodajIzbor();
+		DodajIzbor();
+		DodajIzbor();
+	}
 }
