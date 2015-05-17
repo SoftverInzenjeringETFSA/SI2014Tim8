@@ -414,9 +414,8 @@ public class DodavanjeAdministratora extends JFrame {
 									"Administrator je uspješno dodan!",
 									"Dodavanje administratora",
 									JOptionPane.INFORMATION_MESSAGE);
-						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						} catch (Exception e1) {
+							
 						}
 
 					}

@@ -26,6 +26,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import ba.tim8.kvizbiz.dao.KvizDao;
+
 public class PocetnaKlijent extends JFrame {
 
 	private JPanel contentPane;
@@ -65,26 +67,27 @@ public class PocetnaKlijent extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(197, 85, 367, 256);
 		panel.add(scrollPane);
-		
+		KvizDao k= KvizDao.get();
+		k.ispisAktivnihAnketa();
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{65, "pokusaj"},
-				{44, "Test"},
-				{22, "test"},
-				{11, "proba"},
+				{null, "null"},
 				
 			},
 			new String[] {
 				"ID", "Naziv ankete"
 			}
 		));
+		
 		table.setBounds(197, 47, 367, 256);
 		panel.add(scrollPane);
 		scrollPane.setViewportView(table);
 		
 		Menu menu = new Menu();
 		menu.NapraviMenu(this);
+		
+	
 		
 		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.addActionListener(new ActionListener() {
