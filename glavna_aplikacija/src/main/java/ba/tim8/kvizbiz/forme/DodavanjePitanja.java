@@ -1,5 +1,10 @@
 package ba.tim8.kvizbiz.forme;
 
+import ba.tim8.kvizbiz.dao.PitanjeDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
+import ba.tim8.kvizbiz.entiteti.TipPitanja;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -29,10 +34,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import javax.swing.JScrollPane;
+
 public class DodavanjePitanja extends JFrame {
 
 	private JFrame frmDodavanjePitanja;
 	private JTextField tbxTekstPitanja;
+	private JComboBox cbbTipPitanja;
+	private JCheckBox ckbObaveznoPitanje;
 	
 	private JPanel pnlPitanjePonudjeniOdgovori;
 	private JPanel pnlPitanjeVisestrukiIzbor;
@@ -128,7 +137,6 @@ public class DodavanjePitanja extends JFrame {
 		btnDodajIzbor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DodajIzbor();
-				JOptionPane.showMessageDialog(null,labeleIzbor.size()+" ","Naslov",JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		btnDodajIzbor.setBounds(139, 112, 130, 23);
@@ -137,11 +145,42 @@ public class DodavanjePitanja extends JFrame {
 		btnUkloniIzbor = new JButton("Ukloni izbor");
 		btnUkloniIzbor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//UkloniIzbor();
+				if (brojIzbor <= 3) {
+					JOptionPane.showMessageDialog(null,"Minimalan broj izbora je dva!","Greška",JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				pnlPitanjeVisestrukiIzbor.remove(labeleIzbor.get(labeleIzbor.size()-1));
+				pnlPitanjeVisestrukiIzbor.remove(tbxiIzbor.get(tbxiIzbor.size()-1));
+				labeleIzbor.remove(labeleIzbor.size()-1);
+				tbxiIzbor.remove(tbxiIzbor.size()-1);
+				btnDodajIzbor.setBounds(139, 37 + (brojIzbor-2) * 25, 140, 23);
+				btnUkloniIzbor.setBounds(289, 37 + (brojIzbor-2) * 25, 140, 23);
+				brojIzbor--;
+				pnlPitanjeVisestrukiIzbor.repaint();
 			}
 		});
 		btnUkloniIzbor.setBounds(279, 112, 130, 23);
 		pnlPitanjeVisestrukiIzbor.add(btnUkloniIzbor);
+		
+		btnUkloniOdgovor = new JButton("Ukloni odgovor");
+		btnUkloniOdgovor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (brojOdgovor <= 3) {
+					JOptionPane.showMessageDialog(null,"Minimalan broj odgovora je dva!","Greška",JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				pnlPitanjePonudjeniOdgovori.remove(labeleOdgovor.get(labeleOdgovor.size()-1));
+				pnlPitanjePonudjeniOdgovori.remove(tbxiOdgovor.get(tbxiOdgovor.size()-1));
+				labeleOdgovor.remove(labeleOdgovor.size()-1);
+				tbxiOdgovor.remove(tbxiOdgovor.size()-1);
+				btnDodajOdgovor.setBounds(139, 37 + (brojOdgovor-2) * 25, 140, 23);
+				btnUkloniOdgovor.setBounds(289, 37 + (brojOdgovor-2) * 25, 140, 23);
+				brojOdgovor--;
+				pnlPitanjePonudjeniOdgovori.repaint();
+			}
+		});
+		btnUkloniOdgovor.setBounds(289, 62, 140, 23);
+		pnlPitanjePonudjeniOdgovori.add(btnUkloniOdgovor);
 		
 		JLabel lblTekst = new JLabel("Tekst:");
 		lblTekst.setBounds(10, 28, 46, 14);
@@ -156,11 +195,43 @@ public class DodavanjePitanja extends JFrame {
 		lblTip.setBounds(20, 53, 31, 14);
 		panel.add(lblTip);
 		
-		JCheckBox chbObaveznoPitanje = new JCheckBox("Obavezno");
-		chbObaveznoPitanje.setBounds(66, 77, 97, 23);
-		panel.add(chbObaveznoPitanje);
+		ckbObaveznoPitanje = new JCheckBox("Obavezno");
+		ckbObaveznoPitanje.setBounds(66, 77, 97, 23);
+		panel.add(ckbObaveznoPitanje);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PitanjeDao pdao = PitanjeDao.get();
+								
+				TipPitanja tipNovogPitanja = null;
+				
+				if (cbbTipPitanja.getSelectedIndex() == 0) {
+					tipNovogPitanja = TipPitanja.Abc;
+				}
+				else if (cbbTipPitanja.getSelectedIndex() == 1) {
+					tipNovogPitanja = TipPitanja.OtvoreniOdgovor;
+				}
+				else if (cbbTipPitanja.getSelectedIndex() == 2) {
+					tipNovogPitanja = TipPitanja.DaNE;
+				}
+				else if (cbbTipPitanja.getSelectedIndex() == 3) {
+					tipNovogPitanja = TipPitanja.VisestrukiIzbor;
+				}
+				else if (cbbTipPitanja.getSelectedIndex() == 4) {
+					tipNovogPitanja = TipPitanja.TacnoNetacno;
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Došlo je do nepredviđene situacije u izboru tipa pitanja!");
+				}
+				
+				//TODO: Dodati da se registruje o kojem kvizu je rijec
+				Kviz testniKviz = new Kviz(0, "Testni kviz", 5, true, false);
+				Pitanje novoPitanje = new Pitanje(0, tbxTekstPitanja.getText(), tipNovogPitanja, ckbObaveznoPitanje.isSelected(), testniKviz);
+				
+				pdao.create(novoPitanje);
+			}
+		});
 		btnOk.setBounds(484, 366, 90, 23);
 		panel1.add(btnOk);
 		
@@ -174,7 +245,7 @@ public class DodavanjePitanja extends JFrame {
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		frmDodavanjePitanja.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
-		final JComboBox cbbTipPitanja = new JComboBox();
+		cbbTipPitanja = new JComboBox();
 		cbbTipPitanja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int odabraniId = (int)cbbTipPitanja.getSelectedIndex();
@@ -228,6 +299,8 @@ public class DodavanjePitanja extends JFrame {
 		pnlPitanjeVisestrukiIzbor.add(noviTbx);
 		tbxiIzbor.add(noviTbx);
 		
+		pnlPitanjeVisestrukiIzbor.repaint();
+		
 		btnDodajIzbor.setBounds(139, 37 + (brojIzbor) * 25, 140, 23);
 		btnUkloniIzbor.setBounds(289, 37 + (brojIzbor) * 25, 140, 23);
 		
@@ -238,8 +311,6 @@ public class DodavanjePitanja extends JFrame {
 		JLabel novaLabela = new JLabel();
 		novaLabela.setText(Character.toString((char)('a' + (brojOdgovor-1))) + ")");
 		novaLabela.setBounds(33, 34 + (brojOdgovor - 1) * 25, 23, 14);
-		novaLabela.setOpaque(true);
-		novaLabela.setBackground(Color.red);
 		novaLabela.setVisible(true);
 		pnlPitanjePonudjeniOdgovori.add(novaLabela);
 		labeleOdgovor.add(novaLabela);
@@ -250,8 +321,10 @@ public class DodavanjePitanja extends JFrame {
 		pnlPitanjePonudjeniOdgovori.add(noviTbx);
 		tbxiOdgovor.add(noviTbx);
 		
+		pnlPitanjePonudjeniOdgovori.repaint();
+		
 		btnDodajOdgovor.setBounds(139, 37 + (brojOdgovor) * 25, 140, 23);
-		//btnUkloniOdgovor.setBounds(279, 37 + (brojOdgovor) * 25, 130, 23);
+		btnUkloniOdgovor.setBounds(289, 37 + (brojOdgovor) * 25, 140, 23);		
 		
 		brojOdgovor++;
 	}
