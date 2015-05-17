@@ -34,9 +34,10 @@ public class KvizDao extends BaseDao<Kviz>{
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select id,naziv from Kviz k where k._aktivan= 1");
+		Query q = session.createQuery("select _id,_naziv from Kviz k where k._aktivan= 1");
 	
 		t.commit();
+		
 		
 		Collection<Object> c = q.list();
 		session.close();
