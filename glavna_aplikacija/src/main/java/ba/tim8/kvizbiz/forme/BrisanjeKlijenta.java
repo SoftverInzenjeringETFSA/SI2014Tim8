@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -19,14 +20,19 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-<<<<<<< HEAD
+
+
+
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.dao.OdgovorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Klijent;
 
-=======
->>>>>>> origin/master
+
+
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
@@ -47,14 +53,11 @@ public class BrisanjeKlijenta extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-<<<<<<< HEAD
 	private JTextField textField_6;
-=======
 	
 	public JFrame get_frmBrisanjeKlijenta () {
 		return frmBrisanjeKlijenta;
 	}
->>>>>>> origin/master
 
 	/**
 	 * Launch the application.
@@ -234,7 +237,12 @@ public class BrisanjeKlijenta extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Klijent k=(Klijent)comboBox.getSelectedItem();
+				OdgovorDao odao=new OdgovorDao();
+				odao.izbrisiSveOdgovoreKlijenta(k);
+				KvizDao kvizdao=new KvizDao();
+				kvizdao.izbrisiKlijenta(k);
 				kdao.delete(k.get_id());
+				JOptionPane.showMessageDialog(null,"Klijent je uspješno obrisan!","Brisanje klijenta",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 	}

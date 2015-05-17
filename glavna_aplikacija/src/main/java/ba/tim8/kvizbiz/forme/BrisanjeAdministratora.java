@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -221,7 +222,15 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Administrator a=(Administrator)comboBox.getSelectedItem();
-				adao.delete(a.get_id());
+				if(adao.readAll().size()==1)
+				{
+					JOptionPane.showMessageDialog(null,"Administrator ne može biti obrisan! U sistemu mora postojati barem jedan administrator!","Brisanje administratora",JOptionPane.WARNING_MESSAGE);
+				}
+				else
+				{
+					adao.delete(a.get_id());
+					JOptionPane.showMessageDialog(null,"Administrator je uspješno obrisan!","Brisanje administratora",JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 	

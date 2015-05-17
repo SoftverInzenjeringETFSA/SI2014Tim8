@@ -29,8 +29,7 @@ public abstract class BaseDao<T> implements IDao<T>
 		long id =  (Long) session.save(object);
 		t.commit();
 		session.close();
-		return id;
-		
+		return id;		
 	}
 
 	public T read(long id) {

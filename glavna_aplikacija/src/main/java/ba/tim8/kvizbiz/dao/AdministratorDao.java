@@ -15,8 +15,20 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	public static AdministratorDao get() {
 		return (adao == null) ? adao = new AdministratorDao() : adao;
 	}
-	
-	
 
-	
+	public boolean pretraziPoUsernamu(String username) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._username = :nesto");
+		if (q.setString("nesto", username).getFetchSize() == 1) {
+			t.commit();
+			session.close();
+			return true;
+		} else {
+			t.commit();
+			session.close();
+			return false;
+		}
+	}
 }
