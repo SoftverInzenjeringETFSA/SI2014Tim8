@@ -26,7 +26,7 @@ public abstract class Osoba implements java.io.Serializable {
 	@Column(name = "prezime", nullable = false)
 	private String _prezime;
 	@Column(name = "spol", nullable = false)
-	@Enumerated(EnumType.ORDINAL) 
+	@Enumerated(EnumType.STRING) 
 	private Spol _spol;
 	@Column(name = "adresa", nullable = false)
 	private String _adresa;

@@ -31,4 +31,96 @@ public class AdministratorDao extends BaseDao<Administrator> {
 			return false;
 		}
 	}
+	
+	public Collection<Administrator> dajPoUsernamu(String username) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._username = :nesto");
+		q.setParameter("nesto", username);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
+	
+	public Collection<Administrator> dajPoImenu(String ime) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._ime = :nesto");
+		q.setParameter("nesto", ime);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
+	
+	public Collection<Administrator> dajPoAdresi(String adresa) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._adresa = :nesto");
+		q.setParameter("nesto", adresa);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
+	
+	public Collection<Administrator> dajPoPrezimenu(String prezime) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._prezime = :nesto");
+		q.setParameter("nesto", prezime);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
+	
+	public Collection<String> dajUsernames()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("select distinct a._username from Administrator a");
+		t.commit();
+		Collection<String> c = q.list();
+		session.close();
+		return c;
+	}
+	
+	public Collection<String> dajImena()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("select distinct a._ime from Administrator a");
+		t.commit();
+		Collection<String> c = q.list();
+		session.close();
+		return c;
+	}
+	
+	public Collection<String> dajPrezimena()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("select distinct a._prezime from Administrator a");
+		t.commit();
+		Collection<String> c = q.list();
+		session.close();
+		return c;
+	}
+	
+	public Collection<String> dajAdrese()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("select distinct a._adresa from Administrator a");
+		t.commit();
+		Collection<String> c = q.list();
+		session.close();
+		return c;
+	}
 }
