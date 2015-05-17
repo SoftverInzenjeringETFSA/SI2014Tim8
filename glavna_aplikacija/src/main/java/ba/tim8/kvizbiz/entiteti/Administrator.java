@@ -17,9 +17,6 @@ public class Administrator extends Osoba implements java.io.Serializable
 {
 	
 	
-
-	
-
 	@Column(name = "telefon", nullable = false)
 	private String _telefon;
 	@Column(name = "eMail", nullable = false)
@@ -28,8 +25,6 @@ public class Administrator extends Osoba implements java.io.Serializable
 	private String _username;
 	@Column(name = "password", nullable = false)
 	private String _password;
-	
-	
 	
 	
 	
@@ -74,7 +69,7 @@ public class Administrator extends Osoba implements java.io.Serializable
 	
 	@Override
 	public String toString() {
-		return "Administrator [_username=" + _username + "]";
+		return this.get_username();
 	}
 }
 

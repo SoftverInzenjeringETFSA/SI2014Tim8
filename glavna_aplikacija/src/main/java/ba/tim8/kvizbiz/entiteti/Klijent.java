@@ -89,5 +89,10 @@ public class Klijent extends Osoba implements java.io.Serializable{
 		this._popunjeniKviz=_popunjeniKviz;
 		this._listaOdgovora=_listaOdgovora;
 	}
+	
+	@Override
+	public String toString() {
+		return this.get_ime()+" "+this.get_prezime();
+	}
 
 }

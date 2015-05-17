@@ -131,8 +131,7 @@ public class BrisanjeKlijenta extends JFrame {
 		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator.hasNext();)
 		{
 			Klijent klijent = (Klijent) iterator.next();
-			String zaDodati=klijent.toString();
-			comboBox.addItem(zaDodati);
+			comboBox.addItem(klijent.toString());
 		}
 				
 		JButton btnObriiKlijenta = new JButton("Obri\u0161i klijenta");

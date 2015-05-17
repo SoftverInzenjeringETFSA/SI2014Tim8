@@ -222,8 +222,7 @@ public class BrisanjeAdministratora extends JFrame {
 		for (Iterator<Administrator> iterator = admini.iterator(); iterator
 				.hasNext();) {
 			Administrator admin = (Administrator) iterator.next();
-			String zaDodati = admin.toString();
-			comboBox.addItem(zaDodati);
+			comboBox.addItem(admin.toString());
 		}
 
 		comboBox.addItemListener(new ItemListener() {
