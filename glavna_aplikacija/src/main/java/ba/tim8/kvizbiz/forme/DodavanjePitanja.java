@@ -119,7 +119,9 @@ public class DodavanjePitanja extends JFrame {
 		pnlPitanjePonudjeniOdgovori = new JPanel();
 		pnlPitanjePonudjeniOdgovori.setBorder(new TitledBorder(null, "Unesite novo pitanje s ponu\u0111enim odgovorima:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlPitanjePonudjeniOdgovori.setBounds(10, 107, 544, 226);
-		panel.add(pnlPitanjePonudjeniOdgovori);
+		JScrollPane scroll = new JScrollPane(pnlPitanjePonudjeniOdgovori);
+		scroll.setAutoscrolls(true);
+		panel.add(scroll);
 		pnlPitanjePonudjeniOdgovori.setLayout(null);
 		
 		btnDodajOdgovor = new JButton("Dodaj odgovor");
