@@ -22,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 public class frmDodavanjePitanja extends JFrame {
@@ -80,7 +82,7 @@ public class frmDodavanjePitanja extends JFrame {
 		contentPane.add(pnlPitanje, BorderLayout.CENTER);
 		
 		JPanel pnlPodaci = new JPanel(new GridBagLayout());
-		pnlPodaci.setBorder(new TitledBorder(null, "Unesite podatke o pitanju:"));
+		pnlPodaci.setBorder(new CompoundBorder(new TitledBorder(null, "Unesite podatke o pitanju:"), new EmptyBorder(10, 10, 10, 10)));
 		pnlPitanje.add(pnlPodaci, BorderLayout.PAGE_START);
 		
 		GridBagConstraints gbcPodaci = new GridBagConstraints();
@@ -117,15 +119,24 @@ public class frmDodavanjePitanja extends JFrame {
 		ckbObaveznoPitanje = new JCheckBox();
 		pnlPodaci.add(ckbObaveznoPitanje, gbcPodaci);
 		
-		JPanel pnlPitanjePonudjeniOdgovor = new JPanel(new FlowLayout());
+		JPanel pnlPitanjePonudjeniOdgovor = new JPanel(new GridBagLayout());
+		pnlPitanjePonudjeniOdgovor.setBorder(new CompoundBorder(new TitledBorder(null, "Unesite podatke o pitanju:"), new EmptyBorder(10, 10, 10, 10)));
 		JScrollPane scrollOdgovor = new JScrollPane(pnlPitanjePonudjeniOdgovor);
 		pnlPitanje.add(scrollOdgovor, BorderLayout.CENTER);
 		
-		pnlPitanjePonudjeniOdgovor.add(new JLabel("lalaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-		pnlPitanjePonudjeniOdgovor.add(new JLabel("lalaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-		pnlPitanjePonudjeniOdgovor.add(new JLabel("lalaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-		pnlPitanjePonudjeniOdgovor.add(new JLabel("lalaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-		pnlPitanjePonudjeniOdgovor.add(new JLabel("lalaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+		GridBagConstraints btnTipovi = new GridBagConstraints();
+		
+		btnTipovi.gridx = 2;
+		btnTipovi.gridy = 10;
+		btnTipovi.anchor = GridBagConstraints.NORTH;
+		btnTipovi.fill = GridBagConstraints.VERTICAL;
+		btnTipovi.insets = new Insets(10, 10, 10, 10);
+		btnDodajOdgovor = new JButton("Dodaj pitanje");
+		pnlPitanjePonudjeniOdgovor.add(btnDodajOdgovor, btnTipovi);
+		
+		btnTipovi.gridx++;
+		btnUkloniOdgovor = new JButton("Ukloni odgovor");
+		pnlPitanjePonudjeniOdgovor.add(btnUkloniOdgovor, btnTipovi);
 		
 		JPanel pnlButtoniVanjska = new JPanel(new BorderLayout());
 		pnlPitanje.add(pnlButtoniVanjska, BorderLayout.PAGE_END);
