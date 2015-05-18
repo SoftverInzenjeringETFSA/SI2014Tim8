@@ -217,7 +217,7 @@ public class DodavanjeAdministratora extends JFrame {
 				boolean dodaj = true;
 
 				// username validacija
-				if (textField_5.getText() == "") {
+				if (textField_5.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
@@ -234,7 +234,7 @@ public class DodavanjeAdministratora extends JFrame {
 				}
 
 				// password valdiacija
-				if (textField_6.getText() == "") {
+				if (textField_6.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
@@ -244,7 +244,7 @@ public class DodavanjeAdministratora extends JFrame {
 				}
 
 				// ime validacija
-				if (textField.getText() == "") {
+				if (textField.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
@@ -262,14 +262,14 @@ public class DodavanjeAdministratora extends JFrame {
 						JOptionPane
 								.showMessageDialog(
 										null,
-										"Polje Ime mora sadržavati samo slova i razmake!",
+										"Polje Ime mora sadržavati samo slova!",
 										"Dodavanje administratora",
 										JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
 				// prezime validacija
-				if (textField_1.getText() == "") {
+				if (textField_1.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
@@ -287,14 +287,14 @@ public class DodavanjeAdministratora extends JFrame {
 						JOptionPane
 								.showMessageDialog(
 										null,
-										"Polje Prezime mora sadržavati samo slova i razmake!",
+										"Polje Prezime mora sadržavati samo slova!",
 										"Dodavanje administratora",
 										JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
 				// adresa samo ne smije bit prazna
-				if (textField_2.getText() == "") {
+				if (textField_2.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
@@ -304,7 +304,7 @@ public class DodavanjeAdministratora extends JFrame {
 				}
 
 				// datum rodjenja validacija
-				if (textField_3.getText() == "") {
+				if (textField_3.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
@@ -312,7 +312,7 @@ public class DodavanjeAdministratora extends JFrame {
 							"Dodavanje administratora",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-					String regx = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$";
+					String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField_3.getText());
@@ -322,14 +322,14 @@ public class DodavanjeAdministratora extends JFrame {
 						JOptionPane
 								.showMessageDialog(
 										null,
-										"Polje Datum rođenja mora biti u formatu dd-MM-yyyy(01-01-2015)!",
+										"Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!",
 										"Dodavanje administratora",
 										JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
 				// email validacija
-				if (textField_4.getText() == "") {
+				if (textField_4.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
@@ -353,15 +353,16 @@ public class DodavanjeAdministratora extends JFrame {
 				}
 
 				// telefon validacija
-				if (textField_7.getText() == "") {
+				if (textField_7.getText().isEmpty()) {
 					dodaj = false;
 					btnNewButton.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Telefon mora biti popunjeno!",
 							"Dodavanje administratora",
 							JOptionPane.ERROR_MESSAGE);
-				} else {
-					String regx = "^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$";
+				}
+				else {
+					String regx = "^[0-9]*$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField_7.getText());
@@ -369,24 +370,25 @@ public class DodavanjeAdministratora extends JFrame {
 						dodaj = false;
 						btnNewButton.setText("Greska");
 						JOptionPane.showMessageDialog(null,
-								"Polje Telefon mora biti u pravilnom formatu!",
+								"Polje Telefon mora sadržavati samo brojeve!",
 								"Dodavanje administratora",
 								JOptionPane.ERROR_MESSAGE);
 						;
 					}
 				}
-
+				
+				
+				
+				
 				if (dodaj == true) {
 					DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 					if (radioButton.isSelected()) {
-
-						Administrator a = null;
 						try {
-							a = new Administrator((long) 2,
+							Administrator a = new Administrator((long) 2,
 									textField.getText(), textField_1.getText(),
 									Spol.muski, textField_2.getText(), format
-											.parse(textField_3.getText()),
-									textField_4.getText(), textField_7
+											.parse(textField_4.getText()),
+									textField_3.getText(), textField_7
 											.getText(), textField_5.getText(),
 									textField_6.getText());
 							adao.create(a);
@@ -400,9 +402,8 @@ public class DodavanjeAdministratora extends JFrame {
 
 					} else {
 
-						Administrator a = null;
 						try {
-							a = new Administrator((long) 2,
+							Administrator a = new Administrator((long)1,
 									textField.getText(), textField_1.getText(),
 									Spol.zenski, textField_2.getText(), format
 											.parse(textField_3.getText()),
@@ -419,8 +420,12 @@ public class DodavanjeAdministratora extends JFrame {
 						}
 
 					}
+					DodavanjeAdministratora noviProzor = new DodavanjeAdministratora();
+					JFrame noviFrame = noviProzor.get_frmDodavanjeAdministratora();
+					noviFrame.setVisible(true);
+					frmDodavanjeAdministratora.dispose();
 				}
 			}
 		});
 	}
-}
+}		

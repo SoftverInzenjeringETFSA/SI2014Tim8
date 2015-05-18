@@ -21,7 +21,10 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Transaction t = session.beginTransaction();
 		Query q = session
 				.createQuery("from Administrator a where a._username = :nesto");
-		if (q.setString("nesto", username).getFetchSize() == 1) {
+		q.setParameter("nesto", username);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+		
+		if (!alist.isEmpty()) {
 			t.commit();
 			session.close();
 			return true;
