@@ -36,7 +36,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session
-				.createQuery("from Administrator a where a._username = :nesto");
+				.createQuery("from Administrator a where a._username = :nesto order by a._username");
 		q.setParameter("nesto", username);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
 			t.commit();
@@ -48,7 +48,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session
-				.createQuery("from Administrator a where a._ime = :nesto");
+				.createQuery("from Administrator a where a._ime = :nesto order by a._username");
 		q.setParameter("nesto", ime);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
 			t.commit();
@@ -60,7 +60,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session
-				.createQuery("from Administrator a where a._adresa = :nesto");
+				.createQuery("from Administrator a where a._adresa = :nesto order by a._username");
 		q.setParameter("nesto", adresa);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
 			t.commit();
@@ -72,7 +72,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session
-				.createQuery("from Administrator a where a._prezime = :nesto");
+				.createQuery("from Administrator a where a._prezime = :nesto order by a._username");
 		q.setParameter("nesto", prezime);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
 			t.commit();
@@ -84,7 +84,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._username from Administrator a");
+		Query q = session.createQuery("select distinct a._username from Administrator a order by a._username");
 		t.commit();
 		Collection<String> c = q.list();
 		session.close();
@@ -95,7 +95,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._ime from Administrator a");
+		Query q = session.createQuery("select distinct a._ime from Administrator a  order by a._ime");
 		t.commit();
 		Collection<String> c = q.list();
 		session.close();
@@ -106,7 +106,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._prezime from Administrator a");
+		Query q = session.createQuery("select distinct a._prezime from Administrator a order by a._prezime");
 		t.commit();
 		Collection<String> c = q.list();
 		session.close();
@@ -117,7 +117,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._adresa from Administrator a");
+		Query q = session.createQuery("select distinct a._adresa from Administrator a order by a._adresa");
 		t.commit();
 		Collection<String> c = q.list();
 		session.close();
