@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -73,17 +74,16 @@ public class PregledAnketa extends JFrame {
 		panel.add(table);
 		
 		
-		JButton btnNewButton = new JButton("Statusna traka");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton.setLocation(0, 409);
-		btnNewButton.setSize(584, 42);
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(Color.LIGHT_GRAY);
-		btnNewButton.setEnabled(false);
-	contentPane.add(btnNewButton);
+		JLabel lblStatus = new JLabel("Statusna traka");
+		lblStatus.setBounds(5, 401, 579, 50);
+		contentPane.add(lblStatus);
+		lblStatus.setForeground(Color.lightGray);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		
+				
+		
+	
 	
 	KvizDao k= KvizDao.get();
 	List<Long> l = (List<Long>) k.ispisSvihAnketa();

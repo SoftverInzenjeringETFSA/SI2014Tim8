@@ -25,6 +25,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
+import ba.tim8.kvizbiz.dao.AdministratorDao;
+import ba.tim8.kvizbiz.entiteti.Administrator;
+
 public class LoginAdmin extends JFrame {
 
 	//TODO: Dodati dugme vrati se nazad
@@ -41,7 +44,7 @@ public class LoginAdmin extends JFrame {
 	 */
 	public LoginAdmin() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 300, 200);
+		setBounds(100, 100, 368, 264);
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -97,11 +100,43 @@ public class LoginAdmin extends JFrame {
 		JButton btnPotvrdi = new JButton("Potvrdi");
 		btnPotvrdi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				//JOptionPane.showMessageDialog(null,"Username koji ste unijeli je: " + textField.getText() + ", a password je: " + passwordField.getPassword() + " ... vec hashiran","Porukica",JOptionPane.WARNING_MESSAGE);
-				ManipulacijaAnketama noviProzor = new ManipulacijaAnketama ();
-				JFrame noviFrame = noviProzor.get_frmManipulacijaAnketama();
-				noviFrame.setVisible(true);
-				dispose();
+				String username= textField.getText();
+				String password= passwordField.getText();
+				Administrator a= new Administrator();
+				AdministratorDao b = AdministratorDao.get();
+				a.set_username(username);
+				if(b.pretraziPoUsernamu(username))
+				{
+					if(b.dajPassword().equals(password))
+					{
+						ManipulacijaAnketama noviProzor = new ManipulacijaAnketama ();
+						JFrame noviFrame = noviProzor.get_frmManipulacijaAnketama();
+						noviFrame.setVisible(true);
+						dispose();
+						
+					}
+					else if(!b.dajPassword().equals(password)){
+						JOptionPane.showMessageDialog(null,
+								"Password koji ste unijeli",
+								"nije validan",
+								JOptionPane.ERROR_MESSAGE);
+					
+					}
+						
+						
+					
+				}
+				else {
+					JOptionPane.showMessageDialog(null,
+							"Ponovo unesite podatke",
+							"Uneseni nisu validni",
+							JOptionPane.ERROR_MESSAGE);
+					
+				}
+				
+				
+				
+				
 			}
 		});
 		GridBagConstraints gbc_btnPotvrdi = new GridBagConstraints();

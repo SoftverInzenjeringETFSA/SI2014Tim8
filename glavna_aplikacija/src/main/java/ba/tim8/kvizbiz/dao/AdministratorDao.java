@@ -94,6 +94,18 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		return c;
 	}
 	
+	public Collection<String> dajPassword()
+	{Session session = HibernateUtil.getSessionFactory().openSession();
+	Transaction t = session.beginTransaction();
+	Query q = session.createQuery("select distinct a._password from Administrator a order by a._password");
+	t.commit();
+	Collection<String> c = q.list();
+	session.close();
+	return c;
+		
+		
+	}
+	
 	public Collection<String> dajImena()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -115,6 +127,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		session.close();
 		return c;
 	}
+
 	
 	public Collection<String> dajAdrese()
 	{
@@ -126,4 +139,6 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		session.close();
 		return c;
 	}
+	
+	
 }
