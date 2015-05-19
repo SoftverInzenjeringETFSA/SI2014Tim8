@@ -108,7 +108,6 @@ public class PromjenaKlijenta extends JFrame {
 		JLabel lblIzaberiteAdministratora = new JLabel("Izaberite klijenta:");
 		lblIzaberiteAdministratora.setHorizontalAlignment(JLabel.RIGHT);
 		panel_1.add(lblIzaberiteAdministratora, "cell 0 0,growx,aligny center");
-		
 		JComboBox comboBox = new JComboBox();
 		KlijentDao adao = KlijentDao.get();
 		comboBox.removeAllItems();
@@ -122,6 +121,8 @@ public class PromjenaKlijenta extends JFrame {
 			}});
 			
 		panel_1.add(comboBox, "cell 1 0,growx,aligny top");
+		
+		
 		
 		JButton button = new JButton("Promjeni klijenta");
 		panel.add(button, "cell 0 2,alignx right,aligny bottom");
