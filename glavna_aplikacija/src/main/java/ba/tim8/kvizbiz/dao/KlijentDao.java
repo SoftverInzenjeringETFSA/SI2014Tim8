@@ -19,6 +19,22 @@ public class KlijentDao extends BaseDao<Klijent> {
 		return (kdao == null) ? kdao = new KlijentDao() : kdao;
 	}
 	
+	public Collection<Klijent> dajKlijenta(String proslijedjeno) {
+		String ime,prezime;
+		int razmak=proslijedjeno.indexOf(" ");
+		prezime=proslijedjeno.substring(razmak+1,proslijedjeno.length());
+		ime=proslijedjeno.substring(0,razmak-1);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Klijent k where k._ime = :nesto and k._prezime=:nestodrugo");
+		q.setParameter("nesto", ime);
+		q.setParameter("nestodrugo", prezime);
+		Collection<Klijent> klist = (Collection<Klijent>) q.list();
+			t.commit();
+			session.close();
+			return klist;
+		 }
 	
 	public Collection<String>  ispisImenaPrezimenaKlijenata()
 	{
