@@ -55,7 +55,14 @@ private JComboBox comboBox;
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("Popuni");
+		JButton btnNewButton_1 = new JButton("Pregled");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PregledAnketa p= new PregledAnketa();
+				p.setVisible(true);
+				
+			}
+		});
 		btnNewButton_1.setBounds(37, 186, 120, 23);
 		panel.add(btnNewButton_1);
 		
@@ -100,6 +107,7 @@ private JComboBox comboBox;
 		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		btnNewButton.setLocation(0, 409);

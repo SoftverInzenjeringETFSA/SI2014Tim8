@@ -225,7 +225,7 @@ public class BrisanjeKlijenta extends JFrame {
 		comboBox.setBounds(170, 32, 195, 20);
 		panel_1.add(comboBox);
 
-		/*Klijent klijent = new Klijent();
+		Klijent klijent = new Klijent();
 		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
 				.hasNext();) {
 			klijent = (Klijent) iterator.next();
@@ -288,6 +288,5 @@ public class BrisanjeKlijenta extends JFrame {
 				}
 			}
 		});
-*/
 	}
 }

@@ -1,5 +1,6 @@
 package ba.tim8.kvizbiz.entiteti;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "klijent")
 @PrimaryKeyJoinColumn(name = "idKlijent", referencedColumnName = "idOsoba")
-public class Klijent extends Osoba implements java.io.Serializable{
+public class Klijent extends Osoba implements  java.io.Serializable {
 	@Column(name = "telefon", nullable = true)
 	private String _telefon;
 	@Column(name = "eMail", nullable = true)

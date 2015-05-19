@@ -43,4 +43,18 @@ public class KvizDao extends BaseDao<Kviz>{
 		session.close();
 		return c;
 	}
+	
+	public Collection<Long>  ispisSvihAnketa()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("select _id from Kviz k ");
+	
+		t.commit();
+		
+		
+		Collection<Long> c = q.list();
+		session.close();
+		return c;
+	}
 }
