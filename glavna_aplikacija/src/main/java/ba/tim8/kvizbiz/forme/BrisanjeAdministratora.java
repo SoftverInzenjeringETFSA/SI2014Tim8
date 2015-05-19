@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -203,13 +204,11 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.setBounds(240, 350, 180, 23);
 		panel.add(btnObriiKlijenta);
 
-		final JButton btnNewButton = new JButton("Uredu");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmBrisanjeAdministratora.getContentPane().add(btnNewButton,
-				BorderLayout.SOUTH);
-
+		final JLabel lblStatus = new JLabel("Uredu");
+		lblStatus.setForeground(Color.BLUE);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblStatus, BorderLayout.SOUTH);
 		// LOGIKA
 
 		final JComboBox comboBox = new JComboBox();
@@ -261,7 +260,7 @@ public class BrisanjeAdministratora extends JFrame {
 						trazeniAdmin = (Administrator) iterator.next();
 					}
 					if (adao.readAll().size() == 1) {
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane
 								.showMessageDialog(
 										null,
