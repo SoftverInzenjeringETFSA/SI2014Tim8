@@ -7,9 +7,11 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.SystemColor;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SpringLayout;
@@ -20,6 +22,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -27,12 +30,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
 
 public class PocetnaKlijent extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-
+private JComboBox comboBox;
 	/**
 	 * Create the frame.
 	 */
@@ -55,7 +59,7 @@ public class PocetnaKlijent extends JFrame {
 		btnNewButton_1.setBounds(37, 186, 120, 23);
 		panel.add(btnNewButton_1);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setBounds(37, 85, 120, 20);
 		panel.add(comboBox);
 		
@@ -67,22 +71,26 @@ public class PocetnaKlijent extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(197, 85, 367, 256);
 		panel.add(scrollPane);
-		KvizDao k= KvizDao.get();
-		k.ispisAktivnihAnketa();
+		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, "null"},
-				
-			},
+			new Object[][] { },
 			new String[] {
 				"ID", "Naziv ankete"
 			}
 		));
 		
+		
+		
 		table.setBounds(197, 47, 367, 256);
 		panel.add(scrollPane);
 		scrollPane.setViewportView(table);
+		
+				
+		
+		
+		
+		
 		
 		Menu menu = new Menu();
 		menu.NapraviMenu(this);
@@ -100,5 +108,35 @@ public class PocetnaKlijent extends JFrame {
 		btnNewButton.setForeground(Color.LIGHT_GRAY);
 		btnNewButton.setEnabled(false);
 	contentPane.add(btnNewButton);
+	
+	KvizDao k= KvizDao.get();
+	List<Long> l = (List<Long>) k.ispisAktivnihAnketa();
+	IscitajSveAktivneTabele(l);
+
+
+	
+	}
+	
+	private void IscitajSveAktivneTabele(List<Long> lista)
+	{
+		KvizDao k= KvizDao.get();
+
+		
+		for(Long id:lista)
+			
+		{
+			
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			Kviz kviz = k.read(id);
+			
+			model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv()});
+			comboBox.addItem(id.toString());
+			
+			
+		}
+		
 	}
 }
+
+
+
