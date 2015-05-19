@@ -61,8 +61,8 @@ public abstract class BaseDao<T> implements IDao<T>
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session.createQuery("from " + getClassOfT().getSimpleName());
+		Collection<T> c = (Collection<T>) q.list();
 		t.commit();
-		Collection<T> c = q.list();
 		session.close();
 		return c;
 	}

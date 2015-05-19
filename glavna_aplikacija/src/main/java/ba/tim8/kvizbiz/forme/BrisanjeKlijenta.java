@@ -27,7 +27,6 @@ import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.OdgovorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Klijent;
-
 import ba.tim8.kvizbiz.entiteti.Spol;
 
 import java.awt.event.MouseAdapter;
@@ -93,7 +92,7 @@ public class BrisanjeKlijenta extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmBrisanjeKlijenta);
 
-		JButton btnNewButton = new JButton("Statusna traka");
+		JButton btnNewButton = new JButton("Uredu");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
@@ -116,18 +115,6 @@ public class BrisanjeKlijenta extends JFrame {
 		JLabel lblIzaberiteKlijenta = new JLabel("Izaberite klijenta:");
 		lblIzaberiteKlijenta.setBounds(22, 35, 140, 14);
 		panel_1.add(lblIzaberiteKlijenta);
-
-		KlijentDao kdao = new KlijentDao();
-		Collection<Klijent> klijenti = (Collection<Klijent>) kdao.readAll();
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(170, 32, 195, 20);
-		panel_1.add(comboBox);
-		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
-				.hasNext();) {
-			Klijent klijent = (Klijent) iterator.next();
-			comboBox.addItem(klijent.toString());
-		}
 
 		JButton btnObriiKlijenta = new JButton("Obri\u0161i klijenta");
 		btnObriiKlijenta.setBounds(241, 382, 180, 23);
@@ -230,17 +217,42 @@ public class BrisanjeKlijenta extends JFrame {
 		textField_6.setBounds(140, 213, 230, 20);
 		panel_2.add(textField_6);
 
-		/*comboBox.addItemListener(new ItemListener() {
+		// LOGIKA
+
+		final KlijentDao kdao = new KlijentDao();
+		Collection<Klijent> klijenti = kdao.readAll();
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(170, 32, 195, 20);
+		panel_1.add(comboBox);
+
+		/*Klijent klijent = new Klijent();
+		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
+				.hasNext();) {
+			klijent = (Klijent) iterator.next();
+			comboBox.addItem(klijent.toString());
+		}
+		comboBox.setSelectedIndex(-1);
+
+		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				Klijent k = (Klijent) comboBox.getSelectedItem();
-				textField.setText(k.get_ime());
-				textField_1.setText(k.get_prezime());
-				textField_2.setText(k.get_adresa());
-				textField_3.setText(k.get_datumRodjenja().toGMTString());
-				textField_4.setText(k.get_eMail());
-				textField_5.setText(k.get_telefon());
-				textField_6.setText(k.get_datumPrijave().toGMTString());
-				if (k.get_spol() == Spol.muski)
+				KlijentDao klijentdao = new KlijentDao();
+				Collection<Klijent> klijent = klijentdao.dajKlijenta(comboBox
+						.getSelectedItem().toString());
+				Klijent trazeniKlijent = new Klijent();
+				for (Iterator<Klijent> iterator = klijent.iterator(); iterator
+						.hasNext();) {
+					trazeniKlijent = (Klijent) iterator.next();
+				}
+				textField.setText(trazeniKlijent.get_ime());
+				textField_1.setText(trazeniKlijent.get_prezime());
+				textField_2.setText(trazeniKlijent.get_adresa());
+				textField_3.setText(trazeniKlijent.get_datumRodjenja()
+						.toGMTString());
+				textField_4.setText(trazeniKlijent.get_eMail());
+				textField_5.setText(trazeniKlijent.get_telefon());
+				textField_6.setText(trazeniKlijent.get_datumPrijave()
+						.toGMTString());
+				if (trazeniKlijent.get_spol() == Spol.muski)
 					radioButton.setSelected(true);
 				else
 					radioButton_1.setSelected(true);
@@ -250,16 +262,32 @@ public class BrisanjeKlijenta extends JFrame {
 
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Klijent k = (Klijent) comboBox.getSelectedItem();
-				OdgovorDao odao = new OdgovorDao();
-				odao.izbrisiSveOdgovoreKlijenta(k);
-				KvizDao kvizdao = new KvizDao();
-				kvizdao.izbrisiKlijenta(k);
-				kdao.delete(k.get_id());
-				JOptionPane.showMessageDialog(null,
-						"Klijent je uspješno obrisan!", "Brisanje klijenta",
-						JOptionPane.INFORMATION_MESSAGE);
+				try {
+					KlijentDao klijentdao = new KlijentDao();
+					Collection<Klijent> klijent = klijentdao
+							.dajKlijenta(comboBox.getSelectedItem().toString());
+					Klijent trazeniKlijent = new Klijent();
+					for (Iterator<Klijent> iterator = klijent.iterator(); iterator
+							.hasNext();) {
+						trazeniKlijent = (Klijent) iterator.next();
+					}
+					OdgovorDao odao = new OdgovorDao();
+					odao.izbrisiSveOdgovoreKlijenta(trazeniKlijent);
+					KvizDao kvizdao = new KvizDao();
+					kvizdao.izbrisiKlijenta(trazeniKlijent);
+					kdao.delete(trazeniKlijent.get_id());
+					JOptionPane.showMessageDialog(null,
+							"Klijent je uspješno obrisan!",
+							"Brisanje klijenta",
+							JOptionPane.INFORMATION_MESSAGE);
+					BrisanjeKlijenta noviProzor = new BrisanjeKlijenta();
+					JFrame noviFrame = noviProzor.get_frmBrisanjeKlijenta();
+					noviFrame.setVisible(true);
+					frmBrisanjeKlijenta.dispose();
+				} catch (Exception ex) {
+				}
 			}
-		});*/
+		});
+*/
 	}
 }

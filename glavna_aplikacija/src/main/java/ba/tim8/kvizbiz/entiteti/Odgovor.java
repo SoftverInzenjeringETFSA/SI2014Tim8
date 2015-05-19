@@ -22,7 +22,7 @@ public class Odgovor implements java.io.Serializable{
 	private String _tekstOdgovora;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idPitanje", nullable = false)
+	@JoinColumn(name = "idPitanje", nullable = true, updatable = true)
 	private Pitanje _pitanje;
 	
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "_listaOdgovora")

@@ -241,7 +241,7 @@ public class DodavanjePitanja extends JFrame {
 		btnOtkazi.setBounds(384, 366, 90, 23);
 		panel1.add(btnOtkazi);
 		
-		JButton btnNewButton = new JButton("Statusna traka");
+		JButton btnNewButton = new JButton("Uredu");
 		btnNewButton.setEnabled(false);
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);

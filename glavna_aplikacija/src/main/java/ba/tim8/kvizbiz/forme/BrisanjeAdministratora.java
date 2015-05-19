@@ -203,7 +203,7 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.setBounds(240, 350, 180, 23);
 		panel.add(btnObriiKlijenta);
 
-		JButton btnNewButton = new JButton("Statusna traka");
+		final JButton btnNewButton = new JButton("Uredu");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
@@ -225,16 +225,24 @@ public class BrisanjeAdministratora extends JFrame {
 			comboBox.addItem(admin.toString());
 		}
 
+		comboBox.setSelectedIndex(-1);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				Administrator a = (Administrator) comboBox.getSelectedItem();
-				textField.setText(a.get_ime());
-				textField_1.setText(a.get_prezime());
-				textField_2.setText(a.get_adresa());
-				textField_3.setText(a.get_datumRodjenja().toGMTString());
-				textField_4.setText(a.get_eMail());
-				textField_5.setText(a.get_telefon());
-				if (a.get_spol() == Spol.muski)
+				AdministratorDao admindao = new AdministratorDao();
+				Collection<Administrator> admin = admindao
+						.dajPoUsernamu(comboBox.getSelectedItem().toString());
+				Administrator trazeniAdmin = new Administrator();
+				for (Iterator<Administrator> iterator = admin.iterator(); iterator
+						.hasNext();) {
+					trazeniAdmin = (Administrator) iterator.next();
+				}
+				textField.setText(trazeniAdmin.get_ime());
+				textField_1.setText(trazeniAdmin.get_prezime());
+				textField_2.setText(trazeniAdmin.get_adresa());
+				textField_3.setText(trazeniAdmin.get_datumRodjenja().toString());
+				textField_4.setText(trazeniAdmin.get_eMail());
+				textField_5.setText(trazeniAdmin.get_telefon());
+				if (trazeniAdmin.get_spol() == Spol.muski)
 					radioButton.setSelected(true);
 				else
 					radioButton_1.setSelected(true);
@@ -244,9 +252,16 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Administrator a = (Administrator) comboBox
-							.getSelectedItem();
+					AdministratorDao admindao = new AdministratorDao();
+					Collection<Administrator> admin = admindao
+							.dajPoUsernamu(comboBox.getSelectedItem().toString());
+					Administrator trazeniAdmin = new Administrator();
+					for (Iterator<Administrator> iterator = admin.iterator(); iterator
+							.hasNext();) {
+						trazeniAdmin = (Administrator) iterator.next();
+					}
 					if (adao.readAll().size() == 1) {
+						btnNewButton.setText("Greska");
 						JOptionPane
 								.showMessageDialog(
 										null,
@@ -254,11 +269,15 @@ public class BrisanjeAdministratora extends JFrame {
 										"Brisanje administratora",
 										JOptionPane.WARNING_MESSAGE);
 					} else {
-						adao.delete(a.get_id());
+						adao.delete(trazeniAdmin.get_id());
 						JOptionPane.showMessageDialog(null,
 								"Administrator je uspješno obrisan!",
 								"Brisanje administratora",
 								JOptionPane.INFORMATION_MESSAGE);
+						BrisanjeAdministratora noviProzor = new BrisanjeAdministratora();
+						JFrame noviFrame = noviProzor.get_frmBrisanjeAdministratora();
+						noviFrame.setVisible(true);
+						frmBrisanjeAdministratora.dispose();
 					}
 				} catch (Exception ex) {
 

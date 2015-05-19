@@ -32,7 +32,7 @@ public class Pitanje implements java.io.Serializable{
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idKviz", nullable = false)
+	@JoinColumn(name = "idKviz", nullable = true, updatable=true)
 	private Kviz _kviz;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje")
