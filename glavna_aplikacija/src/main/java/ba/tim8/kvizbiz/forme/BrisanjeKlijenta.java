@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,6 +51,7 @@ public class BrisanjeKlijenta extends JFrame {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
+	private JLabel lblStatus;
 
 	public JFrame get_frmBrisanjeKlijenta() {
 		return frmBrisanjeKlijenta;
@@ -92,12 +94,11 @@ public class BrisanjeKlijenta extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmBrisanjeKlijenta);
 
-		JButton btnNewButton = new JButton("Uredu");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmBrisanjeKlijenta.getContentPane().add(btnNewButton,
-				BorderLayout.SOUTH);
+		lblStatus = new JLabel("Uredu");
+		lblStatus.setForeground(Color.BLUE);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmBrisanjeKlijenta.getContentPane().add(lblStatus, BorderLayout.SOUTH);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,6 +53,7 @@ public class PromjenaKlijenta extends JFrame {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
+	private JLabel lblStatus;
 
 	public JFrame get_frmPromjenaKlijenta() {
 		return frmPromjenaKlijenta;
@@ -94,12 +96,11 @@ public class PromjenaKlijenta extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmPromjenaKlijenta);
 
-		final JButton btnNewButton = new JButton("Uredu");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmPromjenaKlijenta.getContentPane().add(btnNewButton,
-				BorderLayout.SOUTH);
+		lblStatus = new JLabel("Uredu");
+		lblStatus.setForeground(Color.BLUE);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmPromjenaKlijenta.getContentPane().add(lblStatus, BorderLayout.SOUTH);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -273,7 +274,7 @@ public class PromjenaKlijenta extends JFrame {
 				// adresa samo ne smije bit prazna
 				if (textField_2.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Adresa mora biti popunjeno!",
 							"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
@@ -282,7 +283,7 @@ public class PromjenaKlijenta extends JFrame {
 				// email validacija
 				if (textField_4.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Email mora biti popunjeno!",
 							"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
@@ -293,7 +294,7 @@ public class PromjenaKlijenta extends JFrame {
 					Matcher matcher = pattern.matcher(textField_4.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane.showMessageDialog(null,
 								"Polje Email mora biti u pravilnom formatu!",
 								"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
@@ -304,7 +305,7 @@ public class PromjenaKlijenta extends JFrame {
 				// telefon validacija
 				if (textField_5.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Telefon mora biti popunjeno!",
 							"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
@@ -315,7 +316,7 @@ public class PromjenaKlijenta extends JFrame {
 					Matcher matcher = pattern.matcher(textField_5.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane.showMessageDialog(null,
 								"Polje Telefon mora sadržavati samo brojeve!",
 								"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
@@ -328,6 +329,7 @@ public class PromjenaKlijenta extends JFrame {
 					trazeniKlijent.set_eMail(textField_4.getText());
 					trazeniKlijent.set_telefon(textField_5.getText());
 					kdao.update(trazeniKlijent);
+					lblStatus.setText("Uredu");
 					JOptionPane.showMessageDialog(null,
 							"Klijent je uspješno promjenjen!",
 							"Promjena klijenta",
