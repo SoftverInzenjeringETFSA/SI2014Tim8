@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import net.miginfocom.swing.MigLayout;
 
 public class PromjenaPassworda extends JFrame {
 
@@ -61,7 +62,7 @@ public class PromjenaPassworda extends JFrame {
 	private void initialize() {
 		frmPromjenaPassworda = new JFrame();
 		frmPromjenaPassworda.setTitle("Promjena passworda");
-		frmPromjenaPassworda.setBounds(100, 100, 500, 320);
+		frmPromjenaPassworda.setBounds(100, 100, 600, 500);
 		frmPromjenaPassworda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaPassworda.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -71,55 +72,49 @@ public class PromjenaPassworda extends JFrame {
 		
 		JPanel panel = new JPanel();
 		frmPromjenaPassworda.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		panel.setLayout(new MigLayout("", "[grow]", "[grow][20px]"));
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
 		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Podaci o korisni\u010Dkom ra\u010Dunu", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_2.setBounds(30, 30, 430, 150);
-		panel.add(panel_2);
+		panel.add(panel_2, "cell 0 0,grow");
+		panel_2.setLayout(new MigLayout("", "[grow][fill][220px][grow]", "[fill][fill][fill][fill]"));
 		
 		JLabel lblTrenutniPassword = new JLabel("Trenutni password:");
-		lblTrenutniPassword.setBounds(30, 62, 118, 14);
-		panel_2.add(lblTrenutniPassword);
+				lblTrenutniPassword.setHorizontalAlignment(JLabel.RIGHT);
+		panel_2.add(lblTrenutniPassword, "cell 1 1,growx,aligny center");
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(30, 37, 118, 14);
-		panel_2.add(lblUsername);
+		lblUsername.setHorizontalAlignment(JLabel.RIGHT);
+		panel_2.add(lblUsername, "cell 1 0,growx,aligny center");
 		
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setColumns(10);
-		textField.setBounds(194, 34, 210, 20);
-		panel_2.add(textField);
+		panel_2.add(textField, "cell 2 0,growx,aligny top");
 		
 		JLabel lblPonoviteNoviPassword = new JLabel("Ponovite novi password:");
-		lblPonoviteNoviPassword.setBounds(30, 115, 140, 14);
-		panel_2.add(lblPonoviteNoviPassword);
+		lblPonoviteNoviPassword.setHorizontalAlignment(JLabel.RIGHT);
+		panel_2.add(lblPonoviteNoviPassword, "cell 1 3,growx,aligny center");
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(194, 59, 210, 20);
-		panel_2.add(textField_2);
+		panel_2.add(textField_2, "cell 2 1,growx,aligny top");
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(194, 112, 210, 20);
-		panel_2.add(textField_3);
+		panel_2.add(textField_3, "cell 2 3,growx,aligny top");
 		
 		JLabel lblNoviPassword = new JLabel("Novi password:");
-		lblNoviPassword.setBounds(30, 87, 118, 14);
-		panel_2.add(lblNoviPassword);
+		lblNoviPassword.setHorizontalAlignment(JLabel.RIGHT);
+		panel_2.add(lblNoviPassword, "cell 1 2,growx,aligny center");
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(194, 84, 210, 20);
-		panel_2.add(textField_4);
+		panel_2.add(textField_4, "cell 2 2,growx,aligny top");
 		
 		
 		JButton btnPromjeniLinePodatke = new JButton("Promjeni password");
-		btnPromjeniLinePodatke.setBounds(280, 191, 180, 23);
-		panel.add(btnPromjeniLinePodatke);
+		panel.add(btnPromjeniLinePodatke, "cell 0 1,alignx right,aligny bottom");
 			
 		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
