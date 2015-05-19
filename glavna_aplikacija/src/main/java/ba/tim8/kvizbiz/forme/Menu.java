@@ -63,7 +63,7 @@ public class Menu {
 		mntmPromjenaKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PromjenaKlijenta noviProzor = new PromjenaKlijenta();
-				JFrame noviFrame = noviProzor.get_frmModifikacijaKlijenta();
+				JFrame noviFrame = noviProzor.get_frmPromjenaKlijenta();
 				noviFrame.setVisible(true);
 				frame.dispose();
 			}

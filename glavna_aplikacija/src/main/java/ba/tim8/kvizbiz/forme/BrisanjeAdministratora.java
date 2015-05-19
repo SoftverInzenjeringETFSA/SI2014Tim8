@@ -239,7 +239,7 @@ public class BrisanjeAdministratora extends JFrame {
 				textField.setText(trazeniAdmin.get_ime());
 				textField_1.setText(trazeniAdmin.get_prezime());
 				textField_2.setText(trazeniAdmin.get_adresa());
-				textField_3.setText(trazeniAdmin.get_datumRodjenja().toString());
+				textField_3.setText(trazeniAdmin.get_datumRodjenja().toString().substring(0, 10));
 				textField_4.setText(trazeniAdmin.get_eMail());
 				textField_5.setText(trazeniAdmin.get_telefon());
 				if (trazeniAdmin.get_spol() == Spol.muski)

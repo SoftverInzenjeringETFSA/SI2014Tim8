@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -143,10 +144,16 @@ public class PromjenaLicnihPodataka extends JFrame {
 		panel_1.add(label_4, "cell 0 2,growx,aligny top");
 		
 		JRadioButton radioButton = new JRadioButton("Muški");
+		radioButton.setEnabled(false);
 		panel_1.add(radioButton, "cell 1 2,growx,aligny top");
 		
 		JRadioButton radioButton_1 = new JRadioButton("Ženski");
+		radioButton_1.setEnabled(false);
 		panel_1.add(radioButton_1, "cell 3 2,alignx left,aligny top");
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(radioButton);
+		group.add(radioButton_1);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
@@ -164,7 +171,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 		textField_5.setColumns(10);
 		panel_1.add(textField_5, "cell 1 6 3 1,grow");
 			
-		JButton btnNewButton = new JButton("Statusna traka");
+		JButton btnNewButton = new JButton("Uredu");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);

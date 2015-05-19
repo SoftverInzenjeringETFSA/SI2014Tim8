@@ -23,7 +23,7 @@ public class KlijentDao extends BaseDao<Klijent> {
 		String ime,prezime;
 		int razmak=proslijedjeno.indexOf(" ");
 		prezime=proslijedjeno.substring(razmak+1,proslijedjeno.length());
-		ime=proslijedjeno.substring(0,razmak-1);
+		ime=proslijedjeno.substring(0,razmak);
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session

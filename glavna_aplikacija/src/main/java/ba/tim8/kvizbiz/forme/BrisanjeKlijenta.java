@@ -150,7 +150,7 @@ public class BrisanjeKlijenta extends JFrame {
 		panel_2.add(textField_1);
 
 		JLabel label_2 = new JLabel("Datum ro\u0111enja:");
-		label_2.setBounds(30, 140, 80, 14);
+		label_2.setBounds(30, 140, 100, 14);
 		panel_2.add(label_2);
 
 		JLabel label_3 = new JLabel("Adresa:");
@@ -208,7 +208,7 @@ public class BrisanjeKlijenta extends JFrame {
 		panel_2.add(textField_5);
 
 		JLabel label_7 = new JLabel("Datum prijave:");
-		label_7.setBounds(30, 216, 80, 14);
+		label_7.setBounds(30, 216, 100, 14);
 		panel_2.add(label_7);
 
 		textField_6 = new JTextField();
@@ -236,8 +236,8 @@ public class BrisanjeKlijenta extends JFrame {
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				KlijentDao klijentdao = new KlijentDao();
-				Collection<Klijent> klijent = klijentdao.dajKlijenta(comboBox
-						.getSelectedItem().toString());
+				String neki=comboBox.getSelectedItem().toString();
+				Collection<Klijent> klijent = klijentdao.dajKlijenta(neki);
 				Klijent trazeniKlijent = new Klijent();
 				for (Iterator<Klijent> iterator = klijent.iterator(); iterator
 						.hasNext();) {
@@ -246,12 +246,10 @@ public class BrisanjeKlijenta extends JFrame {
 				textField.setText(trazeniKlijent.get_ime());
 				textField_1.setText(trazeniKlijent.get_prezime());
 				textField_2.setText(trazeniKlijent.get_adresa());
-				textField_3.setText(trazeniKlijent.get_datumRodjenja()
-						.toGMTString());
+				textField_3.setText(trazeniKlijent.get_datumRodjenja().toString().substring(0, 10));
 				textField_4.setText(trazeniKlijent.get_eMail());
 				textField_5.setText(trazeniKlijent.get_telefon());
-				textField_6.setText(trazeniKlijent.get_datumPrijave()
-						.toGMTString());
+				textField_6.setText(trazeniKlijent.get_datumPrijave().toString().substring(0, 10));
 				if (trazeniKlijent.get_spol() == Spol.muski)
 					radioButton.setSelected(true);
 				else
