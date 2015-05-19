@@ -209,13 +209,13 @@ public class BrisanjeAdministratora extends JFrame {
 		lblStatus.setForeground(Color.BLUE);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblStatus, BorderLayout.SOUTH);
+		frmBrisanjeAdministratora.getContentPane().add(lblStatus, BorderLayout.SOUTH);
 		// LOGIKA
 
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(170, 32, 195, 20);
 		panel_1.add(comboBox);
-
+/*
 		final AdministratorDao adao = new AdministratorDao();
 		Collection<Administrator> admini = (Collection<Administrator>) adao
 				.readAll();
@@ -224,8 +224,19 @@ public class BrisanjeAdministratora extends JFrame {
 			Administrator admin = (Administrator) iterator.next();
 			comboBox.addItem(admin.toString());
 		}
-
+*/
 		comboBox.setSelectedIndex(-1);
+		
+		// Farukov test
+		JButton btnObojiLabelu = new JButton("Oboji labelu");
+		btnObojiLabelu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lblStatus.setForeground(Color.red);
+				lblStatus.setText("Radi");
+			}
+		});
+		btnObojiLabelu.setBounds(40, 350, 123, 23);
+		panel.add(btnObojiLabelu);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				AdministratorDao admindao = new AdministratorDao();
@@ -252,6 +263,7 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					/*
 					AdministratorDao admindao = new AdministratorDao();
 					Collection<Administrator> admin = admindao
 							.dajPoUsernamu(comboBox.getSelectedItem().toString());
@@ -278,7 +290,9 @@ public class BrisanjeAdministratora extends JFrame {
 						JFrame noviFrame = noviProzor.get_frmBrisanjeAdministratora();
 						noviFrame.setVisible(true);
 						frmBrisanjeAdministratora.dispose();
+						
 					}
+					*/
 				} catch (Exception ex) {
 
 				}
