@@ -50,6 +50,7 @@ public class BrisanjeAdministratora extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JLabel lblStatus;
 
 	public JFrame get_frmBrisanjeAdministratora() {
 		return frmBrisanjeAdministratora;
@@ -84,7 +85,7 @@ public class BrisanjeAdministratora extends JFrame {
 	private void initialize() {
 		frmBrisanjeAdministratora = new JFrame();
 		frmBrisanjeAdministratora.setTitle("Brisanje administratora");
-		frmBrisanjeAdministratora.setBounds(100, 100, 470, 480);
+		frmBrisanjeAdministratora.setBounds(100, 100, 470, 564);
 		frmBrisanjeAdministratora
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBrisanjeAdministratora.getContentPane().setLayout(
@@ -204,7 +205,7 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.setBounds(240, 350, 180, 23);
 		panel.add(btnObriiKlijenta);
 
-		final JLabel lblStatus = new JLabel("Uredu");
+		lblStatus = new JLabel("Uredu");
 		lblStatus.setForeground(Color.BLUE);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
