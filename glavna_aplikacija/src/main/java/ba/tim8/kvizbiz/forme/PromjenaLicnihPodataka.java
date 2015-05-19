@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class PromjenaLicnihPodataka extends JFrame {
 
@@ -72,7 +73,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 	private void initialize() {
 		frmPromjenaLicnihPodataka = new JFrame();
 		frmPromjenaLicnihPodataka.setTitle("Promjena li\u010Dnih podataka");
-		frmPromjenaLicnihPodataka.setBounds(100, 100, 470, 400);
+		frmPromjenaLicnihPodataka.setBounds(100, 100, 600, 500);
 		frmPromjenaLicnihPodataka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaLicnihPodataka.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -82,86 +83,76 @@ public class PromjenaLicnihPodataka extends JFrame {
 		
 		JPanel panel = new JPanel();
 		frmPromjenaLicnihPodataka.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		panel.setLayout(new MigLayout("", "[grow]", "[grow][20px]"));
 		
 		JButton btnPromjeniLinePodatke = new JButton("Promjeni li\u010Dne podatke");
-		btnPromjeniLinePodatke.setBounds(240, 271, 180, 23);
-		panel.add(btnPromjeniLinePodatke);
+		panel.add(btnPromjeniLinePodatke, "cell 0 1,alignx right,aligny center");
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Li\u010Dni podaci", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(30, 30, 390, 230);
-		panel.add(panel_1);
+		panel.add(panel_1, "cell 0 0,grow");
+		panel_1.setLayout(new MigLayout("", "[grow][fill][fill][150px][grow]", "[fill][fill][fill][fill][fill][fill][fill]"));
 		
 		JLabel label = new JLabel("Prezime:");
-		label.setBounds(30, 62, 50, 14);
-		panel_1.add(label);
+		label.setHorizontalAlignment(JLabel.RIGHT);
+		panel_1.add(label, "cell 0 1,growx,aligny center");
 		
 		JLabel label_1 = new JLabel("Ime:");
-		label_1.setBounds(30, 37, 52, 14);
-		panel_1.add(label_1);
+		label_1.setHorizontalAlignment(JLabel.RIGHT);
+		panel_1.add(label_1, "cell 0 0,growx,aligny center");
 		
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setColumns(10);
-		textField.setBounds(140, 34, 230, 20);
-		panel_1.add(textField);
+		panel_1.add(textField, "cell 1 0 3 1,growx,aligny top");
 		
 		textField_1 = new JTextField();
 		textField_1.setEditable(false);
 		textField_1.setColumns(10);
-		textField_1.setBounds(140, 59, 230, 20);
-		panel_1.add(textField_1);
+		panel_1.add(textField_1, "cell 1 1 3 1,growx,aligny top");
 		
 		JLabel label_2 = new JLabel("Datum rođenja:");
-		label_2.setBounds(30, 140, 100, 14);
-		panel_1.add(label_2);
+		label_2.setHorizontalAlignment(JLabel.RIGHT);
+		panel_1.add(label_2, "cell 0 4,growx,aligny center");
 		
 		JLabel label_3 = new JLabel("Adresa:");
-		label_3.setBounds(30, 115, 52, 14);
-		panel_1.add(label_3);
+		label_3.setHorizontalAlignment(JLabel.RIGHT);
+		panel_1.add(label_3, "cell 0 3,growx,aligny center");
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(140, 112, 230, 20);
-		panel_1.add(textField_2);
+		panel_1.add(textField_2, "cell 1 3 3 1,growx,aligny top");
 		
 		textField_3 = new JTextField();
 		textField_3.setEditable(false);
 		textField_3.setColumns(10);
-		textField_3.setBounds(140, 137, 230, 20);
-		panel_1.add(textField_3);
+		panel_1.add(textField_3, "cell 1 4 3 1,growx,aligny top");
 		
 		JLabel label_4 = new JLabel("Spol:");
-		label_4.setBounds(30, 87, 50, 14);
-		panel_1.add(label_4);
+		label_4.setHorizontalAlignment(JLabel.RIGHT);
+		panel_1.add(label_4, "cell 0 2,growx,aligny top");
 		
 		JRadioButton radioButton = new JRadioButton("Muški");
-		radioButton.setBounds(140, 86, 74, 23);
-		panel_1.add(radioButton);
+		panel_1.add(radioButton, "cell 1 2,growx,aligny top");
 		
 		JRadioButton radioButton_1 = new JRadioButton("Ženski");
-		radioButton_1.setBounds(220, 86, 74, 23);
-		panel_1.add(radioButton_1);
+		panel_1.add(radioButton_1, "cell 3 2,alignx left,aligny top");
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(140, 162, 230, 20);
-		panel_1.add(textField_4);
+		panel_1.add(textField_4, "cell 1 5 3 1,growx,aligny top");
 		
 		JLabel label_5 = new JLabel("Email:");
-		label_5.setBounds(30, 165, 50, 14);
-		panel_1.add(label_5);
+		label_5.setHorizontalAlignment(JLabel.RIGHT);
+		panel_1.add(label_5, "cell 0 5,growx,aligny center");
 		
 		JLabel label_6 = new JLabel("Telefon:");
-		label_6.setBounds(30, 191, 52, 14);
-		panel_1.add(label_6);
+		label_6.setHorizontalAlignment(JLabel.RIGHT);
+		panel_1.add(label_6, "cell 0 6,growx,aligny center");
 		
 		textField_5 = new JTextField();
 		textField_5.setColumns(10);
-		textField_5.setBounds(140, 188, 230, 20);
-		panel_1.add(textField_5);
+		panel_1.add(textField_5, "cell 1 6 3 1,grow");
 			
 		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
