@@ -26,7 +26,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-public class frmDodavanjePitanja extends JFrame {
+public class frmDodavanjePitanja_v1 extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tbxTekstPitanja;
@@ -56,7 +56,7 @@ public class frmDodavanjePitanja extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frmDodavanjePitanja frame = new frmDodavanjePitanja();
+					frmDodavanjePitanja_v1 frame = new frmDodavanjePitanja_v1();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,7 +68,7 @@ public class frmDodavanjePitanja extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public frmDodavanjePitanja() {
+	public frmDodavanjePitanja_v1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
@@ -94,17 +94,17 @@ public class frmDodavanjePitanja extends JFrame {
 		pnlPodaci.add(new JLabel("Tekst pitanja: "), gbcPodaci);
 		
 		gbcPodaci.gridy++;
-		pnlPodaci.add(new JLabel("Tip pitanja: "), gbcPodaci);
+		//pnlPodaci.add(new JLabel("Tip pitanja: "), gbcPodaci);
 		
 		gbcPodaci.gridy++;
-		pnlPodaci.add(new JLabel("Obavezno pitanje: "), gbcPodaci);
+		//pnlPodaci.add(new JLabel("Obavezno pitanje: "), gbcPodaci);
 		
 		gbcPodaci.gridy = 0;
 		gbcPodaci.gridx++;
 		gbcPodaci.anchor = GridBagConstraints.LINE_START;
 		tbxTekstPitanja = new JTextField();
 		tbxTekstPitanja.setColumns(12);
-		pnlPodaci.add(tbxTekstPitanja, gbcPodaci);
+		//pnlPodaci.add(tbxTekstPitanja, gbcPodaci);
 		
 		gbcPodaci.gridy++;
 		cbbTipPitanja = new JComboBox();
@@ -113,16 +113,16 @@ public class frmDodavanjePitanja extends JFrame {
 		cbbTipPitanja.addItem("Pitanje s višestrukim izborom");
 		cbbTipPitanja.addItem("Tačno/netačno pitanje");
 		cbbTipPitanja.addItem("Da/ne pitanje");
-		pnlPodaci.add(cbbTipPitanja, gbcPodaci);
+		//pnlPodaci.add(cbbTipPitanja, gbcPodaci);
 		
 		gbcPodaci.gridy++;
 		ckbObaveznoPitanje = new JCheckBox();
-		pnlPodaci.add(ckbObaveznoPitanje, gbcPodaci);
+		//pnlPodaci.add(ckbObaveznoPitanje, gbcPodaci);
 		
 		JPanel pnlPitanjePonudjeniOdgovor = new JPanel(new GridBagLayout());
 		pnlPitanjePonudjeniOdgovor.setBorder(new CompoundBorder(new TitledBorder(null, "Unesite podatke o pitanju:"), new EmptyBorder(10, 10, 10, 10)));
-		JScrollPane scrollOdgovor = new JScrollPane(pnlPitanjePonudjeniOdgovor);
-		pnlPitanje.add(scrollOdgovor, BorderLayout.CENTER);
+		//JScrollPane scrollOdgovor = new JScrollPane(pnlPitanjePonudjeniOdgovor);
+		//pnlPitanje.add(scrollOdgovor, BorderLayout.CENTER);
 		
 		GridBagConstraints btnTipovi = new GridBagConstraints();
 		
@@ -136,7 +136,7 @@ public class frmDodavanjePitanja extends JFrame {
 		
 		btnTipovi.gridx++;
 		btnUkloniOdgovor = new JButton("Ukloni odgovor");
-		pnlPitanjePonudjeniOdgovor.add(btnUkloniOdgovor, btnTipovi);
+		//pnlPitanjePonudjeniOdgovor.add(btnUkloniOdgovor, btnTipovi);
 		
 		JPanel pnlButtoniVanjska = new JPanel(new BorderLayout());
 		pnlPitanje.add(pnlButtoniVanjska, BorderLayout.PAGE_END);
@@ -166,7 +166,7 @@ public class frmDodavanjePitanja extends JFrame {
 				
 			}
 		});
-		pnlButtoni.add(btnOK, gbcButtoni);
+		//pnlButtoni.add(btnOK, gbcButtoni);
 		
 		JButton btnStatus = new JButton("Statusna traka");
 		btnStatus.setEnabled(false);
