@@ -24,8 +24,11 @@ import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+import ba.tim8.kvizbiz.entiteti.Administrator;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import net.miginfocom.swing.MigLayout;
 
 public class PromjenaLicnihPodataka extends JFrame {
@@ -63,6 +66,13 @@ public class PromjenaLicnihPodataka extends JFrame {
 	/**
 	 * Create the application.
 	 */
+	/* Za kad budes imao administratora
+	public PromjenaLicnihPodataka(Administrator logiraniAdministrator) {
+		initialize();
+		logiraniAdministrator.get_id();
+	}
+	*/
+	
 	public PromjenaLicnihPodataka() {
 		initialize();
 	}

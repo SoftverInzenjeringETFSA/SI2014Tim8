@@ -15,17 +15,33 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Collection;
 
 import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import ba.tim8.kvizbiz.dao.AdministratorDao;
+import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.dao.OsobaDao;
+
+import ba.tim8.kvizbiz.entiteti.Administrator;
+import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 import net.miginfocom.swing.MigLayout;
+import ba.tim8.kvizbiz.entiteti.Klijent;
 
 public class PromjenaKlijenta extends JFrame {
 
@@ -94,6 +110,17 @@ public class PromjenaKlijenta extends JFrame {
 		panel_1.add(lblIzaberiteAdministratora, "cell 0 0,growx,aligny center");
 		
 		JComboBox comboBox = new JComboBox();
+		KlijentDao adao = KlijentDao.get();
+		comboBox.removeAllItems();
+		comboBox.addItem("Označite korisnika");
+		for(Klijent k : adao.readAll())
+			comboBox.addItem(k.toString());
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e){
+				
+				
+			}});
+			
 		panel_1.add(comboBox, "cell 1 0,growx,aligny top");
 		
 		JButton button = new JButton("Promjeni klijenta");
@@ -113,12 +140,10 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(label_1, "cell 0 0,growx,aligny center");
 		
 		textField = new JTextField();
-		textField.setEditable(false);
 		textField.setColumns(10);
 		panel_2.add(textField, "cell 1 0 3 1,growx,aligny top");
 		
 		textField_1 = new JTextField();
-		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		panel_2.add(textField_1, "cell 1 1 3 1,growx,aligny top");
 		
@@ -135,7 +160,6 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(textField_2, "cell 1 3 3 1,growx,aligny top");
 		
 		textField_3 = new JTextField();
-		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		panel_2.add(textField_3, "cell 1 4 3 1,growx,aligny top");
 		
@@ -170,5 +194,7 @@ public class PromjenaKlijenta extends JFrame {
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
 		frmModifikacijaKlijenta.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		
+			
 	}
 }
