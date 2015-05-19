@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -44,6 +45,7 @@ public class DodavanjeAdministratora extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_7;
+	private JLabel lblStatus;
 
 	public JFrame get_frmDodavanjeAdministratora() {
 		return frmDodavanjeAdministratora;
@@ -204,12 +206,11 @@ public class DodavanjeAdministratora extends JFrame {
 		textField_7.setBounds(135, 188, 230, 20);
 		panel_2.add(textField_7);
 
-		final JButton btnNewButton = new JButton("Uredu");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmDodavanjeAdministratora.getContentPane().add(btnNewButton,
-				BorderLayout.SOUTH);
+		lblStatus = new JLabel("Uredu");
+		lblStatus.setForeground(Color.BLUE);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmDodavanjeAdministratora.getContentPane().add(lblStatus, BorderLayout.SOUTH);
 
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -219,14 +220,14 @@ public class DodavanjeAdministratora extends JFrame {
 				// username validacija
 				if (textField_5.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Username mora biti popunjeno!",
 							"Dodavanje administratora",
 							JOptionPane.ERROR_MESSAGE);
 				} else if (adao.pretraziPoUsernamu(textField_5.getText())) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Username mora biti jedinstveno!",
 							"Dodavanje administratora",
@@ -236,7 +237,7 @@ public class DodavanjeAdministratora extends JFrame {
 				// password valdiacija
 				if (textField_6.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Password mora biti popunjeno!",
 							"Dodavanje administratora",
@@ -246,7 +247,7 @@ public class DodavanjeAdministratora extends JFrame {
 				// ime validacija
 				if (textField.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Ime mora biti popunjeno!",
 							"Dodavanje administratora",
@@ -258,7 +259,7 @@ public class DodavanjeAdministratora extends JFrame {
 					Matcher matcher = pattern.matcher(textField.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane
 								.showMessageDialog(
 										null,
@@ -271,7 +272,7 @@ public class DodavanjeAdministratora extends JFrame {
 				// prezime validacija
 				if (textField_1.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Prezime mora biti popunjeno!",
 							"Dodavanje administratora",
@@ -283,7 +284,7 @@ public class DodavanjeAdministratora extends JFrame {
 					Matcher matcher = pattern.matcher(textField_1.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane
 								.showMessageDialog(
 										null,
@@ -296,7 +297,7 @@ public class DodavanjeAdministratora extends JFrame {
 				// adresa samo ne smije bit prazna
 				if (textField_2.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Adresa mora biti popunjeno!",
 							"Dodavanje administratora",
@@ -306,7 +307,7 @@ public class DodavanjeAdministratora extends JFrame {
 				// datum rodjenja validacija
 				if (textField_3.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Datum rođenja mora biti popunjeno!",
 							"Dodavanje administratora",
@@ -318,7 +319,7 @@ public class DodavanjeAdministratora extends JFrame {
 					Matcher matcher = pattern.matcher(textField_3.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane
 								.showMessageDialog(
 										null,
@@ -331,7 +332,7 @@ public class DodavanjeAdministratora extends JFrame {
 				// email validacija
 				if (textField_4.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Email mora biti popunjeno!",
 							"Dodavanje administratora",
@@ -343,7 +344,7 @@ public class DodavanjeAdministratora extends JFrame {
 					Matcher matcher = pattern.matcher(textField_4.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane.showMessageDialog(null,
 								"Polje Email mora biti u pravilnom formatu!",
 								"Dodavanje administratora",
@@ -355,7 +356,7 @@ public class DodavanjeAdministratora extends JFrame {
 				// telefon validacija
 				if (textField_7.getText().isEmpty()) {
 					dodaj = false;
-					btnNewButton.setText("Greska");
+					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
 							"Polje Telefon mora biti popunjeno!",
 							"Dodavanje administratora",
@@ -368,7 +369,7 @@ public class DodavanjeAdministratora extends JFrame {
 					Matcher matcher = pattern.matcher(textField_7.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
 						JOptionPane.showMessageDialog(null,
 								"Polje Telefon mora sadržavati samo brojeve!",
 								"Dodavanje administratora",
