@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
@@ -29,20 +32,37 @@ import java.awt.Font;
 
 import javax.swing.SwingConstants;
 
+import ba.tim8.kvizbiz.dao.AdministratorDao;
+import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.entiteti.Administrator;
+import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Spol;
+
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JRadioButton;
 
 public class RegistracijaKlijenta {
 
 	public JFrame frmRegistracijaKlijenta;
 	private JTextField txtIme;
 	private JTextField txtPrezime;
-	private JTextField txtJmbg;
 	private JTextField txtEmail;
 	private JTextField txtBrojTelefona;
 	private JTextField txtAdresa;	
-
+	private JLabel lblStatus;
+	private JTextField txtDatumRodjenja;
+	private JRadioButton radioBtnMuski;
+	private JRadioButton radioBtnZenski;
+	
 	/**
 	 * Create the application.
 	 */
@@ -57,7 +77,7 @@ public class RegistracijaKlijenta {
 		frmRegistracijaKlijenta = new JFrame();
 		frmRegistracijaKlijenta.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\MuhamedMujic\\Desktop\\ikonaKviz.png"));
 		frmRegistracijaKlijenta.setTitle("Registracija klijenta");
-		frmRegistracijaKlijenta.setBounds(100, 100, 450, 386);
+		frmRegistracijaKlijenta.setBounds(100, 100, 450, 428);
 		frmRegistracijaKlijenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmRegistracijaKlijenta.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -76,13 +96,8 @@ public class RegistracijaKlijenta {
 		sl_panelRegistracija.putConstraint(SpringLayout.WEST, lblPrezime, 102, SpringLayout.WEST, panelRegistracija);
 		panelRegistracija.add(lblPrezime);
 		
-		JLabel lblJmbg = new JLabel("JMBG:");
-		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, lblJmbg, 20, SpringLayout.SOUTH, lblPrezime);
-		sl_panelRegistracija.putConstraint(SpringLayout.WEST, lblJmbg, 113, SpringLayout.WEST, panelRegistracija);
-		panelRegistracija.add(lblJmbg);
-		
 		JLabel lblEmail = new JLabel("E-mail:");
-		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, lblEmail, 19, SpringLayout.SOUTH, lblJmbg);
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, lblEmail, 53, SpringLayout.SOUTH, lblPrezime);
 		sl_panelRegistracija.putConstraint(SpringLayout.WEST, lblEmail, 111, SpringLayout.WEST, panelRegistracija);
 		panelRegistracija.add(lblEmail);
 		
@@ -99,13 +114,6 @@ public class RegistracijaKlijenta {
 		sl_panelRegistracija.putConstraint(SpringLayout.EAST, txtPrezime, -99, SpringLayout.EAST, panelRegistracija);
 		panelRegistracija.add(txtPrezime);
 		txtPrezime.setColumns(10);
-		
-		txtJmbg = new JTextField();
-		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, txtJmbg, -3, SpringLayout.NORTH, lblJmbg);
-		sl_panelRegistracija.putConstraint(SpringLayout.WEST, txtJmbg, 161, SpringLayout.WEST, panelRegistracija);
-		sl_panelRegistracija.putConstraint(SpringLayout.EAST, txtJmbg, -99, SpringLayout.EAST, panelRegistracija);
-		panelRegistracija.add(txtJmbg);
-		txtJmbg.setColumns(10);
 		
 		txtEmail = new JTextField();
 		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, txtEmail, -3, SpringLayout.NORTH, lblEmail);
@@ -140,23 +148,30 @@ public class RegistracijaKlijenta {
 		txtAdresa.setColumns(10);
 		
 		JButton btnOtkazi = new JButton("Otka\u017Ei");
-		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, btnOtkazi, 24, SpringLayout.SOUTH, txtAdresa);
-		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnOtkazi, -99, SpringLayout.EAST, panelRegistracija);
+		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnOtkazi, -101, SpringLayout.EAST, panelRegistracija);
 		panelRegistracija.add(btnOtkazi);
 		
 		JButton btnRegistrujSe = new JButton("Registruj se");
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, btnOtkazi, 0, SpringLayout.NORTH, btnRegistrujSe);
+		sl_panelRegistracija.putConstraint(SpringLayout.WEST, btnOtkazi, 6, SpringLayout.EAST, btnRegistrujSe);
+		sl_panelRegistracija.putConstraint(SpringLayout.WEST, btnRegistrujSe, 0, SpringLayout.WEST, lblIme);
+		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnRegistrujSe, -204, SpringLayout.EAST, panelRegistracija);
 		btnRegistrujSe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(!spremiKlijenta()){
+					JOptionPane.showMessageDialog(null,
+							"Greška prilikom registracije klijenta!",
+							"Registracija klijenta",
+							JOptionPane.ERROR_MESSAGE);
+					;
+				}else{
 				PocetnaKlijent noviFrame = new PocetnaKlijent();
 				noviFrame.setVisible(true);
 				frmRegistracijaKlijenta.dispose();
+				}
 			}
 		});	
 		btnRegistrujSe.setMargin(new Insets(2, 5, 2, 5));
-		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnRegistrujSe, -204, SpringLayout.EAST, panelRegistracija);
-		sl_panelRegistracija.putConstraint(SpringLayout.WEST, btnOtkazi, 8, SpringLayout.EAST, btnRegistrujSe);
-		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, btnRegistrujSe, 0, SpringLayout.NORTH, btnOtkazi);
-		sl_panelRegistracija.putConstraint(SpringLayout.WEST, btnRegistrujSe, 0, SpringLayout.WEST, lblIme);
 		panelRegistracija.add(btnRegistrujSe);
 		frmRegistracijaKlijenta.getContentPane().add(panelRegistracija);
 		
@@ -196,8 +211,7 @@ public class RegistracijaKlijenta {
 		panelRegistracija.add(label_1);
 		
 		JLabel label_2 = new JLabel("*");
-		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, label_2, 0, SpringLayout.NORTH, lblJmbg);
-		sl_panelRegistracija.putConstraint(SpringLayout.EAST, label_2, -6, SpringLayout.WEST, lblJmbg);
+		sl_panelRegistracija.putConstraint(SpringLayout.WEST, label_2, 39, SpringLayout.WEST, panelRegistracija);
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_2.setForeground(Color.RED);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -210,5 +224,204 @@ public class RegistracijaKlijenta {
 		label_3.setForeground(Color.RED);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panelRegistracija.add(label_3);
+		
+		JLabel label_4 = new JLabel("Spol:");
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, label_4, 17, SpringLayout.SOUTH, txtAdresa);
+		sl_panelRegistracija.putConstraint(SpringLayout.EAST, label_4, -280, SpringLayout.EAST, panelRegistracija);
+		panelRegistracija.add(label_4);
+		
+		radioBtnMuski = new JRadioButton("Muški");
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, btnRegistrujSe, 23, SpringLayout.SOUTH, radioBtnMuski);
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, radioBtnMuski, -4, SpringLayout.NORTH, label_4);
+		sl_panelRegistracija.putConstraint(SpringLayout.WEST, radioBtnMuski, 0, SpringLayout.WEST, lblpoljeJeObavezno);
+		radioBtnMuski.setSelected(true);
+		panelRegistracija.add(radioBtnMuski);
+		
+		radioBtnZenski = new JRadioButton("Ženski");
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, radioBtnZenski, -4, SpringLayout.NORTH, label_4);
+		sl_panelRegistracija.putConstraint(SpringLayout.WEST, radioBtnZenski, 18, SpringLayout.EAST, radioBtnMuski);
+		panelRegistracija.add(radioBtnZenski);
+		
+		ButtonGroup spol = new ButtonGroup();
+		spol.add(radioBtnMuski);
+		spol.add(radioBtnZenski);
+		
+		txtDatumRodjenja = new JTextField();
+		sl_panelRegistracija.putConstraint(SpringLayout.SOUTH, label_2, 0, SpringLayout.SOUTH, txtDatumRodjenja);
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, txtDatumRodjenja, 16, SpringLayout.SOUTH, txtPrezime);
+		sl_panelRegistracija.putConstraint(SpringLayout.WEST, txtDatumRodjenja, -86, SpringLayout.EAST, separator);
+		sl_panelRegistracija.putConstraint(SpringLayout.EAST, txtDatumRodjenja, 0, SpringLayout.EAST, txtIme);
+		txtDatumRodjenja.setColumns(10);
+		panelRegistracija.add(txtDatumRodjenja);
+		
+		JLabel label_5 = new JLabel("Datum rođenja:");
+		sl_panelRegistracija.putConstraint(SpringLayout.EAST, label_2, -7, SpringLayout.WEST, label_5);
+		sl_panelRegistracija.putConstraint(SpringLayout.NORTH, label_5, 20, SpringLayout.SOUTH, label_1);
+		sl_panelRegistracija.putConstraint(SpringLayout.EAST, label_5, 0, SpringLayout.EAST, lblIme);
+		panelRegistracija.add(label_5);
+		
+		JLabel lblStatus = new JLabel("Statusna traka");
+		lblStatus.setForeground(Color.lightGray);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmRegistracijaKlijenta.getContentPane().add(lblStatus, BorderLayout.SOUTH);
+	}
+	private boolean spremiKlijenta(){
+		KlijentDao kdao = new KlijentDao();
+		boolean dodaj = true;
+
+	
+		// ime validacija
+		if (txtIme.getText().isEmpty()) {
+			dodaj = false;
+			//lblStatus.setText("Greska");
+			JOptionPane.showMessageDialog(null,
+					"Polje Ime mora biti popunjeno!",
+					"Registracija klijenta",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else {
+			String regx = "[a-zA-Z]+\\.?";
+			Pattern pattern = Pattern.compile(regx,
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(txtIme.getText());
+			if (!matcher.matches()) {
+				dodaj = false;
+				//lblStatus.setText("Greska");
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Polje Ime mora sadržavati samo slova!",
+								"Registracija klijenta",
+								JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+
+		// prezime validacija
+		if (txtPrezime.getText().isEmpty()) {
+			dodaj = false;
+			//lblStatus.setText("Greska");
+			JOptionPane.showMessageDialog(null,
+					"Polje Prezime mora biti popunjeno!",
+					"Registracija klijenta",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else {
+			String regx = "[a-zA-Z]+\\.?";
+			Pattern pattern = Pattern.compile(regx,
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(txtPrezime.getText());
+			if (!matcher.matches()) {
+				dodaj = false;
+				//lblStatus.setText("Greska");
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Polje Prezime mora sadržavati samo slova!",
+								"Registracija klijenta",
+								JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+
+		if (txtDatumRodjenja.getText().isEmpty()) {
+			dodaj = false;
+			//lblStatus.setText("Greska");
+			JOptionPane.showMessageDialog(null,
+					"Polje Datum rođenja mora biti popunjeno!",
+					"Dodavanje administratora",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else {
+			String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
+			Pattern pattern = Pattern.compile(regx,
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(txtDatumRodjenja.getText());
+			if (!matcher.matches()) {
+				dodaj = false;
+				//lblStatus.setText("Greska");
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!",
+								"Dodavanje administratora",
+								JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		
+		// email validacija
+		if (txtEmail.getText().isEmpty()) {
+			dodaj = false;
+			//lblStatus.setText("Greska");
+			JOptionPane.showMessageDialog(null,
+					"Polje Email mora biti popunjeno!",
+					"Registracija klijenta",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else {
+			String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+			Pattern pattern = Pattern.compile(regx,
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(txtEmail.getText());
+			if (!matcher.matches()) {
+				dodaj = false;
+				//lblStatus.setText("Greska");
+				JOptionPane.showMessageDialog(null,
+						"Polje Email mora biti u pravilnom formatu!",
+						"Registracija klijenta",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+
+		// telefon validacija
+		if (!txtBrojTelefona.getText().isEmpty()) {
+			String regx = "^[0-9]*$";
+			Pattern pattern = Pattern.compile(regx,
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(txtBrojTelefona.getText());
+			if (!matcher.matches()) {
+				dodaj = false;
+				//lblStatus.setText("Greska");
+				JOptionPane.showMessageDialog(null,
+						"Polje Broj telefona mora sadržavati samo brojeve!",
+						"Registracija klijenta",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		
+
+		
+		if (dodaj == true) {
+			java.util.Date dt = new java.util.Date();			
+			DateFormat  format = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date datum = format.parse(txtDatumRodjenja.getText());
+				Klijent k = new Klijent();
+				k.set_ime(txtIme.getText());
+				k.set_prezime(txtPrezime.getText());
+				k.set_eMail(txtEmail.getText());
+				k.set_adresa(txtAdresa.getText());
+				k.set_telefon(txtBrojTelefona.getText());
+				k.set_datumRodjenja(datum);
+				if(radioBtnMuski.isSelected()){
+					k.set_spol(Spol.muski);
+				}else{
+					k.set_spol(Spol.zenski);
+				}
+				k.set_datumPrijave(dt);
+				kdao.create(k);
+				JOptionPane.showMessageDialog(null,
+						"Klijent je uspješno registrovan!",
+						"Registracija klijenta",
+						JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}	
+		}
+		return dodaj;
 	}
 }
