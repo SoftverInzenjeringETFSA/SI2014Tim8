@@ -147,7 +147,7 @@ public class RegistracijaKlijenta {
 		JButton btnRegistrujSe = new JButton("Registruj se");
 		btnRegistrujSe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PocetnaKlijent noviFrame = new PocetnaKlijent();
+				PocetnaKlijent_v1 noviFrame = new PocetnaKlijent_v1();
 				noviFrame.setVisible(true);
 				frmRegistracijaKlijenta.dispose();
 			}

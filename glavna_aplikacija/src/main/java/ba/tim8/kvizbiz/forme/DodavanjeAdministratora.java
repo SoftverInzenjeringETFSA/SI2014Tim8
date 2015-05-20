@@ -214,7 +214,7 @@ public class DodavanjeAdministratora extends JFrame {
 
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdministratorDao adao = new AdministratorDao();
+				AdministratorDao adao = AdministratorDao.get();
 				boolean dodaj = true;
 
 				// username validacija

@@ -17,6 +17,8 @@ public class OsobaDao extends BaseDao<Osoba> {
 	public static OsobaDao get() {
 		return (odao == null) ? odao = new OsobaDao() : odao;
 	}
+	
+	private OsobaDao(){}
 
 	
 }

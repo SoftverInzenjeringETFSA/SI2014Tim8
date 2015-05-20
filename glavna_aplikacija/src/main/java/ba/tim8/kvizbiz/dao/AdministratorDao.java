@@ -15,6 +15,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	public static AdministratorDao get() {
 		return (adao == null) ? adao = new AdministratorDao() : adao;
 	}
+	private AdministratorDao () {}
 
 	public boolean pretraziPoUsernamu(String username) {
 		Session session = HibernateUtil.getSessionFactory().openSession();

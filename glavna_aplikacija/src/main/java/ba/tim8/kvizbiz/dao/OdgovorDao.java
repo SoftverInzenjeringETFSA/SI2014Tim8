@@ -19,6 +19,8 @@ public class OdgovorDao extends BaseDao<Odgovor> {
 		return (odao == null) ? odao = new OdgovorDao() : odao;
 	}
 	
+	private OdgovorDao(){}
+	
 	public void izbrisiSveOdgovoreKlijenta(Klijent k)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();

@@ -220,7 +220,7 @@ public class BrisanjeKlijenta extends JFrame {
 
 		// LOGIKA
 
-		final KlijentDao kdao = new KlijentDao();
+		final KlijentDao kdao = KlijentDao.get();
 		Collection<Klijent> klijenti = kdao.readAll();
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(170, 32, 195, 20);
@@ -236,7 +236,7 @@ public class BrisanjeKlijenta extends JFrame {
 
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				KlijentDao klijentdao = new KlijentDao();
+				KlijentDao klijentdao = KlijentDao.get();
 				String neki=comboBox.getSelectedItem().toString();
 				Collection<Klijent> klijent = klijentdao.dajKlijenta(neki);
 				Klijent trazeniKlijent = new Klijent();
@@ -262,7 +262,7 @@ public class BrisanjeKlijenta extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					KlijentDao klijentdao = new KlijentDao();
+					KlijentDao klijentdao = KlijentDao.get();
 					Collection<Klijent> klijent = klijentdao
 							.dajKlijenta(comboBox.getSelectedItem().toString());
 					Klijent trazeniKlijent = new Klijent();
@@ -270,9 +270,9 @@ public class BrisanjeKlijenta extends JFrame {
 							.hasNext();) {
 						trazeniKlijent = (Klijent) iterator.next();
 					}
-					OdgovorDao odao = new OdgovorDao();
+					OdgovorDao odao = OdgovorDao.get();
 					odao.izbrisiSveOdgovoreKlijenta(trazeniKlijent);
-					KvizDao kvizdao = new KvizDao();
+					KvizDao kvizdao = KvizDao.get();
 					kvizdao.izbrisiKlijenta(trazeniKlijent);
 					kdao.delete(trazeniKlijent.get_id());
 					JOptionPane.showMessageDialog(null,

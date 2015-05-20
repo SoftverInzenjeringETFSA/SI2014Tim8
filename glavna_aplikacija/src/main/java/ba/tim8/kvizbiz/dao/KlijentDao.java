@@ -14,6 +14,7 @@ import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 public class KlijentDao extends BaseDao<Klijent> {
 
 	private static KlijentDao kdao = null;
+	private KlijentDao() {}
 
 	public static KlijentDao get() {
 		return (kdao == null) ? kdao = new KlijentDao() : kdao;
