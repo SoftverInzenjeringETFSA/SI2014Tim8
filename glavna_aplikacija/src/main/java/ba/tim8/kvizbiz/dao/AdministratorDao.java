@@ -1,10 +1,13 @@
 package ba.tim8.kvizbiz.dao;
 
 import java.util.Collection;
+
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.mapping.List;
+
 import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 
@@ -139,6 +142,17 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Collection<String> c = q.list();
 		session.close();
 		return c;
+	}
+	
+	public static Administrator  nadjiAdministratora(Session s, String ime)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	Transaction t = session.beginTransaction();
+	Criteria k= session. createCriteria(AdministratorDao.class);
+	Administrator a=(Administrator)k.uniqueResult();
+	t.commit();
+		
+		return a;
 	}
 	
 	

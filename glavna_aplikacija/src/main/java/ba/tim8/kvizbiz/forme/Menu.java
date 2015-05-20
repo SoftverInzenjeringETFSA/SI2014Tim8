@@ -10,6 +10,9 @@ import javax.swing.JMenuItem;
 
 // Klasa koja služi za postavljanje menija na forme u svakom prozoru u koujem je to potrebno
 public class Menu {	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public Menu () {}
 	
 	// Metoda prima JFrame na koji "zakači" meni
@@ -192,5 +195,10 @@ public class Menu {
 			}
 		});
 		mnProfil.add(mntmOdjava);
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 }

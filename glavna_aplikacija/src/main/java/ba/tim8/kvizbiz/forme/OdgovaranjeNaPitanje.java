@@ -3,15 +3,22 @@ package ba.tim8.kvizbiz.forme;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
 import java.awt.Toolkit;
+
 import javax.swing.JLabel;
+
 import java.awt.BorderLayout;
+
 import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
+
 import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.border.LineBorder;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -19,6 +26,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
 import java.awt.Font;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JRadioButton;
@@ -52,6 +60,10 @@ public class OdgovaranjeNaPitanje extends JFrame {
 	 */
 	public OdgovaranjeNaPitanje() {
 		initialize();
+	}
+
+	public OdgovaranjeNaPitanje(String id) {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
