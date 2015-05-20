@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.SystemColor;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -51,11 +52,11 @@ private JComboBox comboBox;
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Pregled anketa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(0, 0, 574, 408);
+		panel.setBounds(10, 29, 574, 377);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("Pregled");
+		JButton btnNewButton_1 = new JButton("Pregled anketa");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PregledAnketa p= new PregledAnketa();
@@ -63,6 +64,7 @@ private JComboBox comboBox;
 				
 			}
 		});
+	
 		btnNewButton_1.setBounds(37, 186, 120, 23);
 		panel.add(btnNewButton_1);
 		
@@ -93,29 +95,32 @@ private JComboBox comboBox;
 		panel.add(scrollPane);
 		scrollPane.setViewportView(table);
 		
-				
-		
-		
-		
-		
-		
-		Menu menu = new Menu();
-		menu.NapraviMenu(this);
-		
-	
-		
-		JButton btnNewButton = new JButton("Statusna traka");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnNewButton_2 = new JButton("Popuni anketu");
+		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				OdgovaranjeNaPitanje o= new OdgovaranjeNaPitanje();
+				o.setVisible(true);
 				
 			}
 		});
-		btnNewButton.setLocation(0, 409);
-		btnNewButton.setSize(574, 42);
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(Color.LIGHT_GRAY);
-		btnNewButton.setEnabled(false);
-	contentPane.add(btnNewButton);
+		btnNewButton_2.setBounds(37, 237, 120, 23);
+		panel.add(btnNewButton_2);
+		
+	
+		
+		JLabel lblStatus = new JLabel("Statusna traka");
+		lblStatus.setBounds(10, 401, 574, 50);
+		contentPane.add(lblStatus);
+		lblStatus.setForeground(Color.lightGray);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		
+				
+		
+	
+		
+		Menu menu = new Menu();
+		menu.NapraviMenu(this);
 	
 	KvizDao k= KvizDao.get();
 	List<Long> l = (List<Long>) k.ispisAktivnihAnketa();

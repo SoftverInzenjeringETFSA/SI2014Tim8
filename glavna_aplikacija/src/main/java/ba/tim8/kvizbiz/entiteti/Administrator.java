@@ -57,6 +57,7 @@ public class Administrator extends Osoba implements java.io.Serializable
 		super();
 	}
 	
+	
 	public Administrator(long _id, String _ime, String _prezime, Spol _spol,
 			String _adresa, Date _datumRodjenja, String _brojtelefona,
 			String _eMail, String _username, String _password) {
