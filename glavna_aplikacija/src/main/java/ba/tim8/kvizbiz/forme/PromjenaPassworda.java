@@ -28,6 +28,8 @@ public class PromjenaPassworda extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JLabel lblStatus;
+
 	
 	public JFrame get_frmPromjenaPassworda () {
 		return frmPromjenaPassworda;
