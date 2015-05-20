@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.*;
 
 import ba.tim8.kvizbiz.dao.*;
@@ -133,13 +132,13 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		btnDodajIzbor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (listaOdgovori.size() >= 8) {
+				if (listaIzbori.size() >= 8) {
 					lblStatus.setText("Ne možete dodati više od 8 višestrukih izbora!");
 					lblStatus.setForeground(SystemColor.red);
 					return;
 				}
 				
-				JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaIzbori.size())) + ")");
+				JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
 				pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
 				listaLabeleIzbori.add(novaLabela);
 				JTextField noviOdgovor = new JTextField();
@@ -152,7 +151,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		pnlIzbor.add(btnDodajIzbor, "cell 0 8 4 1,alignx center");
 		
 		for (int i = 0; i < 3; i++) {
-			JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaIzbori.size())) + ")");
+			JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
 			pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
 			listaLabeleIzbori.add(novaLabela);
 			JTextField noviOdgovor = new JTextField();
@@ -165,7 +164,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		btnObrisiIzbor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if (listaOdgovori.size() <= 2) {
+				if (listaIzbori.size() <= 2) {
 					lblStatus.setText("Ne možete imati manje od 2 višestruka izbor!");
 					lblStatus.setForeground(SystemColor.red);
 					return;

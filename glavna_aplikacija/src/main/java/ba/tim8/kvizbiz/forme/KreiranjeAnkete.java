@@ -117,7 +117,7 @@ public class KreiranjeAnkete extends JFrame {
 		Object[] naziviKolona = new Object[]{"Broj", "Tekst", "Tip"};
 		Object[][] podaci = new Object[][]{
 				{new Integer(1), "Koliko je 2+2?", "Ponu�eni odgovori"},
-				{new Integer(2), "�ta je polimorfizam?", "Otvoren odgovor"}
+				{new Integer(2), "šta je polimorfizam?", "Otvoren odgovor"}
 		};
 		
 		DefaultTableModel model = new DefaultTableModel();
