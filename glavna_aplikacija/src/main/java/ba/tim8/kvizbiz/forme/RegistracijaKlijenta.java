@@ -163,7 +163,6 @@ public class RegistracijaKlijenta {
 							"Greška prilikom registracije klijenta!",
 							"Registracija klijenta",
 							JOptionPane.ERROR_MESSAGE);
-					;
 				}else{
 				PocetnaKlijent_v1 noviFrame = new PocetnaKlijent_v1();
 				noviFrame.setVisible(true);

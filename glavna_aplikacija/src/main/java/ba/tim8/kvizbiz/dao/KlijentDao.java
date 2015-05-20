@@ -15,7 +15,6 @@ public class KlijentDao extends BaseDao<Klijent> {
 
 	private static KlijentDao kdao = null;
 	public KlijentDao() {}
-
 	public static KlijentDao get() {
 		return (kdao == null) ? kdao = new KlijentDao() : kdao;
 	}
