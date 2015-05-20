@@ -237,7 +237,7 @@ public class BrisanjeKlijenta extends JFrame {
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				KlijentDao klijentdao = KlijentDao.get();
-				String neki=comboBox.getSelectedItem().toString();
+				String neki = comboBox.getSelectedItem().toString();
 				Collection<Klijent> klijent = klijentdao.dajKlijenta(neki);
 				Klijent trazeniKlijent = new Klijent();
 				for (Iterator<Klijent> iterator = klijent.iterator(); iterator
@@ -247,10 +247,12 @@ public class BrisanjeKlijenta extends JFrame {
 				textField.setText(trazeniKlijent.get_ime());
 				textField_1.setText(trazeniKlijent.get_prezime());
 				textField_2.setText(trazeniKlijent.get_adresa());
-				textField_3.setText(trazeniKlijent.get_datumRodjenja().toString().substring(0, 10));
+				textField_3.setText(trazeniKlijent.get_datumRodjenja()
+						.toString().substring(0, 10));
 				textField_4.setText(trazeniKlijent.get_eMail());
 				textField_5.setText(trazeniKlijent.get_telefon());
-				textField_6.setText(trazeniKlijent.get_datumPrijave().toString().substring(0, 10));
+				textField_6.setText(trazeniKlijent.get_datumPrijave()
+						.toString().substring(0, 10));
 				if (trazeniKlijent.get_spol() == Spol.muski)
 					radioButton.setSelected(true);
 				else
@@ -262,27 +264,35 @@ public class BrisanjeKlijenta extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					KlijentDao klijentdao = KlijentDao.get();
-					Collection<Klijent> klijent = klijentdao
-							.dajKlijenta(comboBox.getSelectedItem().toString());
-					Klijent trazeniKlijent = new Klijent();
-					for (Iterator<Klijent> iterator = klijent.iterator(); iterator
-							.hasNext();) {
-						trazeniKlijent = (Klijent) iterator.next();
+					if (comboBox.getSelectedIndex() == -1) {
+						JOptionPane.showMessageDialog(null,
+								"Izaberite klijenta!",
+								"Brisanje klijenta",
+								JOptionPane.WARNING_MESSAGE);
+					} else {
+						KlijentDao klijentdao = KlijentDao.get();
+						Collection<Klijent> klijent = klijentdao
+								.dajKlijenta(comboBox.getSelectedItem()
+										.toString());
+						Klijent trazeniKlijent = new Klijent();
+						for (Iterator<Klijent> iterator = klijent.iterator(); iterator
+								.hasNext();) {
+							trazeniKlijent = (Klijent) iterator.next();
+						}
+						OdgovorDao odao = OdgovorDao.get();
+						odao.izbrisiSveOdgovoreKlijenta(trazeniKlijent);
+						KvizDao kvizdao = KvizDao.get();
+						kvizdao.izbrisiKlijenta(trazeniKlijent);
+						kdao.delete(trazeniKlijent.get_id());
+						JOptionPane.showMessageDialog(null,
+								"Klijent je uspješno obrisan!",
+								"Brisanje klijenta",
+								JOptionPane.INFORMATION_MESSAGE);
+						BrisanjeKlijenta noviProzor = new BrisanjeKlijenta();
+						JFrame noviFrame = noviProzor.get_frmBrisanjeKlijenta();
+						noviFrame.setVisible(true);
+						frmBrisanjeKlijenta.dispose();
 					}
-					OdgovorDao odao = OdgovorDao.get();
-					odao.izbrisiSveOdgovoreKlijenta(trazeniKlijent);
-					KvizDao kvizdao = KvizDao.get();
-					kvizdao.izbrisiKlijenta(trazeniKlijent);
-					kdao.delete(trazeniKlijent.get_id());
-					JOptionPane.showMessageDialog(null,
-							"Klijent je uspješno obrisan!",
-							"Brisanje klijenta",
-							JOptionPane.INFORMATION_MESSAGE);
-					BrisanjeKlijenta noviProzor = new BrisanjeKlijenta();
-					JFrame noviFrame = noviProzor.get_frmBrisanjeKlijenta();
-					noviFrame.setVisible(true);
-					frmBrisanjeKlijenta.dispose();
 				} catch (Exception ex) {
 				}
 			}

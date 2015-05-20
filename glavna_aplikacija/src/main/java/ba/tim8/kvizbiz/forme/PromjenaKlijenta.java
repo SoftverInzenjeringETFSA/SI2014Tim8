@@ -262,81 +262,82 @@ public class PromjenaKlijenta extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean dodaj = true;
-				KlijentDao klijentdao = KlijentDao.get();
-				Collection<Klijent> klijent = klijentdao.dajKlijenta(comboBox.getSelectedItem().toString());
-				Klijent trazeniKlijent = new Klijent();
-				for (Iterator<Klijent> iterator = klijent.iterator(); iterator
-						.hasNext();) {
-					trazeniKlijent = (Klijent) iterator.next();
-				}
-
-				// adresa samo ne smije bit prazna
-				if (textField_2.getText().isEmpty()) {
+				if (comboBox.getSelectedIndex() == -1) {
 					dodaj = false;
-					lblStatus.setText("Greska");
 					JOptionPane.showMessageDialog(null,
-							"Polje Adresa mora biti popunjeno!",
-							"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
-				}
-
-				// email validacija
-				if (textField_4.getText().isEmpty()) {
-					dodaj = false;
-					lblStatus.setText("Greska");
-					JOptionPane.showMessageDialog(null,
-							"Polje Email mora biti popunjeno!",
-							"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
-				} else {
-					String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-					Pattern pattern = Pattern.compile(regx,
-							Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(textField_4.getText());
-					if (!matcher.matches()) {
-						dodaj = false;
-						lblStatus.setText("Greska");
-						JOptionPane.showMessageDialog(null,
-								"Polje Email mora biti u pravilnom formatu!",
-								"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
-						;
-					}
-				}
-
-				// telefon validacija
-				if (textField_5.getText().isEmpty()) {
-					dodaj = false;
-					lblStatus.setText("Greska");
-					JOptionPane.showMessageDialog(null,
-							"Polje Telefon mora biti popunjeno!",
-							"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
-				} else {
-					String regx = "^[0-9]*$";
-					Pattern pattern = Pattern.compile(regx,
-							Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(textField_5.getText());
-					if (!matcher.matches()) {
-						dodaj = false;
-						lblStatus.setText("Greska");
-						JOptionPane.showMessageDialog(null,
-								"Polje Telefon mora sadržavati samo brojeve!",
-								"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
-						;
-					}
-				}
-
-				if (dodaj == true) {
-					trazeniKlijent.set_adresa(textField_2.getText());
-					trazeniKlijent.set_eMail(textField_4.getText());
-					trazeniKlijent.set_telefon(textField_5.getText());
-					kdao.update(trazeniKlijent);
-					lblStatus.setText("Uredu");
-					JOptionPane.showMessageDialog(null,
-							"Klijent je uspješno promjenjen!",
+							"Izaberite klijenta!",
 							"Promjena klijenta",
-							JOptionPane.INFORMATION_MESSAGE);
-					PromjenaKlijenta noviProzor = new PromjenaKlijenta();
-					JFrame noviFrame = noviProzor.get_frmPromjenaKlijenta();
-					noviFrame.setVisible(true);
-					frmPromjenaKlijenta.dispose();
+							JOptionPane.WARNING_MESSAGE);
+				} else
+
+				{
+					KlijentDao klijentdao = KlijentDao.get();
+					Collection<Klijent> klijent = klijentdao
+							.dajKlijenta(comboBox.getSelectedItem().toString());
+					Klijent trazeniKlijent = new Klijent();
+					for (Iterator<Klijent> iterator = klijent.iterator(); iterator
+							.hasNext();) {
+						trazeniKlijent = (Klijent) iterator.next();
+					}
+
+					// telefon validacija
+					if (textField_5.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Telefon mora biti popunjeno!");
+					} else {
+						String regx = "^[0-9]*$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_5.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus
+									.setText("Polje Telefon mora sadržavati samo brojeve!");
+						}
+					}
+
+					// email validacija
+					if (textField_4.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Email mora biti popunjeno!");
+					} else {
+						String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_4.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus
+									.setText("Polje Email mora biti u pravilnom formatu!");
+						}
+					}
+
+					// adresa samo ne smije bit prazna
+					if (textField_2.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Adresa mora biti popunjeno!");
+					}
+
+					if (comboBox.getSelectedIndex() == -1) {
+						dodaj = false;
+						lblStatus.setText("Izaberite klijenta!");
+					}
+
+					if (dodaj == true) {
+						trazeniKlijent.set_adresa(textField_2.getText());
+						trazeniKlijent.set_eMail(textField_4.getText());
+						trazeniKlijent.set_telefon(textField_5.getText());
+						kdao.update(trazeniKlijent);
+						lblStatus.setText("Uredu");
+						JOptionPane.showMessageDialog(null,
+								"Klijent je uspješno promjenjen!",
+								"Promjena klijenta",
+								JOptionPane.INFORMATION_MESSAGE);
+						PromjenaKlijenta noviProzor = new PromjenaKlijenta();
+						JFrame noviFrame = noviProzor.get_frmPromjenaKlijenta();
+						noviFrame.setVisible(true);
+						frmPromjenaKlijenta.dispose();
+					}
 				}
 			}
 		});
