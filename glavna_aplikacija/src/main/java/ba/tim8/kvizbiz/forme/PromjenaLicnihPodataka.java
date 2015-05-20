@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -31,6 +32,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PromjenaLicnihPodataka extends JFrame {
 
@@ -176,5 +182,79 @@ public class PromjenaLicnihPodataka extends JFrame {
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
 		frmPromjenaLicnihPodataka.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		/*
+		btnPromjeniLinePodatke.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean dodaj = true;
+				// adresa samo ne smije bit prazna
+				if (textField_2.getText().isEmpty()) {
+					dodaj = false;
+					btnNewButton.setText("Greska");
+					JOptionPane.showMessageDialog(null,
+							"Polje Adresa mora biti popunjeno!",
+							"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+				}
+
+				// email validacija
+				if (textField_4.getText().isEmpty()) {
+					dodaj = false;
+					btnNewButton.setText("Greska");
+					JOptionPane.showMessageDialog(null,
+							"Polje Email mora biti popunjeno!",
+							"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+				} else {
+					String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+					Pattern pattern = Pattern.compile(regx,
+							Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(textField_4.getText());
+					if (!matcher.matches()) {
+						dodaj = false;
+						btnNewButton.setText("Greska");
+						JOptionPane.showMessageDialog(null,
+								"Polje Email mora biti u pravilnom formatu!",
+								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+						;
+					}
+				}
+
+				// telefon validacija
+				if (textField_5.getText().isEmpty()) {
+					dodaj = false;
+					btnNewButton.setText("Greska");
+					JOptionPane.showMessageDialog(null,
+							"Polje Telefon mora biti popunjeno!",
+							"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+				} else {
+					String regx = "^[0-9]*$";
+					Pattern pattern = Pattern.compile(regx,
+							Pattern.CASE_INSENSITIVE);
+					Matcher matcher = pattern.matcher(textField_5.getText());
+					if (!matcher.matches()) {
+						dodaj = false;
+						btnNewButton.setText("Greska");
+						JOptionPane.showMessageDialog(null,
+								"Polje Telefon mora sadržavati samo brojeve!",
+								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+						;
+					}
+				}
+
+				if (dodaj == true) {
+					trazeniKlijent.set_adresa(textField_2.getText());
+					trazeniKlijent.set_eMail(textField_4.getText());
+					trazeniKlijent.set_telefon(textField_5.getText());
+					kdao.update(trazeniKlijent);
+					JOptionPane.showMessageDialog(null,
+							"Klijent je uspješno promjenjen!",
+							"Promjena klijenta",
+							JOptionPane.INFORMATION_MESSAGE);
+					PromjenaLicnihPodataka noviProzor = new PromjenaLicnihPodataka();
+					JFrame noviFrame = noviProzor.get_frmPromjenaLicnihPodataka();
+					noviFrame.setVisible(true);
+					frmPromjenaLicnihPodataka.dispose();
+				}
+			}
+		}); */
 	}
 }

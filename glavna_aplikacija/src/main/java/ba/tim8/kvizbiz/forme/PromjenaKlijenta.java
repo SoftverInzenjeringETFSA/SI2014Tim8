@@ -262,8 +262,7 @@ public class PromjenaKlijenta extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean dodaj = true;
 				KlijentDao klijentdao = new KlijentDao();
-				Collection<Klijent> klijent = klijentdao.dajKlijenta(comboBox
-						.getSelectedItem().toString());
+				Collection<Klijent> klijent = klijentdao.dajKlijenta(comboBox.getSelectedItem().toString());
 				Klijent trazeniKlijent = new Klijent();
 				for (Iterator<Klijent> iterator = klijent.iterator(); iterator
 						.hasNext();) {
