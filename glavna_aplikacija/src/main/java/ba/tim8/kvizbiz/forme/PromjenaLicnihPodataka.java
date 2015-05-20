@@ -26,7 +26,10 @@ import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
+import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
+import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Spol;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,6 +38,8 @@ import net.miginfocom.swing.MigLayout;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,10 +188,42 @@ public class PromjenaLicnihPodataka extends JFrame {
 		btnNewButton.setEnabled(false);
 		frmPromjenaLicnihPodataka.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		/*
+		AsministratorDao administratordao = new AdministratorDao();
+		String neki = ovdje treba username od logiranog admina :P
+		Collection<Administrator> administrator = Administratordao.dajUsername(neki);
+		Administrator trazeniAdministrator = new Administrator();
+		for (Iterator<Administrator> iterator = administrator.iterator(); iterator
+				.hasNext();) {
+			trazeniAdministrator = (Administrator) iterator.next();
+		}
+		textField.setText(trazeniAdministrator.get_ime());
+		textField_1.setText(trazeniAdministrator.get_prezime());
+		textField_2.setText(trazeniAdministrator.get_adresa());
+		textField_3.setText(trazeniAdministrator.get_datumRodjenja()
+				.toString().substring(0, 10));
+		textField_4.setText(trazeniAdministrator.get_eMail());
+		textField_5.setText(trazeniAdministrator.get_telefon());
+		
+		if (trazeniKlijent.get_spol() == Spol.muski)
+			radioButton.setSelected(true);
+		else
+			radioButton_1.setSelected(true);		
+		
+		
+		 	 
 		btnPromjeniLinePodatke.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				boolean dodaj = true;
+				
+			    AsministratorDao administratordao = new AdministratorDao();
+			    String neki = ovdje treba username od logiranog admina :P
+				Collection<Administrator> administrator = Administratordao.dajUsername(neki);
+		        Administrator trazeniAdministrator = new Administrator();
+		         for (Iterator<Administrator> iterator = administrator.iterator(); iterator
+				      .hasNext();) {
+			       trazeniAdministrator = (Administrator) iterator.next();
+		        }
 				// adresa samo ne smije bit prazna
 				if (textField_2.getText().isEmpty()) {
 					dodaj = false;
@@ -241,13 +278,13 @@ public class PromjenaLicnihPodataka extends JFrame {
 				}
 
 				if (dodaj == true) {
-					trazeniKlijent.set_adresa(textField_2.getText());
-					trazeniKlijent.set_eMail(textField_4.getText());
-					trazeniKlijent.set_telefon(textField_5.getText());
-					kdao.update(trazeniKlijent);
+					trazeniAdministrator.set_adresa(textField_2.getText());
+					trazeniAdministrator.set_eMail(textField_4.getText());
+					trazeniAdministrator.set_telefon(textField_5.getText());
+					adao.update(trazeniAdministraotr);
 					JOptionPane.showMessageDialog(null,
-							"Klijent je uspješno promjenjen!",
-							"Promjena klijenta",
+							"Podaci Administratora su promijenjeni!",
+							"Promjena licnih podataka",
 							JOptionPane.INFORMATION_MESSAGE);
 					PromjenaLicnihPodataka noviProzor = new PromjenaLicnihPodataka();
 					JFrame noviFrame = noviProzor.get_frmPromjenaLicnihPodataka();
