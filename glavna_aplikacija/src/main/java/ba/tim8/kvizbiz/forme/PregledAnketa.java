@@ -64,8 +64,8 @@ public class PregledAnketa extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null},
-			},
+				
+},
 			new String[] {
 				"Id", "Naziv ankete"
 			}
