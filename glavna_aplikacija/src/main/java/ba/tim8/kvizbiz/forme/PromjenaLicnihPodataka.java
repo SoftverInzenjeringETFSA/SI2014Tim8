@@ -3,9 +3,12 @@ package ba.tim8.kvizbiz.forme;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -15,33 +18,32 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
-import javax.swing.JComboBox;
 
-import java.awt.BorderLayout;
 
 import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
-import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Spol;
+import net.miginfocom.swing.MigLayout;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import net.miginfocom.swing.MigLayout;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PromjenaLicnihPodataka extends JFrame {
 
@@ -54,6 +56,8 @@ public class PromjenaLicnihPodataka extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JLabel lblStatus;
+
 	
 	public JFrame get_frmPromjenaLicnihPodataka () {
 		return frmPromjenaLicnihPodataka;
@@ -103,11 +107,17 @@ public class PromjenaLicnihPodataka extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmPromjenaLicnihPodataka);
 		
+		lblStatus = new JLabel("Uredu");
+		lblStatus.setForeground(Color.BLUE);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmPromjenaLicnihPodataka.getContentPane().add(lblStatus, BorderLayout.SOUTH);
+		
 		JPanel panel = new JPanel();
 		frmPromjenaLicnihPodataka.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new MigLayout("", "[grow]", "[grow][20px]"));
 		
-		JButton btnPromjeniLinePodatke = new JButton("Promjeni li\u010Dne podatke");
+		JButton btnPromjeniLinePodatke = new JButton("Promjeni li\u010Dnih podatke");
 		panel.add(btnPromjeniLinePodatke, "cell 0 1,alignx right,aligny center");
 		
 		JPanel panel_1 = new JPanel();
@@ -182,15 +192,23 @@ public class PromjenaLicnihPodataka extends JFrame {
 		textField_5.setColumns(10);
 		panel_1.add(textField_5, "cell 1 6 3 1,grow");
 			
-		JButton btnNewButton = new JButton("Uredu");
+		/*JButton btnNewButton = new JButton("Uredu");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
-		frmPromjenaLicnihPodataka.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
-		/*
-		AsministratorDao administratordao = new AdministratorDao();
-		String neki = ovdje treba username od logiranog admina :P
-		Collection<Administrator> administrator = Administratordao.dajUsername(neki);
+		frmPromjenaLicnihPodataka.getContentPane().add(btnNewButton, BorderLayout.SOUTH);*/
+		
+		final AdministratorDao adao = AdministratorDao.get();
+		Collection<Administrator> administratori = adao.readAll();
+		 
+		 
+		AdministratorDao administratordao = AdministratorDao.get();
+		String neki = "jkvesic";// samo za testiranje
+		Collection<Administrator> administrator = administratordao.dajPoUsernamu(neki);
 		Administrator trazeniAdministrator = new Administrator();
 		for (Iterator<Administrator> iterator = administrator.iterator(); iterator
 				.hasNext();) {
@@ -204,7 +222,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 		textField_4.setText(trazeniAdministrator.get_eMail());
 		textField_5.setText(trazeniAdministrator.get_telefon());
 		
-		if (trazeniKlijent.get_spol() == Spol.muski)
+		if (trazeniAdministrator.get_spol() == Spol.muski)
 			radioButton.setSelected(true);
 		else
 			radioButton_1.setSelected(true);		
@@ -216,82 +234,89 @@ public class PromjenaLicnihPodataka extends JFrame {
 				
 				boolean dodaj = true;
 				
-			    AsministratorDao administratordao = new AdministratorDao();
-			    String neki = ovdje treba username od logiranog admina :P
-				Collection<Administrator> administrator = Administratordao.dajUsername(neki);
+			    AdministratorDao administratordao = AdministratorDao.get();
+			    String neki ="jkvesic";// samo za testiranje
+				Collection<Administrator> administrator = administratordao.dajPoUsernamu(neki);
 		        Administrator trazeniAdministrator = new Administrator();
 		         for (Iterator<Administrator> iterator = administrator.iterator(); iterator
 				      .hasNext();) {
 			       trazeniAdministrator = (Administrator) iterator.next();
 		        }
-				// adresa samo ne smije bit prazna
-				if (textField_2.getText().isEmpty()) {
-					dodaj = false;
-					btnNewButton.setText("Greska");
-					JOptionPane.showMessageDialog(null,
-							"Polje Adresa mora biti popunjeno!",
-							"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-				}
-
-				// email validacija
-				if (textField_4.getText().isEmpty()) {
-					dodaj = false;
-					btnNewButton.setText("Greska");
-					JOptionPane.showMessageDialog(null,
-							"Polje Email mora biti popunjeno!",
-							"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-				} else {
-					String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-					Pattern pattern = Pattern.compile(regx,
-							Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(textField_4.getText());
-					if (!matcher.matches()) {
+		      // adresa samo ne smije bit prazna
+					if (textField_2.getText().isEmpty()) {
 						dodaj = false;
-						btnNewButton.setText("Greska");
+						lblStatus.setText("Greska");
+						lblStatus.setForeground(Color.red);
 						JOptionPane.showMessageDialog(null,
-								"Polje Email mora biti u pravilnom formatu!",
+								"Polje Adresa mora biti popunjeno!",
 								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-						;
+					}
+
+					// email validacija
+					if (textField_4.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Greska");
+						lblStatus.setForeground(Color.red);
+						JOptionPane.showMessageDialog(null,
+								"Polje Email mora biti popunjeno!",
+								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+					} else {
+						String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_4.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Greska");
+							lblStatus.setForeground(Color.red);
+							JOptionPane.showMessageDialog(null,
+									"Polje Email mora biti u pravilnom formatu!",
+									"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+							;
+						}
+					}
+
+					// telefon validacija
+					if (textField_5.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Greska");
+						lblStatus.setForeground(Color.red);
+						JOptionPane.showMessageDialog(null,
+								"Polje Telefon mora biti popunjeno!",
+								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+					} else {
+						String regx = "^[0-9]*$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_5.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Greska");
+							lblStatus.setForeground(Color.red);
+							JOptionPane.showMessageDialog(null,
+									"Polje Telefon mora sadržavati samo brojeve!",
+									"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
+							;
+						}
+					}
+
+					if (dodaj == true) {
+						trazeniAdministrator.set_adresa(textField_2.getText());
+						trazeniAdministrator.set_eMail(textField_4.getText());
+						trazeniAdministrator.set_telefon(textField_5.getText());
+						adao.update(trazeniAdministrator);
+						lblStatus.setText("Uredu");
+						lblStatus.setForeground(Color.green);
+						JOptionPane.showMessageDialog(null,
+								"Klijent je uspješno promjenjen!",
+								"Promjena licnih podataka",
+								JOptionPane.INFORMATION_MESSAGE);
+						PromjenaLicnihPodataka noviProzor = new PromjenaLicnihPodataka();
+						JFrame noviFrame = noviProzor.get_frmPromjenaLicnihPodataka();
+						noviFrame.setVisible(true);
+						frmPromjenaLicnihPodataka.dispose();
 					}
 				}
-
-				// telefon validacija
-				if (textField_5.getText().isEmpty()) {
-					dodaj = false;
-					btnNewButton.setText("Greska");
-					JOptionPane.showMessageDialog(null,
-							"Polje Telefon mora biti popunjeno!",
-							"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-				} else {
-					String regx = "^[0-9]*$";
-					Pattern pattern = Pattern.compile(regx,
-							Pattern.CASE_INSENSITIVE);
-					Matcher matcher = pattern.matcher(textField_5.getText());
-					if (!matcher.matches()) {
-						dodaj = false;
-						btnNewButton.setText("Greska");
-						JOptionPane.showMessageDialog(null,
-								"Polje Telefon mora sadržavati samo brojeve!",
-								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-						;
-					}
-				}
-
-				if (dodaj == true) {
-					trazeniAdministrator.set_adresa(textField_2.getText());
-					trazeniAdministrator.set_eMail(textField_4.getText());
-					trazeniAdministrator.set_telefon(textField_5.getText());
-					adao.update(trazeniAdministraotr);
-					JOptionPane.showMessageDialog(null,
-							"Podaci Administratora su promijenjeni!",
-							"Promjena licnih podataka",
-							JOptionPane.INFORMATION_MESSAGE);
-					PromjenaLicnihPodataka noviProzor = new PromjenaLicnihPodataka();
-					JFrame noviFrame = noviProzor.get_frmPromjenaLicnihPodataka();
-					noviFrame.setVisible(true);
-					frmPromjenaLicnihPodataka.dispose();
-				}
-			}
-		}); */
+			});
 	}
 }
