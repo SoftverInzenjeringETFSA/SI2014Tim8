@@ -239,7 +239,7 @@ public class BrisanjeAdministratora extends JFrame {
 		panel.add(btnObojiLabelu);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				AdministratorDao admindao = new AdministratorDao();
+				AdministratorDao admindao = AdministratorDao.get();
 				Collection<Administrator> admin = admindao
 						.dajPoUsernamu(comboBox.getSelectedItem().toString());
 				Administrator trazeniAdmin = new Administrator();
