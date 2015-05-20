@@ -226,12 +226,18 @@ public class DodavanjePitanja extends JFrame {
 				else {
 					JOptionPane.showMessageDialog(null, "Došlo je do nepredviđene situacije u izboru tipa pitanja!");
 				}
-				
+				/*
 				//TODO: Dodati da se registruje o kojem kvizu je rijec
 				Kviz testniKviz = new Kviz(0, "Testni kviz", 5, true, false);
-				Pitanje novoPitanje = new Pitanje(0, tbxTekstPitanja.getText(), tipNovogPitanja, ckbObaveznoPitanje.isSelected(), testniKviz);
+				Pitanje novoPitanje;
+				try {
+					novoPitanje = new Pitanje(0, tbxTekstPitanja.getText(), tipNovogPitanja, ckbObaveznoPitanje.isSelected(), testniKviz);
+				} catch (Exception e1) {
+					lblStatus.setText(e1.getMessage());
+				}
 				
 				pdao.create(novoPitanje);
+				*/
 			}
 		});
 		btnOk.setBounds(484, 366, 90, 23);
