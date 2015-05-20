@@ -16,5 +16,5 @@ public class PitanjeDao extends BaseDao<Pitanje> {
 		return (pdao == null) ? pdao = new PitanjeDao() : pdao;
 	}
 
-	
+	private PitanjeDao(){}
 }

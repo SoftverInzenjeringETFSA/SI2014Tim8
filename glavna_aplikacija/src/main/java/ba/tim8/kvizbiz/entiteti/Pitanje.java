@@ -2,6 +2,8 @@ package ba.tim8.kvizbiz.entiteti;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "pitanje")
 public class Pitanje implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@Column(name = "idPitanje", unique = true, nullable = false)
 	private long _id;
@@ -47,7 +51,13 @@ public class Pitanje implements java.io.Serializable{
 	public String get_tekstPitanja() {
 		return _tekstPitanja;
 	}
-	public void set_tekstPitanja(String _tekstPitanja) {
+	public void set_tekstPitanja(String _tekstPitanja) throws Exception {
+		Pattern p = Pattern.compile("^[a-zA-Z čČćĆžŽšŠđĐ]*$");
+		Matcher m = p.matcher(_tekstPitanja);
+		if (false == m.matches()) {
+			throw new Exception("Tekst pitanja smije sadržavati samo slova!");
+		}
+		
 		this._tekstPitanja = _tekstPitanja;
 	}
 	public TipPitanja get_tipPitanja() {
@@ -80,13 +90,13 @@ public class Pitanje implements java.io.Serializable{
 	public Pitanje(){}
 	
 	public Pitanje(long _id, String _tekstPitanja, TipPitanja _tipPitanja,
-			boolean obavezno, Kviz _kviz) {
+			boolean obavezno, Kviz _kviz) throws Exception {
 		super();
-		this._id = _id;
-		this._tekstPitanja = _tekstPitanja;
-		this._tipPitanja = _tipPitanja;
-		this.obavezno = obavezno;
-		this._kviz = _kviz;
+		set_id(_id);
+		set_tekstPitanja(_tekstPitanja);
+		set_tipPitanja(_tipPitanja);
+		setObavezno(obavezno);
+		set_kviz(_kviz);
 	}
 	
 }

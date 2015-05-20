@@ -2,6 +2,8 @@ package ba.tim8.kvizbiz.entiteti;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "odgovor")
 public class Odgovor implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@Column(name = "idOdgovor", unique = true, nullable = false)
 	private long _id;
@@ -37,7 +41,13 @@ public class Odgovor implements java.io.Serializable{
 	public String get_tekstOdgovora() {
 		return _tekstOdgovora;
 	}
-	public void set_tekstOdgovora(String _tekstOdgovora) {
+	public void set_tekstOdgovora(String _tekstOdgovora) throws Exception {
+		Pattern p = Pattern.compile("^[a-zA-Z čČćĆžŽšŠđĐ]*$");
+		Matcher m = p.matcher(_tekstOdgovora);
+		if (false == m.matches()) {
+			throw new Exception("Tekst odgovora smije sadržavati samo slova!");
+		}
+		
 		this._tekstOdgovora = _tekstOdgovora;
 	}
 	public Pitanje get_pitanje() {
@@ -58,12 +68,12 @@ public class Odgovor implements java.io.Serializable{
 	
 	public Odgovor() {}
 	
-	public Odgovor(long _id, String _tekstOdgovora, Pitanje _pitanje, Set<Klijent> _klijenti) {
+	public Odgovor(long _id, String _tekstOdgovora, Pitanje _pitanje, Set<Klijent> _klijenti) throws Exception {
 		super();
-		this._id = _id;
-		this._tekstOdgovora = _tekstOdgovora;
-		this._pitanje = _pitanje;
-		this._klijenti = _klijenti;
+		set_id(_id);
+		set_tekstOdgovora(_tekstOdgovora);
+		set_pitanje(_pitanje);
+		set_klijenti(_klijenti);
 	}
 	
 }

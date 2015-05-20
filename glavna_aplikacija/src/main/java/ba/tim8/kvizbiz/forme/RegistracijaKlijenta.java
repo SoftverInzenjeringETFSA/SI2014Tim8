@@ -398,8 +398,10 @@ public class RegistracijaKlijenta {
 		if (dodaj == true) {
 			java.util.Date dt = new java.util.Date();			
 			DateFormat  format = new SimpleDateFormat("yyyy-MM-dd");
+		
 			try {
 				Date datum = format.parse(txtDatumRodjenja.getText());
+				
 				Klijent k = new Klijent();
 				k.set_ime(txtIme.getText());
 				k.set_prezime(txtPrezime.getText());
@@ -407,6 +409,7 @@ public class RegistracijaKlijenta {
 				k.set_adresa(txtAdresa.getText());
 				k.set_telefon(txtBrojTelefona.getText());
 				k.set_datumRodjenja(datum);
+			
 				if(radioBtnMuski.isSelected()){
 					k.set_spol(Spol.muski);
 				}else{

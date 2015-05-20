@@ -19,6 +19,7 @@ public class KvizDao extends BaseDao<Kviz>{
     {
         return (kdao == null) ? kdao = new KvizDao() : kdao;
     }
+	private KvizDao() {}
 	
 	public void izbrisiKlijenta(Klijent k)
 	{

@@ -215,9 +215,73 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		pnlPodaci.add(ckbObavezno, "cell 2 2,alignx left");
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PitanjeDao pdao = PitanjeDao.get();
+				
+				TipPitanja tipNovogPitanja = null;
+				
+				if (cbbTip.getSelectedIndex() == 0) {
+					lblStatus.setText("Niste odabrali tip pitanja!");
+					lblStatus.setForeground(Color.red);
+				}
+				else if (cbbTip.getSelectedIndex() == 1) {
+					tipNovogPitanja = TipPitanja.Abc;
+				}
+				else if (cbbTip.getSelectedIndex() == 2) {
+					tipNovogPitanja = TipPitanja.OtvoreniOdgovor;
+				}
+				else if (cbbTip.getSelectedIndex() == 3) {
+					tipNovogPitanja = TipPitanja.DaNE;
+				}
+				else if (cbbTip.getSelectedIndex() == 4) {
+					tipNovogPitanja = TipPitanja.VisestrukiIzbor;
+				}
+				else if (cbbTip.getSelectedIndex() == 5) {
+					tipNovogPitanja = TipPitanja.TacnoNetacno;
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Došlo je do nepredviđene situacije u izboru tipa pitanja!");
+				}
+				
+				//TODO: Dodati da se registruje o kojem kvizu je rijec
+				Pitanje novoPitanje = null;
+				
+				try {
+					Kviz testniKviz = new Kviz(1, "Testni kviz", 5, true, false);
+					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
+				}
+				catch (Exception e1) {
+					lblStatus.setText(e1.getMessage());
+					lblStatus.setForeground(Color.red);
+				}
+				
+				long idKviza = pdao.create(novoPitanje);
+				
+				try {
+					if (tipNovogPitanja == TipPitanja.Abc) {
+						for(int i = 0; i < listaOdgovori.size(); i++) {
+							
+						}
+					}
+				}
+				catch (Exception e1) {
+					lblStatus.setText(e1.getMessage());
+					lblStatus.setForeground(Color.red);
+				}
+				
+				lblStatus.setText("Novo pitanje je uspješno uneseno.");
+				lblStatus.setForeground(Color.green);
+			}
+		});
 		kontejner.add(btnOk, "flowx,cell 2 2,growx");
 		
 		JButton btnOtkazi = new JButton("Otkaži");
+		btnOtkazi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		kontejner.add(btnOtkazi, "cell 1 2,growx");		
 		
 		lblStatus = new JLabel("Statusna traka");

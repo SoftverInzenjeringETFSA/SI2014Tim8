@@ -1,11 +1,13 @@
 package ba.tim8.kvizbiz.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 
 
@@ -60,11 +62,12 @@ public abstract class BaseDao<T> implements IDao<T>
 	public Collection<T> readAll() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("from " + getClassOfT().getSimpleName());
-		Collection<T> c = (Collection<T>) q.list();
+		Query q = session.createQuery("select id from " + getClassOfT().getSimpleName());
+		Collection<Long> c = (Collection<Long>) q.list();
 		t.commit();
 		session.close();
-		return c;
+		return napraviObjekte(c);
+		
 	}
 	
 	public void deleteAll()
@@ -76,6 +79,17 @@ public abstract class BaseDao<T> implements IDao<T>
 		t.commit();
 		session.close();
 		
+	}
+	
+	private Collection<T> napraviObjekte(Collection<Long> ids)
+	{
+		Collection<T> r = new ArrayList<T>();
+		for(int i=0;i<ids.size();i++)
+		{
+			r.add(read(((ArrayList<Long>)ids).get(i)));
+		}
+		
+		return r;
 	}
 	
 
