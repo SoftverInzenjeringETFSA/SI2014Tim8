@@ -85,7 +85,7 @@ public class BrisanjeAdministratora extends JFrame {
 	private void initialize() {
 		frmBrisanjeAdministratora = new JFrame();
 		frmBrisanjeAdministratora.setTitle("Brisanje administratora");
-		frmBrisanjeAdministratora.setBounds(100, 100, 470, 564);
+		frmBrisanjeAdministratora.setBounds(100, 100, 470, 480);
 		frmBrisanjeAdministratora
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBrisanjeAdministratora.getContentPane().setLayout(
@@ -215,7 +215,7 @@ public class BrisanjeAdministratora extends JFrame {
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(170, 32, 195, 20);
 		panel_1.add(comboBox);
-/*
+
 		final AdministratorDao adao = new AdministratorDao();
 		Collection<Administrator> admini = (Collection<Administrator>) adao
 				.readAll();
@@ -224,19 +224,8 @@ public class BrisanjeAdministratora extends JFrame {
 			Administrator admin = (Administrator) iterator.next();
 			comboBox.addItem(admin.toString());
 		}
-*/
-		comboBox.setSelectedIndex(-1);
 		
-		// Farukov test
-		JButton btnObojiLabelu = new JButton("Oboji labelu");
-		btnObojiLabelu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lblStatus.setForeground(Color.red);
-				lblStatus.setText("Radi");
-			}
-		});
-		btnObojiLabelu.setBounds(40, 350, 123, 23);
-		panel.add(btnObojiLabelu);
+		comboBox.setSelectedIndex(-1);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				AdministratorDao admindao = AdministratorDao.get();
@@ -263,7 +252,7 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					/*
+					
 					AdministratorDao admindao = new AdministratorDao();
 					Collection<Administrator> admin = admindao
 							.dajPoUsernamu(comboBox.getSelectedItem().toString());
@@ -292,7 +281,7 @@ public class BrisanjeAdministratora extends JFrame {
 						frmBrisanjeAdministratora.dispose();
 						
 					}
-					*/
+					
 				} catch (Exception ex) {
 
 				}
