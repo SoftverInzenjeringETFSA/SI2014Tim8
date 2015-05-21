@@ -1,6 +1,7 @@
 package ba.tim8.kvizbiz.dao;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -9,6 +10,7 @@ import org.hibernate.Transaction;
 import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Odgovor;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 
 public class OdgovorDao extends BaseDao<Odgovor> {
@@ -29,6 +31,16 @@ public class OdgovorDao extends BaseDao<Odgovor> {
 		q.setLong("nesto", k.get_id()).executeUpdate();
 		t.commit();
 		session.close();		
+	}
+	public List dajOdgovore(int pitanjeID){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("select _id, _pitanje, _tekstOdgovora from Odgovor o where o._pitanje = :qId");
+		q.setLong("qId", pitanjeID).executeUpdate();
+		List c = q.list();
+		t.commit();
+		session.close();
+		return c;
 	}
 
 	
