@@ -216,7 +216,7 @@ public class BrisanjeAdministratora extends JFrame {
 		comboBox.setBounds(170, 32, 195, 20);
 		panel_1.add(comboBox);
 
-		final AdministratorDao adao = new AdministratorDao();
+		final AdministratorDao adao = AdministratorDao.get();
 		Collection<Administrator> admini = (Collection<Administrator>) adao
 				.readAll();
 		for (Iterator<Administrator> iterator = admini.iterator(); iterator
@@ -253,7 +253,7 @@ public class BrisanjeAdministratora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					
-					AdministratorDao admindao = new AdministratorDao();
+					AdministratorDao admindao = AdministratorDao.get();
 					Collection<Administrator> admin = admindao
 							.dajPoUsernamu(comboBox.getSelectedItem().toString());
 					Administrator trazeniAdmin = new Administrator();
