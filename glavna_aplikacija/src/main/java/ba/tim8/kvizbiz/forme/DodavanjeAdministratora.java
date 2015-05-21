@@ -321,7 +321,6 @@ public class DodavanjeAdministratora extends JFrame {
 				}
 				
 				
-
 				if (dodaj == true) {
 					JOptionPane.showMessageDialog(null,
 							"Administrator je uspješno dodan!",
