@@ -249,6 +249,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				Pitanje novoPitanje = null;
 				ArrayList<Odgovor> noviodgovori = new ArrayList<Odgovor>();
 				
+				// Kreiranje objekata
 				try {
 					Kviz testniKviz = KreiranjeAnkete_v1.trenutniKviz;
 					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
@@ -264,9 +265,10 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 					return;
 				}
 				
-				long idKviza = pdao.create(novoPitanje);
-				
+				// Upis u bazu				
 				try {
+					long idKviza = pdao.create(novoPitanje);
+					
 					if (tipNovogPitanja == TipPitanja.Abc) {
 						for(int i = 0; i < listaOdgovori.size(); i++) {
 							
@@ -274,7 +276,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 					}
 				}
 				catch (Exception e1) {
-					lblStatus.setText(e1.getMessage());
+					lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
 					lblStatus.setForeground(Color.red);
 					return;
 				}

@@ -34,6 +34,8 @@ public class LoginAdmin extends JFrame {
 
 	//TODO: Dodati dugme vrati se nazad
 	
+	public static String usernameLogiranogAdmina;
+	
 	private JPanel contentPane;
 	private JTextField textField;
 	private JMenuBar menuBar;
