@@ -1,5 +1,8 @@
 package ba.tim8.kvizbiz.dao;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 
 import org.hibernate.Criteria;
@@ -175,5 +178,30 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		return a;
 	}
 	
+	public void updatePass(Administrator a)
+	{
+		try{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		String text = a.get_password();
+		MessageDigest m = MessageDigest.getInstance("MD5");
+		m.reset();
+		m.update(text.getBytes());
+		byte[] digest = m.digest();
+		BigInteger bigInt = new BigInteger(1,digest);
+		String hashtext = bigInt.toString(16);
+		while(hashtext.length() < 32 ){
+		  hashtext = "0"+hashtext;
+		}
+		Query q = session.createQuery("UPDATE Administrator a set a._password = :nesto WHERE a._id = :idneki");
+		q.setParameter("nesto", hashtext);
+		q.setParameter("idneki", a.get_id());
+		q.executeUpdate();
+		t.commit();
+		session.close();	
+		}
+		catch(Exception ex)
+		{}
+	}
 	
 }

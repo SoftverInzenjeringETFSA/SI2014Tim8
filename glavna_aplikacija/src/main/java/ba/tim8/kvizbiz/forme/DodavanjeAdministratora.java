@@ -319,6 +319,8 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus.setText("Polje Username mora biti jedinstveno!");
 				}
+				
+				
 
 				if (dodaj == true) {
 					JOptionPane.showMessageDialog(null,
@@ -336,6 +338,9 @@ public class DodavanjeAdministratora extends JFrame {
 											.getText(), textField_5.getText(),
 									passwordField.getText());
 							adao.create(a);
+							adao.updatePass(a);
+							
+							
 						} catch (ParseException e1) {
 							e1.printStackTrace();
 						}
@@ -351,6 +356,7 @@ public class DodavanjeAdministratora extends JFrame {
 											.getText(), textField_5.getText(),
 									passwordField.getText());
 							adao.create(a);
+							adao.updatePass(a);
 						} catch (Exception e1) {
 
 						}
