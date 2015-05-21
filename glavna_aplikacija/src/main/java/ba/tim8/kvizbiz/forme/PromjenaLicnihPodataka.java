@@ -204,10 +204,10 @@ public class PromjenaLicnihPodataka extends JFrame {
 		
 		final AdministratorDao adao = AdministratorDao.get();
 		Collection<Administrator> administratori = adao.readAll();
-		 
+		
 		 
 		AdministratorDao administratordao = AdministratorDao.get();
-		String neki = "jkvesic_3";// samo za testiranje
+		String neki = LoginAdmina.usernameLogiranogAdmina;
 		Collection<Administrator> administrator = administratordao.dajPoUsernamu(neki);
 		Administrator trazeniAdministrator = new Administrator();
 		for (Iterator<Administrator> iterator = administrator.iterator(); iterator
@@ -235,7 +235,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 				boolean dodaj = true;
 				
 			    AdministratorDao administratordao = AdministratorDao.get();
-			    String neki ="jkvesic_3";// samo za testiranje
+				String neki = LoginAdmina.usernameLogiranogAdmina;
 				Collection<Administrator> administrator = administratordao.dajPoUsernamu(neki);
 		        Administrator trazeniAdministrator = new Administrator();
 		         for (Iterator<Administrator> iterator = administrator.iterator(); iterator
