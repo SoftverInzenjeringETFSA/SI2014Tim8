@@ -5,9 +5,14 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.table.DefaultTableModel;
+
+import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 public class PocetnaKlijent_v1 extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -48,6 +53,7 @@ public class PocetnaKlijent_v1 extends JFrame {
 		pnlKvizovi.setBorder(new TitledBorder("Odaberite kviz na koji želite odgovarati:"));
 		contentPane.add(pnlKvizovi, BorderLayout.CENTER);
 		
+		/*
 		for (int i = 0; i < 8; i++) {
 			final JPanel pnlTest1 = new JPanel(new BorderLayout(0, 0));
 			pnlTest1.setSize(120, 160);
@@ -73,6 +79,42 @@ public class PocetnaKlijent_v1 extends JFrame {
 			
 			pnlKvizovi.add(pnlTest1);
 		}
+		*/
+		KvizDao kdao = KvizDao.get();
+		List<Long> listaAnketa = (List<Long>) kdao.ispisAktivnihAnketa();
+		
+		for(Long id:listaAnketa) {
+			final Kviz kviz = kdao.read(id);
+			
+			final JPanel novaPanela = new JPanel(new BorderLayout(0, 0));
+			novaPanela.setSize(120, 160);
+			novaPanela.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(5 ,5 ,5 ,5), BorderFactory.createRaisedBevelBorder()));
+			
+			final JLabel labela = new JLabel(kviz.get_naziv());
+			labela.setHorizontalAlignment(SwingConstants.CENTER);
+			novaPanela.add(labela, BorderLayout.SOUTH);
+			
+			ImageIcon slika = new ImageIcon("slike/slika" + (kviz.get_id()%6+1) + ".jpg");
+			BufferedImage bi = new BufferedImage(120, 120, BufferedImage.TYPE_INT_RGB);
+	        Graphics2D g2d = (Graphics2D) bi.createGraphics();
+	        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY));
+	        g2d.drawImage(slika.getImage(), 0, 0, 120, 120, null);
+	        novaPanela.add(new JLabel(new ImageIcon(bi)), BorderLayout.CENTER);
+			
+			novaPanela.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					int rezultatDijaloga = JOptionPane.showConfirmDialog(novaPanela, "Jeste li sigurni da zelite odabrati kviz " + labela.getText() + " ?", "Provjera izbora kviza", JOptionPane.YES_NO_OPTION);
+					if (rezultatDijaloga == JOptionPane.YES_OPTION) {
+						//TODO: Odvesti na Muhamedovu formu
+						JOptionPane.showMessageDialog(null, "Id kviza: " + kviz.get_id());
+					}
+				}
+			});
+			
+			pnlKvizovi.add(novaPanela);
+		}
+		
 		lblStatus = new JLabel("Statusna traka");
 		lblStatus.setForeground(Color.lightGray);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));

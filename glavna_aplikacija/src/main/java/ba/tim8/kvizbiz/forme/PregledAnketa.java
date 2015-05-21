@@ -70,8 +70,18 @@ public class PregledAnketa extends JFrame {
 				"Id", "Naziv ankete"
 			}
 		));
-		table.setBounds(48, 68, 200, 50);
+		table.setBounds(48, 68, 199, 82);
 		panel.add(table);
+		
+		JButton btnNazad = new JButton("Nazad");
+		btnNazad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PocetnaKlijent p= new PocetnaKlijent();
+				p.setVisible(true);
+			}
+		});
+		btnNazad.setBounds(450, 314, 89, 23);
+		panel.add(btnNazad);
 		
 		
 		JLabel lblStatus = new JLabel("Statusna traka");

@@ -28,6 +28,8 @@ import javax.swing.border.TitledBorder;
 
 public class frmDodavanjePitanja_v1 extends JFrame {
 
+	public static int test;
+	
 	private JPanel contentPane;
 	private JTextField tbxTekstPitanja;
 	private JComboBox cbbTipPitanja;
@@ -69,6 +71,8 @@ public class frmDodavanjePitanja_v1 extends JFrame {
 	 * Create the frame.
 	 */
 	public frmDodavanjePitanja_v1() {
+		test = 3;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
@@ -153,7 +157,9 @@ public class frmDodavanjePitanja_v1 extends JFrame {
 		btnOtkazi.setPreferredSize(new Dimension(90, 23));
 		btnOtkazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//frmDodavanjePitanja_v2 lala = new frmDodavanjePitanja_v2();
+				//lala.setVisible(true);
+				//dispose();
 			}
 		});
 		pnlButtoni.add(btnOtkazi, gbcButtoni);

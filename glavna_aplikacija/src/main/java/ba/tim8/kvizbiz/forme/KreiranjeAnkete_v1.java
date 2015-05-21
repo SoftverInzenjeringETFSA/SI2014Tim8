@@ -10,10 +10,14 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
+import ba.tim8.kvizbiz.dao.PitanjeDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
 import net.miginfocom.swing.MigLayout;
 
 public class KreiranjeAnkete_v1 extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	public static Kviz trenutniKviz;
 	
 	private JPanel contentPane;
 	private JTextField tbxNaslov;
@@ -73,10 +77,21 @@ public class KreiranjeAnkete_v1 extends JFrame {
 		kontejner.add(pnlPitanja, "cell 0 1 3 1,growx,growy");
 		
 		JButton btnDodaj = new JButton("Dodaj novo pitanje");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Component component = (Component) e.getSource();
+				frmDodavanjePitanja_v2 forma = new frmDodavanjePitanja_v2((JFrame) SwingUtilities.getRoot(component));
+				forma.setVisible(true);
+				dispose();
+			}
+		});
 		pnlPitanja.add(btnDodaj, "cell 0 0");
 		
 		pnlPitanja.add(new JLabel("Odaberite ID:"), "cell 0 1,alignx left");
 		JComboBox<Integer> cbbID = new JComboBox<Integer>();
+		PitanjeDao pdao = PitanjeDao.get();
+		for(long id : pdao.DajSveIdZaKviz(1))
+			cbbID.addItem((int)id);
 		pnlPitanja.add(cbbID, "cell 0 1,alignx left");
 		
 		JButton btnPromjeni = new JButton("Promjeni odabrano pitanje");

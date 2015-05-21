@@ -92,4 +92,9 @@ public class Kviz implements java.io.Serializable{
 		this._aktivan = _aktivan;
 		this._arhiviran = _arhiviran;
 	}
+	
+	@Override
+	public String toString() {
+		return this.get_naziv();
+	}
 }
