@@ -31,6 +31,7 @@ public class KvizDao extends BaseDao<Kviz>{
 		session.close();		
 	}	
 	
+
 	public Collection<Long>  ispisAktivnihAnketa()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();

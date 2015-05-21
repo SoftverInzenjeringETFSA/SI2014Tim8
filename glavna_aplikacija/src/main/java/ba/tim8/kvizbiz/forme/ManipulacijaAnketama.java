@@ -21,6 +21,14 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import ba.tim8.kvizbiz.dao.BaseDao;
+import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.List;
+
 public class ManipulacijaAnketama extends JFrame {
 
 	private JFrame frmManipulacijaAnketama;
@@ -82,20 +90,29 @@ public class ManipulacijaAnketama extends JFrame {
 		panel.add(scrollPane);
 		
 		// Testni podaci
-		Object[] naziviKolona = new Object[]{"Broj", "Naziv", "Stats", "Broj pitanja", "Ograni�enjes"};
+		Object[] naziviKolona = new Object[]{"Broj", "Naziv", "Ograni�enjes", "Status"};
 		Object[][] podaci = new Object[][]{
-				{new Integer(1), "Studentska", "Arhivirana", "10", "10"},
-				{new Integer(2), "Programiranje", "Otvorena", "12", "15"}
+				
 		};
 		
 		DefaultTableModel model = new DefaultTableModel();
 		model.setDataVector(podaci, naziviKolona);
 		
+		
 		tblAnkete = new JTable(model);
 		tblAnkete.getColumnModel().getColumn(0).setPreferredWidth(20);
 		scrollPane.setViewportView(tblAnkete);
 		
+		KvizDao k= KvizDao.get();
+		List<Long> l = (List<Long>) k.ispisSvihAnketa();
+		IscitajSveAnkete(l);
+		
 		JButton btnObriiOznaenu = new JButton("Obri\u0161i ozna\u010Denu");
+		btnObriiOznaenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnObriiOznaenu.setBounds(10, 92, 147, 23);
 		panel.add(btnObriiOznaenu);
 		
@@ -125,6 +142,36 @@ public class ManipulacijaAnketama extends JFrame {
 		btnNewButton.setEnabled(false);
 		frmManipulacijaAnketama.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
+		
+	}
+	private void IscitajSveAnkete(List<Long> lista)
+	{
+		KvizDao k= KvizDao.get();
+
+		
+		for(Long id:lista)
+			
+		{
+			
+			DefaultTableModel model = (DefaultTableModel) tblAnkete.getModel();
+			Kviz kviz = k.read(id);
+			if(kviz.is_aktivan())
+			{
+			model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"aktivan"});
+			
+			}
+			else if(kviz.is_arhiviran())
+			{
+				model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"arhiviran"});
+
+			}
+			else
+			{
+				model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"otvoren"});
+
+			}
+			
+		}
 		
 	}
 
