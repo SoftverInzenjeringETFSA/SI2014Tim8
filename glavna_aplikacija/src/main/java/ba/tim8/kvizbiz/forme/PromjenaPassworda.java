@@ -1,16 +1,20 @@
 package ba.tim8.kvizbiz.forme;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -19,8 +23,26 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+
+import javax.swing.JTextPane;
+import javax.swing.JSpinner;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+
+import ba.tim8.kvizbiz.dao.AdministratorDao;
+import ba.tim8.kvizbiz.entiteti.Administrator;
+import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Spol;
 import net.miginfocom.swing.MigLayout;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -73,6 +95,13 @@ public class PromjenaPassworda extends JFrame {
 		frmPromjenaPassworda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaPassworda.getContentPane().setLayout(new BorderLayout(0, 0));
 		
+		
+		lblStatus = new JLabel("Uredu");
+		lblStatus.setForeground(Color.BLUE);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmPromjenaPassworda.getContentPane().add(lblStatus, BorderLayout.SOUTH);
+		
 		// Kreiranje menija
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmPromjenaPassworda);
@@ -119,10 +148,72 @@ public class PromjenaPassworda extends JFrame {
 		passwordField_2.setColumns(10);
 		panel_2.add(passwordField_2, "cell 2 2,growx,aligny top");
 		
+		String neki = LoginAdmina.usernameLogiranogAdmina;
+        textField.setText(neki);
 		
 		JButton btnPromjeniLinePodatke = new JButton("Promjeni password");
 		btnPromjeniLinePodatke.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean dodaj=true;
+			    AdministratorDao administratordao = AdministratorDao.get();
+				String neki = LoginAdmina.usernameLogiranogAdmina;
+				Collection<Administrator> administrator = administratordao.dajPoUsernamu(neki);
+		        Administrator trazeniAdministrator = new Administrator();
+		         for (Iterator<Administrator> iterator = administrator.iterator(); iterator
+				      .hasNext();) {
+			       trazeniAdministrator = (Administrator) iterator.next();
+		        }
+                
+			 // potvrda password validacija
+				if (passwordField_1.getText().isEmpty()) {
+					dodaj = false;
+					lblStatus.setText("Polje password mora biti popunjeno!");
+					lblStatus.setForeground(Color.red);
+
+				} 
+			    
+				 // novi password validacija
+					if (passwordField_2.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Novi password mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					}else if(!passwordField_2.getText().equals(passwordField_1.getText())){
+						dodaj = false;
+						lblStatus.setText("Polja Novi password i Potvrdi password se ne poklapaju !");
+						lblStatus.setForeground(Color.red);
+					}
+					
+					 // trenutni password validacija
+					if (passwordField.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Trenutni Password mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+                       
+					}
+					char[] c=passwordField.getPassword();
+				
+					 if(!administratordao.pretraziAdmina(neki,c)){
+						dodaj = false;
+						lblStatus.setText("Unijeli ste pogrešan password u polje Trenutni password!");
+						lblStatus.setForeground(Color.red);
+					}
+					
+					if(dodaj==true){
+						administratordao.updatePass(trazeniAdministrator);
+						lblStatus.setText("Uredu");
+						lblStatus.setForeground(Color.blue);
+						JOptionPane.showMessageDialog(null,
+								"Password je uspješno promijenjen!",
+								"Promjena passworda",
+								JOptionPane.INFORMATION_MESSAGE);
+						PromjenaPassworda noviProzor = new PromjenaPassworda();
+						JFrame noviFrame = noviProzor.get_frmPromjenaPassworda();
+						noviFrame.setVisible(true);
+						frmPromjenaPassworda.dispose();
+					}
+								
 				
 			}
 		});
