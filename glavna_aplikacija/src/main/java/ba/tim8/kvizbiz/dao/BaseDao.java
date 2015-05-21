@@ -32,7 +32,6 @@ public abstract class BaseDao<T> implements IDao<T>
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		long id =  (Long) session.save(object);
-		JOptionPane.showMessageDialog(null, id);
 		t.commit();
 		session.close();
 		return id;		
