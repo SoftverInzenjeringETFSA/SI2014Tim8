@@ -21,18 +21,29 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import ba.tim8.kvizbiz.dao.BaseDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.konekcija.HibernateUtil;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManipulacijaAnketama extends JFrame {
 
 	private JFrame frmManipulacijaAnketama;
 	private JTable tblAnkete;
+	List<Kviz> lk = new ArrayList<Kviz>();
 	
 	public JFrame get_frmManipulacijaAnketama () {
 		return frmManipulacijaAnketama;
@@ -95,7 +106,7 @@ public class ManipulacijaAnketama extends JFrame {
 				
 		};
 		
-		DefaultTableModel model = new DefaultTableModel();
+		final DefaultTableModel model = new DefaultTableModel();
 		model.setDataVector(podaci, naziviKolona);
 		
 		
@@ -110,6 +121,33 @@ public class ManipulacijaAnketama extends JFrame {
 		JButton btnObriiOznaenu = new JButton("Obri\u0161i ozna\u010Denu");
 		btnObriiOznaenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+//				BaseDao b= BaseDao.delete(tblAnkete.getSelectionModel().getSelectionMode()4
+				
+				Kviz selected = new Kviz();
+				int selectedRow = tblAnkete.getSelectedRow();
+				
+				selected = lk.get(tblAnkete.convertRowIndexToModel(selectedRow));
+				
+				
+				
+				Session session = HibernateUtil.getSessionFactory().openSession();
+				Transaction t = session.beginTransaction();
+	    
+	    selected = (Kviz) session.load(Kviz.class,selected.get_id());
+	    session.delete(selected);
+			t.commit();
+				session.close();
+				
+				lk.remove(selected);
+				model.removeRow(tblAnkete.getSelectedRow());
+				model.fireTableDataChanged();
+				
+				
+				
+				
+				
+				
+				
 				
 			}
 		});
@@ -144,10 +182,10 @@ public class ManipulacijaAnketama extends JFrame {
 		
 		
 	}
-	private void IscitajSveAnkete(List<Long> lista)
+	private List<Kviz> IscitajSveAnkete(List<Long> lista)
 	{
 		KvizDao k= KvizDao.get();
-
+		
 		
 		for(Long id:lista)
 			
@@ -155,6 +193,7 @@ public class ManipulacijaAnketama extends JFrame {
 			
 			DefaultTableModel model = (DefaultTableModel) tblAnkete.getModel();
 			Kviz kviz = k.read(id);
+			lk.add(kviz);
 			if(kviz.is_aktivan())
 			{
 			model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"aktivan"});
@@ -172,6 +211,44 @@ public class ManipulacijaAnketama extends JFrame {
 			}
 			
 		}
+		
+		return lk;
+		
+	}
+	
+	
+	
+	private void IscitajSveAnketeO(List<Kviz> lista)
+	{
+		
+		
+		
+		for(Kviz kviz:lista)
+			
+		{
+			
+			DefaultTableModel model = (DefaultTableModel) tblAnkete.getModel();
+			
+			lk.add(kviz);
+			if(kviz.is_aktivan())
+			{
+			model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"aktivan"});
+			
+			}
+			else if(kviz.is_arhiviran())
+			{
+				model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"arhiviran"});
+
+			}
+			else
+			{
+				model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"otvoren"});
+
+			}
+			
+		}
+		
+		
 		
 	}
 
