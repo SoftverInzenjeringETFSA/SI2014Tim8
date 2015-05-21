@@ -30,6 +30,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,11 +43,12 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * Create the frame.
 	 */
-	public frmDodavanjePitanja_v2() {
+	public frmDodavanjePitanja_v2(final JFrame proslaForma) {
 		listaOdgovori = new ArrayList<JTextField>();
 		listaIzbori = new ArrayList<JTextField>();
 		listaLabeleOdgovori = new ArrayList<JLabel>();
@@ -218,12 +220,14 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PitanjeDao pdao = PitanjeDao.get();
+				OdgovorDao odao = OdgovorDao.get();
 				
 				TipPitanja tipNovogPitanja = null;
 				
 				if (cbbTip.getSelectedIndex() == 0) {
 					lblStatus.setText("Niste odabrali tip pitanja!");
 					lblStatus.setForeground(Color.red);
+					return;
 				}
 				else if (cbbTip.getSelectedIndex() == 1) {
 					tipNovogPitanja = TipPitanja.Abc;
@@ -246,28 +250,74 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				
 				//TODO: Dodati da se registruje o kojem kvizu je rijec
 				Pitanje novoPitanje = null;
+				ArrayList<Odgovor> noviOdgovori = new ArrayList<Odgovor>();
 				
+				// Kreiranje objekata
 				try {
+					//TODO: Faruk: kada sve bude spremno, ovo odkomentirati 
+					//Kviz testniKviz = KreiranjeAnkete_v1.trenutniKviz;
 					Kviz testniKviz = new Kviz(1, "Testni kviz", 5, true, false);
 					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
-				}
-				catch (Exception e1) {
-					lblStatus.setText(e1.getMessage());
-					lblStatus.setForeground(Color.red);
-				}
-				
-				long idKviza = pdao.create(novoPitanje);
-				
-				try {
 					if (tipNovogPitanja == TipPitanja.Abc) {
-						for(int i = 0; i < listaOdgovori.size(); i++) {
-							
+						for (int i = 0; i < listaOdgovori.size(); i++) {
+							Odgovor noviOdgovor = new Odgovor(0, listaOdgovori.get(i).getText(), null, null);
+							noviOdgovori.add(noviOdgovor);
 						}
+					}
+					else if (tipNovogPitanja == TipPitanja.DaNE) {
+						Odgovor da = new Odgovor(0, "Da", null, null);
+						noviOdgovori.add(da);
+						Odgovor ne = new Odgovor(0, "Ne", null, null);
+						noviOdgovori.add(ne);
+					}
+					else if (tipNovogPitanja == TipPitanja.OtvoreniOdgovor) {
+						
+					}
+					else if (tipNovogPitanja == TipPitanja.TacnoNetacno) {
+						Odgovor tacno = new Odgovor(0, "Tačno", null, null);
+						noviOdgovori.add(tacno);
+						Odgovor netacno = new Odgovor(0, "Netačno", null, null);
+						noviOdgovori.add(netacno);
+					}
+					else if (tipNovogPitanja == TipPitanja.VisestrukiIzbor) {
+						for (int i = 0; i < listaIzbori.size(); i++) {
+							Odgovor noviOdgovor = new Odgovor(0, listaIzbori.get(i).getText(), null, null);
+							noviOdgovori.add(noviOdgovor);
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Došlo je do nepredviđene situacije kod prepoznavanja tipa pitanja!");
 					}
 				}
 				catch (Exception e1) {
 					lblStatus.setText(e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					return;
+				}
+				
+				// Upis u bazu
+				long idPitanja = -1;
+				ArrayList<Long> idjeviOdgovora = new ArrayList<Long>();
+				
+				try {
+					idPitanja = pdao.create(novoPitanje);
+					JOptionPane.showMessageDialog(null, "ID pitanja: " + idPitanja);
+					
+					for (int i = 0; i < noviOdgovori.size(); i++) {
+						noviOdgovori.get(i).set_pitanje(novoPitanje);
+						idjeviOdgovora.add(odao.create(noviOdgovori.get(i)));
+					}
+				}
+				catch (Exception e1) {
+					if (idPitanja != -1) {
+						pdao.delete(idPitanja);
+						for (int i = 0; i < idjeviOdgovora.size(); i++) {
+							odao.delete(idjeviOdgovora.get(i));
+						}
+					}
+					lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
+					lblStatus.setForeground(Color.red);
+					return;
 				}
 				
 				lblStatus.setText("Novo pitanje je uspješno uneseno.");
@@ -276,13 +326,14 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		});
 		kontejner.add(btnOk, "flowx,cell 2 2,growx");
 		
-		JButton btnOtkazi = new JButton("Otkaži");
-		btnOtkazi.addActionListener(new ActionListener() {
+		JButton btnNazad = new JButton("Nazad");
+		btnNazad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				proslaForma.setVisible(true);
+				dispose();
 			}
 		});
-		kontejner.add(btnOtkazi, "cell 1 2,growx");		
+		kontejner.add(btnNazad, "cell 1 2,growx");		
 		
 		lblStatus = new JLabel("Statusna traka");
 		lblStatus.setForeground(Color.lightGray);

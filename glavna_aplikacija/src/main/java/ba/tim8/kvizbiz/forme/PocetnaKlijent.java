@@ -67,6 +67,8 @@ private JComboBox comboBox;
 	
 		btnNewButton_1.setBounds(37, 186, 120, 23);
 		panel.add(btnNewButton_1);
+		KvizDao k= KvizDao.get();
+		List<Long> l = (List<Long>) k.ispisAktivnihAnketa();
 		
 		comboBox = new JComboBox();
 		comboBox.setBounds(37, 85, 120, 20);
@@ -98,7 +100,10 @@ private JComboBox comboBox;
 		JButton btnNewButton_2 = new JButton("Popuni anketu");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				OdgovaranjeNaPitanje o= new OdgovaranjeNaPitanje();
+				
+				String id= comboBox.getSelectedItem().toString();
+				OdgovaranjeNaPitanje o= new OdgovaranjeNaPitanje(id);
+				
 				o.setVisible(true);
 				
 			}
@@ -122,8 +127,7 @@ private JComboBox comboBox;
 		Menu menu = new Menu();
 		menu.NapraviMenu(this);
 	
-	KvizDao k= KvizDao.get();
-	List<Long> l = (List<Long>) k.ispisAktivnihAnketa();
+	
 	IscitajSveAktivneTabele(l);
 
 

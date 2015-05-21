@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -21,10 +22,30 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import ba.tim8.kvizbiz.dao.BaseDao;
+import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.konekcija.HibernateUtil;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.control.Alert;
 public class ManipulacijaAnketama extends JFrame {
 
 	private JFrame frmManipulacijaAnketama;
 	private JTable tblAnkete;
+	List<Kviz> lk = new ArrayList<Kviz>();
 	
 	public JFrame get_frmManipulacijaAnketama () {
 		return frmManipulacijaAnketama;
@@ -82,20 +103,67 @@ public class ManipulacijaAnketama extends JFrame {
 		panel.add(scrollPane);
 		
 		// Testni podaci
-		Object[] naziviKolona = new Object[]{"Broj", "Naziv", "Stats", "Broj pitanja", "Ograni�enjes"};
+		Object[] naziviKolona = new Object[]{"Broj", "Naziv", "Ograni�enjes", "Status"};
 		Object[][] podaci = new Object[][]{
-				{new Integer(1), "Studentska", "Arhivirana", "10", "10"},
-				{new Integer(2), "Programiranje", "Otvorena", "12", "15"}
+				
 		};
 		
-		DefaultTableModel model = new DefaultTableModel();
+		final DefaultTableModel model = new DefaultTableModel();
 		model.setDataVector(podaci, naziviKolona);
+		
 		
 		tblAnkete = new JTable(model);
 		tblAnkete.getColumnModel().getColumn(0).setPreferredWidth(20);
 		scrollPane.setViewportView(tblAnkete);
 		
+		KvizDao k= KvizDao.get();
+		List<Long> l = (List<Long>) k.ispisSvihAnketa();
+		IscitajSveAnkete(l);
+		
 		JButton btnObriiOznaenu = new JButton("Obri\u0161i ozna\u010Denu");
+		btnObriiOznaenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//				BaseDao b= BaseDao.delete(tblAnkete.getSelectionModel().getSelectionMode()4
+				
+				Kviz selected = new Kviz();
+				int selectedRow = tblAnkete.getSelectedRow();
+				
+				selected = lk.get(tblAnkete.convertRowIndexToModel(selectedRow));
+				
+				
+				
+				Session session = HibernateUtil.getSessionFactory().openSession();
+				Transaction t = session.beginTransaction();
+	    
+	    selected = (Kviz) session.load(Kviz.class,selected.get_id());
+	    session.delete(selected);
+			t.commit();
+				session.close();
+//				lk.remove(selected);
+//				
+//				model.removeRow(tblAnkete.getSelectedRow());
+//				model.fireTableDataChanged();
+				
+				int a= model.getRowCount()-1;
+				
+				while(a>=0){
+					
+					model.removeRow(a);
+					lk.remove(a);
+					a--;
+					
+				}
+				KvizDao k= KvizDao.get();
+				List<Long> l = (List<Long>) k.ispisSvihAnketa();
+				IscitajSveAnkete(l);
+				
+				tblAnkete.repaint();
+				
+				selected = null;
+				
+				
+			}
+		});
 		btnObriiOznaenu.setBounds(10, 92, 147, 23);
 		panel.add(btnObriiOznaenu);
 		
@@ -104,6 +172,36 @@ public class ManipulacijaAnketama extends JFrame {
 		panel.add(btnModifikujOznaenu);
 		
 		JButton btnArhivirajOznaenu = new JButton("Arhiviraj ozna\u010Denu");
+		btnArhivirajOznaenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Kviz selected = new Kviz();
+				int selectedRow = tblAnkete.getSelectedRow();
+				
+				selected = lk.get(tblAnkete.convertRowIndexToModel(selectedRow));
+				if(selected.is_arhiviran())
+
+					JOptionPane.showMessageDialog(null, "Vec arhivirana");
+				selected.set_aktivan(false);
+				selected.set_arhiviran(true);
+				Session session = HibernateUtil.getSessionFactory().openSession();
+				Transaction t = session.beginTransaction();
+				session.update(selected);
+				t.commit();
+				session.close();
+				
+				model.fireTableDataChanged();
+				int a= model.getRowCount()-1;
+				
+				while(a>=0){
+					
+					model.removeRow(a);
+					a--;
+				}
+				KvizDao k= KvizDao.get();
+				List<Long> l = (List<Long>) k.ispisSvihAnketa();
+				IscitajSveAnkete(l);
+			}
+		});
 		btnArhivirajOznaenu.setBounds(10, 160, 147, 23);
 		panel.add(btnArhivirajOznaenu);
 		
@@ -127,5 +225,43 @@ public class ManipulacijaAnketama extends JFrame {
 		
 		
 	}
+	private List<Kviz> IscitajSveAnkete(List<Long> lista)
+	{
+		KvizDao k= KvizDao.get();
+		
+		
+		for(Long id:lista)
+			
+		{
+			
+			DefaultTableModel model = (DefaultTableModel) tblAnkete.getModel();
+			Kviz kviz = k.read(id);
+			lk.add(kviz);
+			if(kviz.is_aktivan())
+			{
+			model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"aktivan"});
+			
+			}
+			else if(kviz.is_arhiviran())
+			{
+				model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"arhiviran"});
+
+			}
+			else
+			{
+				model.addRow(new Object[]{kviz.get_id(),kviz.get_naziv(),kviz.get_vremenskoOgranicenje(),"otvoren"});
+
+			}
+			
+		}
+		
+		return lk;
+		
+	}
+	
+	
+	
+	
+	
 
 }

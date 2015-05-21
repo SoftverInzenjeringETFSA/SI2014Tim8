@@ -42,10 +42,10 @@ public class Odgovor implements java.io.Serializable{
 		return _tekstOdgovora;
 	}
 	public void set_tekstOdgovora(String _tekstOdgovora) throws Exception {
-		Pattern p = Pattern.compile("^[a-zA-Z čČćĆžŽšŠđĐ]*$");
+		Pattern p = Pattern.compile("^[0-9a-zA-Z čČćĆžŽšŠđĐ]*$");
 		Matcher m = p.matcher(_tekstOdgovora);
 		if (false == m.matches()) {
-			throw new Exception("Tekst odgovora smije sadržavati samo slova!");
+			throw new Exception("Tekst odgovora smije sadržavati samo slova i brojeve!");
 		}
 		
 		this._tekstOdgovora = _tekstOdgovora;

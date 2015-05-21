@@ -25,12 +25,16 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
+import org.hibernate.Session;
+
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
 
-public class LoginAdmin extends JFrame {
+public class LoginAdmin_stara extends JFrame {
 
 	//TODO: Dodati dugme vrati se nazad
+	
+	public static String usernameLogiranogAdmina = "";
 	
 	private JPanel contentPane;
 	private JTextField textField;
@@ -38,11 +42,12 @@ public class LoginAdmin extends JFrame {
 	private JMenu mnFile;
 	private JMenu mnPomo;
 	private JPasswordField passwordField;
+	protected Session session;
 
 	/**
 	 * Create the frame.
 	 */
-	public LoginAdmin() {
+	public LoginAdmin_stara() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 368, 264);
 		
@@ -99,46 +104,24 @@ public class LoginAdmin extends JFrame {
 		
 		JButton btnPotvrdi = new JButton("Potvrdi");
 		btnPotvrdi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
+		public void actionPerformed(ActionEvent e) {
+			try{
 				String username= textField.getText();
-				String password= passwordField.getText();
-				Administrator a= new Administrator();
-				AdministratorDao b = AdministratorDao.get();
-				a.set_username(username);
-				if(b.pretraziPoUsernamu(username))
-				{
-					if(b.dajPassword().equals(password))
-					{
-						ManipulacijaAnketama noviProzor = new ManipulacijaAnketama ();
-						JFrame noviFrame = noviProzor.get_frmManipulacijaAnketama();
-						noviFrame.setVisible(true);
-						dispose();
-						
-					}
-					else if(!b.dajPassword().equals(password)){
-						JOptionPane.showMessageDialog(null,
-								"Password koji ste unijeli",
-								"nije validan",
-								JOptionPane.ERROR_MESSAGE);
-					
-					}
-						
-						
-					
+				char[] password = passwordField.getPassword();				
+				AdministratorDao a= AdministratorDao.get();					
+								
+				if(a.pretraziAdmina(username,password)){					
+					usernameLogiranogAdmina = username;
 				}
-				else {
-					JOptionPane.showMessageDialog(null,
-							"Ponovo unesite podatke",
-							"Uneseni nisu validni",
-							JOptionPane.ERROR_MESSAGE);
-					
-				}
-				
-				
-				
+			}
+			catch(Exception e2)
+			{
 				
 			}
+			}				
 		});
+	
+		
 		GridBagConstraints gbc_btnPotvrdi = new GridBagConstraints();
 		gbc_btnPotvrdi.gridx = 2;
 		gbc_btnPotvrdi.gridy = 5;

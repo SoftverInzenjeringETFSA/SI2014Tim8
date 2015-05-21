@@ -4,9 +4,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.JOptionPane;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 
 
@@ -29,6 +32,7 @@ public abstract class BaseDao<T> implements IDao<T>
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		long id =  (Long) session.save(object);
+		JOptionPane.showMessageDialog(null, id);
 		t.commit();
 		session.close();
 		return id;		

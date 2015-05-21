@@ -12,12 +12,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PromjenaPassworda extends JFrame {
 
@@ -25,9 +30,9 @@ public class PromjenaPassworda extends JFrame {
 	
 	private JFrame frmPromjenaPassworda;
 	private JTextField textField;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
+	private JPasswordField passwordField_2;
 	private JLabel lblStatus;
 
 	
@@ -98,31 +103,36 @@ public class PromjenaPassworda extends JFrame {
 		lblPonoviteNoviPassword.setHorizontalAlignment(JLabel.RIGHT);
 		panel_2.add(lblPonoviteNoviPassword, "cell 1 3,growx,aligny center");
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		panel_2.add(textField_2, "cell 2 1,growx,aligny top");
+		passwordField = new JPasswordField();
+	    passwordField.setColumns(10);
+		panel_2.add(passwordField, "cell 2 1,growx,aligny top");
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		panel_2.add(textField_3, "cell 2 3,growx,aligny top");
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setColumns(10);
+		panel_2.add(passwordField_1, "cell 2 3,growx,aligny top");
 		
 		JLabel lblNoviPassword = new JLabel("Novi password:");
 		lblNoviPassword.setHorizontalAlignment(JLabel.RIGHT);
 		panel_2.add(lblNoviPassword, "cell 1 2,growx,aligny center");
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		panel_2.add(textField_4, "cell 2 2,growx,aligny top");
+		passwordField_2 = new JPasswordField();
+		passwordField_2.setColumns(10);
+		panel_2.add(passwordField_2, "cell 2 2,growx,aligny top");
 		
 		
 		JButton btnPromjeniLinePodatke = new JButton("Promjeni password");
+		btnPromjeniLinePodatke.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		panel.add(btnPromjeniLinePodatke, "cell 0 1,alignx right,aligny bottom");
 			
-		JButton btnNewButton = new JButton("Statusna traka");
+		/*JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
-		frmPromjenaPassworda.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		frmPromjenaPassworda.getContentPane().add(btnNewButton, BorderLayout.SOUTH);*/
 	
 	}
 }

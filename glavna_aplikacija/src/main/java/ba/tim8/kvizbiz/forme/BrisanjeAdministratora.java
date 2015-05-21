@@ -269,6 +269,7 @@ public class BrisanjeAdministratora extends JFrame {
 								.iterator(); iterator.hasNext();) {
 							trazeniAdmin = (Administrator) iterator.next();
 						}
+
 						if (adao.readAll().size() == 1) {
 							lblStatus.setText("Greska");
 							JOptionPane
@@ -290,7 +291,6 @@ public class BrisanjeAdministratora extends JFrame {
 							frmBrisanjeAdministratora.dispose();
 
 						}
-
 					}
 				} catch (Exception ex) {
 
