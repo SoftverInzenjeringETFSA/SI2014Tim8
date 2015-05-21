@@ -69,6 +69,7 @@ public class LoginAdmina extends JFrame {
 									
 					if(a.pretraziAdmina(username,password)){					
 						usernameLogiranogAdmina = username;
+						JOptionPane.showMessageDialog(null, "Logiran je");
 					}
 					else {
 						lblStatus.setText("Pogrešan unos korisničkog imena ili lozinke.");
