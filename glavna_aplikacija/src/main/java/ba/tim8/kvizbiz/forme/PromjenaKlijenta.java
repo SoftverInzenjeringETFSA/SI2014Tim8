@@ -291,8 +291,7 @@ public class PromjenaKlijenta extends JFrame {
 						Matcher matcher = pattern.matcher(textField_5.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
-							lblStatus
-									.setText("Polje Telefon mora sadržavati samo brojeve!");
+							lblStatus.setText("Polje Telefon mora sadržavati samo brojeve!");
 						}
 					}
 
