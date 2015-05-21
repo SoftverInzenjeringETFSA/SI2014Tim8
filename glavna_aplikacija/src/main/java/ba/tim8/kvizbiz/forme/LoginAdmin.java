@@ -107,17 +107,13 @@ public class LoginAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try{
 				String username= textField.getText();
-				String password= passwordField.getText();
+				String password= passwordField.getPassword();
 				
 				AdministratorDao a= AdministratorDao.get();
-				Administrator admin= new Administrator();
-				admin= a.nadjiAdministratora(session, textField.getText());
 				
-				
-				String imeAdmina=admin.get_username();
-				String passAdmina=admin.get_password();
-				
-				if(username.equals(imeAdmina)&& password.equals(passAdmina)){
+								
+			if(a.pretraziAdmina(username,password)){
+				System.out.println("sndn");
 					 Menu m = new Menu();
 				   m.setVisible(true);
 				   setVisible(false);

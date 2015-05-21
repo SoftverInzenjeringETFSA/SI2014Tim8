@@ -39,6 +39,26 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		}
 	}
 	
+	public boolean pretraziAdmina(String username,String password) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._username = :nesto and a._password=md5(:nestodrugo)");
+		q.setParameter("nesto", username);
+		q.setParameter("nestodrugo", password);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+		
+		if (!alist.isEmpty()) {
+			t.commit();
+			session.close();
+			return true;
+		} else {
+			t.commit();
+			session.close();
+			return false;
+		}
+	}
+	
 	public Collection<Administrator> dajPoUsernamu(String username) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
