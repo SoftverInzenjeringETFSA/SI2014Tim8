@@ -30,7 +30,7 @@ import org.hibernate.Session;
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
 
-public class LoginAdmin extends JFrame {
+public class LoginAdmin_stara extends JFrame {
 
 	//TODO: Dodati dugme vrati se nazad
 	
@@ -47,7 +47,7 @@ public class LoginAdmin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginAdmin() {
+	public LoginAdmin_stara() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 368, 264);
 		
@@ -104,25 +104,21 @@ public class LoginAdmin extends JFrame {
 		
 		JButton btnPotvrdi = new JButton("Potvrdi");
 		btnPotvrdi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try{
+		public void actionPerformed(ActionEvent e) {
+			try{
 				String username= textField.getText();
-				char[] password = passwordField.getPassword();
-				
-				AdministratorDao a= AdministratorDao.get();
-				
+				char[] password = passwordField.getPassword();				
+				AdministratorDao a= AdministratorDao.get();					
 								
-			if(a.pretraziAdmina(username,password)){
-				System.out.println("sndn");
-					 Menu m = new Menu();
-				   m.setVisible(true);
-				   setVisible(false);
+				if(a.pretraziAdmina(username,password)){					
+					usernameLogiranogAdmina = username;
 				}
-				}
-				catch(Exception e2)
-				{}
-			}	
+			}
+			catch(Exception e2)
+			{
 				
+			}
+			}				
 		});
 	
 		

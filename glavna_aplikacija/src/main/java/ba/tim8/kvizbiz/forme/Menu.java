@@ -18,7 +18,7 @@ public class Menu {
 	// Metoda prima JFrame na koji "zakači" meni
 	public void NapraviMenu (final JFrame frame) {
 		
-		if (LoginAdmin.usernameLogiranogAdmina != "") {		
+		if (LoginAdmin_stara.usernameLogiranogAdmina != "") {		
 			JMenuBar menuBar = new JMenuBar();
 			frame.setJMenuBar(menuBar);
 			
