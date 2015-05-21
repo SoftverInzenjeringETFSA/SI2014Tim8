@@ -107,7 +107,7 @@ public class LoginAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try{
 				String username= textField.getText();
-				String password= passwordField.getPassword();
+				char[] password = passwordField.getPassword();
 				
 				AdministratorDao a= AdministratorDao.get();
 				
