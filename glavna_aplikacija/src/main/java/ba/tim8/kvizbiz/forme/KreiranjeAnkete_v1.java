@@ -10,10 +10,13 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
+import ba.tim8.kvizbiz.entiteti.Kviz;
 import net.miginfocom.swing.MigLayout;
 
 public class KreiranjeAnkete_v1 extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	public static Kviz trenutniKviz;
 	
 	private JPanel contentPane;
 	private JTextField tbxNaslov;

@@ -224,6 +224,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				if (cbbTip.getSelectedIndex() == 0) {
 					lblStatus.setText("Niste odabrali tip pitanja!");
 					lblStatus.setForeground(Color.red);
+					return;
 				}
 				else if (cbbTip.getSelectedIndex() == 1) {
 					tipNovogPitanja = TipPitanja.Abc;
@@ -246,14 +247,21 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				
 				//TODO: Dodati da se registruje o kojem kvizu je rijec
 				Pitanje novoPitanje = null;
+				ArrayList<Odgovor> noviodgovori = new ArrayList<Odgovor>();
 				
 				try {
-					Kviz testniKviz = new Kviz(1, "Testni kviz", 5, true, false);
+					Kviz testniKviz = KreiranjeAnkete_v1.trenutniKviz;
 					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
+					if (tipNovogPitanja == TipPitanja.Abc) {
+						for (int i = 0; i < listaOdgovori.size(); i++) {
+							
+						}
+					}
 				}
 				catch (Exception e1) {
 					lblStatus.setText(e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					return;
 				}
 				
 				long idKviza = pdao.create(novoPitanje);
@@ -268,6 +276,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				catch (Exception e1) {
 					lblStatus.setText(e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					return;
 				}
 				
 				lblStatus.setText("Novo pitanje je uspješno uneseno.");
