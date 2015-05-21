@@ -207,7 +207,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 		 
 		 
 		AdministratorDao administratordao = AdministratorDao.get();
-		String neki = "jkvesic";// samo za testiranje
+		String neki = "jkvesic_3";// samo za testiranje
 		Collection<Administrator> administrator = administratordao.dajPoUsernamu(neki);
 		Administrator trazeniAdministrator = new Administrator();
 		for (Iterator<Administrator> iterator = administrator.iterator(); iterator
@@ -235,7 +235,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 				boolean dodaj = true;
 				
 			    AdministratorDao administratordao = AdministratorDao.get();
-			    String neki ="jkvesic";// samo za testiranje
+			    String neki ="jkvesic_3";// samo za testiranje
 				Collection<Administrator> administrator = administratordao.dajPoUsernamu(neki);
 		        Administrator trazeniAdministrator = new Administrator();
 		         for (Iterator<Administrator> iterator = administrator.iterator(); iterator
@@ -299,7 +299,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setText("Uredu");
 						lblStatus.setForeground(Color.blue);
 						JOptionPane.showMessageDialog(null,
-								"Klijent je uspješno promjenjen!",
+								"Podaci su uspješno promijenjeni!",
 								"Promjena licnih podataka",
 								JOptionPane.INFORMATION_MESSAGE);
 						PromjenaLicnihPodataka noviProzor = new PromjenaLicnihPodataka();
