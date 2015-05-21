@@ -218,6 +218,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PitanjeDao pdao = PitanjeDao.get();
+				OdgovorDao odao = OdgovorDao.get();
 				
 				TipPitanja tipNovogPitanja = null;
 				
@@ -247,16 +248,43 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				
 				//TODO: Dodati da se registruje o kojem kvizu je rijec
 				Pitanje novoPitanje = null;
-				ArrayList<Odgovor> noviodgovori = new ArrayList<Odgovor>();
+				ArrayList<Odgovor> noviOdgovori = new ArrayList<Odgovor>();
 				
 				// Kreiranje objekata
 				try {
-					Kviz testniKviz = KreiranjeAnkete_v1.trenutniKviz;
+					//TODO: Faruk: kada sve bude spremno, ovo odkomentirati 
+					//Kviz testniKviz = KreiranjeAnkete_v1.trenutniKviz;
+					Kviz testniKviz = new Kviz(1, "Testni kviz", 5, true, false);
 					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
 					if (tipNovogPitanja == TipPitanja.Abc) {
 						for (int i = 0; i < listaOdgovori.size(); i++) {
-							
+							Odgovor noviOdgovor = new Odgovor(0, listaOdgovori.get(i).getText(), null, null);
+							noviOdgovori.add(noviOdgovor);
 						}
+					}
+					else if (tipNovogPitanja == TipPitanja.DaNE) {
+						Odgovor da = new Odgovor(0, "Da", null, null);
+						noviOdgovori.add(da);
+						Odgovor ne = new Odgovor(0, "Ne", null, null);
+						noviOdgovori.add(ne);
+					}
+					else if (tipNovogPitanja == TipPitanja.OtvoreniOdgovor) {
+						
+					}
+					else if (tipNovogPitanja == TipPitanja.TacnoNetacno) {
+						Odgovor tacno = new Odgovor(0, "Tačno", null, null);
+						noviOdgovori.add(tacno);
+						Odgovor netacno = new Odgovor(0, "Netačno", null, null);
+						noviOdgovori.add(netacno);
+					}
+					else if (tipNovogPitanja == TipPitanja.VisestrukiIzbor) {
+						for (int i = 0; i < listaIzbori.size(); i++) {
+							Odgovor noviOdgovor = new Odgovor(0, listaIzbori.get(i).getText(), null, null);
+							noviOdgovori.add(noviOdgovor);
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Došlo je do nepredviđene situacije kod prepoznavanja tipa pitanja!");
 					}
 				}
 				catch (Exception e1) {
@@ -265,17 +293,26 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 					return;
 				}
 				
-				// Upis u bazu				
+				// Upis u bazu
+				long idPitanja = -1;
+				ArrayList<Long> idjeviOdgovora = new ArrayList<Long>();
+				
 				try {
-					long idKviza = pdao.create(novoPitanje);
+					idPitanja = pdao.create(novoPitanje);
+					JOptionPane.showMessageDialog(null, "ID pitanja: " + idPitanja);
 					
-					if (tipNovogPitanja == TipPitanja.Abc) {
-						for(int i = 0; i < listaOdgovori.size(); i++) {
-							
-						}
+					for (int i = 0; i < noviOdgovori.size(); i++) {
+						noviOdgovori.get(i).set_pitanje(novoPitanje);
+						idjeviOdgovora.add(odao.create(noviOdgovori.get(i)));
 					}
 				}
 				catch (Exception e1) {
+					if (idPitanja != -1) {
+						pdao.delete(idPitanja);
+						for (int i = 0; i < idjeviOdgovora.size(); i++) {
+							odao.delete(idjeviOdgovora.get(i));
+						}
+					}
 					lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
 					lblStatus.setForeground(Color.red);
 					return;
