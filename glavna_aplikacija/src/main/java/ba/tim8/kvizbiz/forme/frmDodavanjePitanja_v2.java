@@ -30,6 +30,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,11 +43,12 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * Create the frame.
 	 */
-	public frmDodavanjePitanja_v2() {
+	public frmDodavanjePitanja_v2(final JFrame proslaForma) {
 		listaOdgovori = new ArrayList<JTextField>();
 		listaIzbori = new ArrayList<JTextField>();
 		listaLabeleOdgovori = new ArrayList<JLabel>();
@@ -324,13 +326,14 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		});
 		kontejner.add(btnOk, "flowx,cell 2 2,growx");
 		
-		JButton btnOtkazi = new JButton("Otkaži");
-		btnOtkazi.addActionListener(new ActionListener() {
+		JButton btnNazad = new JButton("Nazad");
+		btnNazad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				proslaForma.setVisible(true);
+				dispose();
 			}
 		});
-		kontejner.add(btnOtkazi, "cell 1 2,growx");		
+		kontejner.add(btnNazad, "cell 1 2,growx");		
 		
 		lblStatus = new JLabel("Statusna traka");
 		lblStatus.setForeground(Color.lightGray);

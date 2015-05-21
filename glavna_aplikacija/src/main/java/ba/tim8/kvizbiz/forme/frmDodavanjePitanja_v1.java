@@ -157,9 +157,9 @@ public class frmDodavanjePitanja_v1 extends JFrame {
 		btnOtkazi.setPreferredSize(new Dimension(90, 23));
 		btnOtkazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmDodavanjePitanja_v2 lala = new frmDodavanjePitanja_v2();
-				lala.setVisible(true);
-				dispose();
+				//frmDodavanjePitanja_v2 lala = new frmDodavanjePitanja_v2();
+				//lala.setVisible(true);
+				//dispose();
 			}
 		});
 		pnlButtoni.add(btnOtkazi, gbcButtoni);
