@@ -216,11 +216,11 @@ public class PromjenaLicnihPodataka extends JFrame {
 		}
 		textField.setText(trazeniAdministrator.get_ime());
 		textField_1.setText(trazeniAdministrator.get_prezime());
-		textField_2.setText(trazeniAdministrator.get_adresa());
+		//textField_2.setText(trazeniAdministrator.get_adresa());
 		textField_3.setText(trazeniAdministrator.get_datumRodjenja()
 				.toString().substring(0, 10));
-		textField_4.setText(trazeniAdministrator.get_eMail());
-		textField_5.setText(trazeniAdministrator.get_telefon());
+		//textField_4.setText(trazeniAdministrator.get_eMail());
+		//textField_5.setText(trazeniAdministrator.get_telefon());
 		
 		if (trazeniAdministrator.get_spol() == Spol.muski)
 			radioButton.setSelected(true);
@@ -242,48 +242,13 @@ public class PromjenaLicnihPodataka extends JFrame {
 				      .hasNext();) {
 			       trazeniAdministrator = (Administrator) iterator.next();
 		        }
-		      // adresa samo ne smije bit prazna
-					if (textField_2.getText().isEmpty()) {
-						dodaj = false;
-						lblStatus.setText("Greska");
-						lblStatus.setForeground(Color.red);
-						JOptionPane.showMessageDialog(null,
-								"Polje Adresa mora biti popunjeno!",
-								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-					}
-
-					// email validacija
-					if (textField_4.getText().isEmpty()) {
-						dodaj = false;
-						lblStatus.setText("Greska");
-						lblStatus.setForeground(Color.red);
-						JOptionPane.showMessageDialog(null,
-								"Polje Email mora biti popunjeno!",
-								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-					} else {
-						String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-						Pattern pattern = Pattern.compile(regx,
-								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textField_4.getText());
-						if (!matcher.matches()) {
-							dodaj = false;
-							lblStatus.setText("Greska");
-							lblStatus.setForeground(Color.red);
-							JOptionPane.showMessageDialog(null,
-									"Polje Email mora biti u pravilnom formatu!",
-									"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
-							;
-						}
-					}
-
-					// telefon validacija
+		  
+		      // telefon validacija
 					if (textField_5.getText().isEmpty()) {
 						dodaj = false;
-						lblStatus.setText("Greska");
+						lblStatus.setText("Polje Telefon mora biti popunjeno");
 						lblStatus.setForeground(Color.red);
-						JOptionPane.showMessageDialog(null,
-								"Polje Telefon mora biti popunjeno!",
-								"Promjena licnih podataka", JOptionPane.ERROR_MESSAGE);
+						
 					} else {
 						String regx = "^[0-9]*$";
 						Pattern pattern = Pattern.compile(regx,
@@ -291,13 +256,39 @@ public class PromjenaLicnihPodataka extends JFrame {
 						Matcher matcher = pattern.matcher(textField_5.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
-							lblStatus.setText("Greska");
+							lblStatus.setText("Polje Telefon mora sadržavati samo brojeve!");
 							lblStatus.setForeground(Color.red);
-							JOptionPane.showMessageDialog(null,
-									"Polje Telefon mora sadržavati samo brojeve!",
-									"Promjena klijenta", JOptionPane.ERROR_MESSAGE);
-							;
+						
 						}
+					}
+
+					// email validacija
+					if (textField_4.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Email mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+						
+					} else {
+						String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_4.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Email mora biti u pravilnom formatu!");
+							lblStatus.setForeground(Color.red);
+							
+						}
+					}
+
+					
+										
+				    // adresa samo ne smije bit prazna
+					if (textField_2.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Adresa mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+						
 					}
 
 					if (dodaj == true) {
@@ -306,7 +297,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						trazeniAdministrator.set_telefon(textField_5.getText());
 						adao.update(trazeniAdministrator);
 						lblStatus.setText("Uredu");
-						lblStatus.setForeground(Color.green);
+						lblStatus.setForeground(Color.blue);
 						JOptionPane.showMessageDialog(null,
 								"Klijent je uspješno promjenjen!",
 								"Promjena licnih podataka",
