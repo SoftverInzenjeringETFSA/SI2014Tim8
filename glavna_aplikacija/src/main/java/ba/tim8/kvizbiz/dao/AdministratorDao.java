@@ -39,7 +39,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		}
 	}
 	
-	public boolean pretraziAdmina(String username,char[] password) {
+	public boolean pretraziAdmina(String username,char [] password) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session
