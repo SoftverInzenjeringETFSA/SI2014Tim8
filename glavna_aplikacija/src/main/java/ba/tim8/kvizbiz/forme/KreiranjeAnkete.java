@@ -201,16 +201,17 @@ public class KreiranjeAnkete extends JFrame {
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblStatus, BorderLayout.SOUTH);
 		
-		ucitajSvaPitanja();
+		if (trenutniKvizID != -1)
+			ucitajSvaPitanja();
 	}
 	
 	private void ucitajSvaPitanja()
 	{
 		PitanjeDao pdao = PitanjeDao.get();
-		Collection<Pitanje> pitanja = pdao.readAll();
+		//Collection<Pitanje> pitanja = pdao.DajSveZaKviz(trenutniKvizID);
 		DefaultTableModel model = (DefaultTableModel) tblPitanja.getModel();
 		
-		ucitajPitanja(pitanja);
+		//ucitajPitanja(pitanja);
 	}	
 	
 	private void ucitajPitanja(Collection<Pitanje> pitanja)

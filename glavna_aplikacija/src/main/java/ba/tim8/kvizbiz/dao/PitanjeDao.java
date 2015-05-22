@@ -43,13 +43,25 @@ public class PitanjeDao extends BaseDao<Pitanje> {
 		return plist;
 	}
 	
-	public long kreirajPitanje(Pitanje object) {
+	public Collection<String> DajSveTekstoveZaKviz(long kviz) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		session.save(object);
-		long id = object.get_id();
+		Query q = session.createQuery("select _tekstPitanja from Pitanje where _kviz.id = :parametar");
+		q.setParameter("parametar", kviz);
+		Collection<String> plist = (Collection<String>) q.list();
 		t.commit();
 		session.close();
-		return id;		
+		return plist;
+	}
+	
+	public Collection<String> DajSveTipoveeZaKviz(long kviz) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("select _tekstPitanja from Pitanje where _kviz.id = :parametar");
+		q.setParameter("parametar", kviz);
+		Collection<String> plist = (Collection<String>) q.list();
+		t.commit();
+		session.close();
+		return plist;
 	}
 }
