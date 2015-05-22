@@ -168,6 +168,12 @@ public class ManipulacijaAnketama extends JFrame {
 		panel.add(btnObriiOznaenu);
 		
 		JButton btnModifikujOznaenu = new JButton("Modifikuj ozna\u010Denu");
+		btnModifikujOznaenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ModifikacijaAnkete m= new ModifikacijaAnkete();
+				m.setVisible(true);
+			}
+		});
 		btnModifikujOznaenu.setBounds(10, 126, 147, 23);
 		panel.add(btnModifikujOznaenu);
 		
