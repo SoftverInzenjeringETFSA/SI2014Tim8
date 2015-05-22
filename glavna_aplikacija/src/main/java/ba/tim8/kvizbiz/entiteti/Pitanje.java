@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,6 +25,7 @@ public class Pitanje implements java.io.Serializable{
 	
 	@Id
 	@Column(name = "idPitanje", unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long _id;
 	@Column(name = "tekstPitanja", nullable = false)
 	private String _tekstPitanja;

@@ -92,16 +92,49 @@ public class KreiranjeAnkete extends JFrame {
 		pnlPitanja.add(btnDodaj, "cell 0 0");
 		
 		pnlPitanja.add(new JLabel("Odaberite ID:"), "cell 0 1,alignx left");
-		JComboBox<Integer> cbbID = new JComboBox<Integer>();
+		final JComboBox<Integer> cbbID = new JComboBox<Integer>();
 		PitanjeDao pdao = PitanjeDao.get();
 		for(long id : pdao.DajSveIdZaKviz(1))
 			cbbID.addItem((int)id);
 		pnlPitanja.add(cbbID, "cell 0 1,alignx left");
 		
 		JButton btnPromjeni = new JButton("Promjeni odabrano pitanje");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Component component = (Component) e.getSource();
+				//frmDodavanjePitanja_v2 forma = new frmDodavanjePitanja_v2((JFrame) SwingUtilities.getRoot(component));
+				//forma.setVisible(true);
+				//dispose();
+			}
+		});
 		pnlPitanja.add(btnPromjeni, "cell 0 2");
 		
 		JButton btnObrisi = new JButton("Obriši odabrano pitanje");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int odabraniId = (Integer) cbbID.getSelectedItem();
+				PitanjeDao pdao = PitanjeDao.get();
+				try {
+					pdao.delete((long) odabraniId);
+					lblStatus.setText("Pitanje je uspješno obrisano.");
+					lblStatus.setForeground(Color.green);
+					
+					removeAllRows();
+					ucitajSvaPitanja();
+					
+					cbbID.removeAllItems();
+					for(long id : pdao.DajSveIdZaKviz(1))
+						cbbID.addItem((int)id);
+					
+					contentPane.revalidate();
+					contentPane.repaint();
+				}
+				catch (Exception e1) {
+					lblStatus.setText("Greska: " + e1.getMessage());
+					lblStatus.setForeground(Color.red);
+				}
+			}
+		});
 		pnlPitanja.add(btnObrisi, "cell 0 3");
 		
 		JButton btnOk = new JButton("OK");

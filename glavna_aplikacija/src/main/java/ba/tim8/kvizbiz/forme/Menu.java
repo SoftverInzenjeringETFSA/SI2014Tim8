@@ -57,7 +57,7 @@ public class Menu {
 			JMenuItem mntmPregledAdministratora = new JMenuItem("Pregled");
 			mntmPregledAdministratora.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					PregledAdministratora noviProzor = new PregledAdministratora();
+					PregledAdministratora noviProzor = new PregledAdministratora(frame);
 					JFrame noviFrame = noviProzor
 							.get_frmPregledAdministratora();
 					noviFrame.setVisible(true);

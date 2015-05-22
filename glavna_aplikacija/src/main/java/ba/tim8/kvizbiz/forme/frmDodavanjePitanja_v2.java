@@ -302,9 +302,9 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				
 				try {
 					idPitanja = pdao.create(novoPitanje);
+					
+					//TODO: za izmjenu provjeriti je li vec ima id
 					JOptionPane.showMessageDialog(null, "ID pitanja: " + idPitanja);
-
-					idPitanja = 1;
 					
 					for (int i = 0; i < noviOdgovori.size(); i++) {
 						noviOdgovori.get(i).set_pitanje(novoPitanje);

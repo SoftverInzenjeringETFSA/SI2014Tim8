@@ -32,6 +32,7 @@ public class OdgovorDao extends BaseDao<Odgovor> {
 		t.commit();
 		session.close();		
 	}
+	
 	public List dajOdgovore(int pitanjeID){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
@@ -42,6 +43,4 @@ public class OdgovorDao extends BaseDao<Odgovor> {
 		session.close();
 		return c;
 	}
-
-	
 }
