@@ -21,7 +21,10 @@ import javax.swing.table.TableModel;
 import javax.swing.border.LineBorder;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
@@ -38,12 +41,19 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
+import javax.swing.JTextField;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class PregledAdministratora extends JFrame {
 
 	private JFrame frmPregledAdministratora;
 	private JTable table;
-	private JComboBox comboBox_1;
 	private JComboBox  comboBox;
+	private JTextField textField;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton;
 	
 	public JFrame get_frmPregledAdministratora() {
 		return frmPregledAdministratora;
@@ -82,8 +92,8 @@ public class PregledAdministratora extends JFrame {
 		frmPregledAdministratora.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Kreiranje menija
-		Menu menu = new Menu();
-		menu.NapraviMenu(frmPregledAdministratora);		
+		//Menu menu = new Menu();
+		//menu.NapraviMenu(frmPregledAdministratora);		
 		
 		frmPregledAdministratora.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -101,9 +111,9 @@ public class PregledAdministratora extends JFrame {
 		label.setBounds(30, 32, 132, 14);
 		panel_1.add(label);
 		
-		JLabel label_1 = new JLabel("Izaberite vrijednost:");
-		label_1.setBounds(30, 57, 132, 14);
-		panel_1.add(label_1);
+		JLabel lblUnesiteVrijednost = new JLabel("Unesite vrijednost:");
+		lblUnesiteVrijednost.setBounds(30, 57, 132, 14);
+		panel_1.add(lblUnesiteVrijednost);
 		
 		comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
@@ -121,75 +131,76 @@ public class PregledAdministratora extends JFrame {
 				
 				if(e.getStateChange() == ItemEvent.SELECTED)
 				{
-					comboBox_1.removeAllItems();
-					comboBox_1.addItem("--------"); // default value
+					
 					
 					String kategorija = e.getItem().toString();
 					
-					if(kategorija.compareTo("Username") == 0)
+					if(kategorija.compareTo("--------") == 0)
 					{
-						
-						for(String s : adao.dajUsernames())
-							comboBox_1.addItem(s);
-						
-					}
-					else if(kategorija.compareTo("Ime") == 0)
-					{
-						for(String s : adao.dajImena())
-							comboBox_1.addItem(s);
-					}
-					else if(kategorija.compareTo("Prezime") == 0)
-					{
-						for(String s : adao.dajPrezimena())
-							comboBox_1.addItem(s);
-					}
-					else if(kategorija.compareTo("Adresa") == 0)
-					{
-						for(String s : adao.dajAdrese())
-							comboBox_1.addItem(s);
-					}
-					else // default value, show all admins
-					{
-						comboBox_1.removeAllItems();
 						ucitajSveAdmine();
+						textField.setText("");
+						
+						
 					}
+					
+						
+						
+					
 				}
 				
 				
 			}
 		});
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"--------", "Username", "Ime", "Prezime", "Adresa"}));
-		comboBox.setBounds(172, 29, 230, 20);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"--------", "Username", "Ime", "Prezime", "Adresa", "Datum rođenja", "Telefon", "Email"}));
+		comboBox.setBounds(172, 29, 114, 20);
 		panel_1.add(comboBox);
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e)
+		textField = new JTextField();
+		textField.setBounds(172, 54, 114, 20);
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		btnNewButton_1 = new JButton("Pretraži");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e)
+			
 			
 			{
 				// pretraga
 				
 				AdministratorDao adao = AdministratorDao.get();
 				
-				if(e.getStateChange() == ItemEvent.SELECTED)
-				{
-				
 				if(comboBox.getSelectedItem().toString() == "Username")
-					ucitajAdmine(adao.dajPoUsernamu(comboBox_1.getSelectedItem().toString()));
+					ucitajAdmine(adao.dajPoUsernamu(textField.getText()));
 				else if(comboBox.getSelectedItem().toString() == "Ime")
-					ucitajAdmine(adao.dajPoImenu(comboBox_1.getSelectedItem().toString()));
+					ucitajAdmine(adao.dajPoImenu(textField.getText()));
 				else if(comboBox.getSelectedItem().toString() == "Prezime")
-					ucitajAdmine(adao.dajPoPrezimenu(comboBox_1.getSelectedItem().toString()));
+					ucitajAdmine(adao.dajPoPrezimenu(textField.getText()));
 				else if(comboBox.getSelectedItem().toString() == "Adresa")
-					ucitajAdmine(adao.dajPoAdresi(comboBox_1.getSelectedItem().toString()));
-				
-				
-			}
-				
+					ucitajAdmine(adao.dajPoAdresi(textField.getText()));
+				else if(comboBox.getSelectedItem().toString() == "Datum rođenja")
+				{
+						try
+					{
+						ucitajAdmine(adao.dajPoDatumu(textField.getText()));
+					}
+					catch(Exception ex)
+					{
+						JOptionPane.showMessageDialog(null,
+								"Datum mora biti u formatu dd/mm/yyyy",
+								"Pogrešan format datuma",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else if(comboBox.getSelectedItem().toString() == "Telefon")
+					ucitajAdmine(adao.dajPoTelefonu(textField.getText()));
+				else if(comboBox.getSelectedItem().toString() == "Email")
+					ucitajAdmine(adao.dajPoMailu(textField.getText()));
 			}
 		});
-		comboBox_1.setBounds(172, 54, 230, 20);
-		panel_1.add(comboBox_1);
+		btnNewButton_1.setBounds(314, 53, 89, 23);
+		panel_1.add(btnNewButton_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 145, 580, 127);
@@ -210,7 +221,7 @@ public class PregledAdministratora extends JFrame {
 		table.getColumnModel().getColumn(5).setPreferredWidth(85);
 		table.getColumnModel().getColumn(5).setMinWidth(85);
 		
-		JButton btnNewButton = new JButton("Statusna traka");
+		btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
@@ -226,6 +237,7 @@ public class PregledAdministratora extends JFrame {
 		
 		AdministratorDao adao = AdministratorDao.get();
 		Collection<Administrator> admini = adao.readAll();
+		sortirajPoUsernamu(admini);
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		
 		
@@ -236,16 +248,31 @@ public class PregledAdministratora extends JFrame {
 	}
 	
 	
+	private void sortirajPoUsernamu(Collection<Administrator> admini)
+	{
+		Comparator<Administrator> comparator = new Comparator<Administrator>() {
+		    public int compare(Administrator f1, Administrator f2) {
+		        return f1.get_username().compareTo(f2.get_username());
+		    }
+		};
+
+		Collections.sort((ArrayList<Administrator>) admini, comparator);
+		
+	}
+
 	private void ucitajAdmine(Collection<Administrator> admini)
 	{
+		Integer brojac = 0;
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		removeAllRows();
 		
 		for(Administrator a : admini)
 		{
 			model.addRow(new Object[]{a.get_username(), a.get_ime(), a.get_prezime(), a.get_spol(), a.get_adresa(), a.get_datumRodjenja(), a.get_eMail(), a.get_telefon()});
-			
+			brojac++;
 		}
+		
+		btnNewButton.setText("Prikazano " + brojac.toString()  + " rezultata.");
 	}
 	
 	private void removeAllRows()

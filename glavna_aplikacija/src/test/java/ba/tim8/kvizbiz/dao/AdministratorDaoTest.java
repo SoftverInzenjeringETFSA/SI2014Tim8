@@ -237,7 +237,6 @@ public class AdministratorDaoTest {
 	}
 
 	
-	
 	@After
 	public void deleteTestDataAfter()
 	{
@@ -245,6 +244,7 @@ public class AdministratorDaoTest {
 		adao.deleteAll();
 	
 	}
+	
 	
 	
 
