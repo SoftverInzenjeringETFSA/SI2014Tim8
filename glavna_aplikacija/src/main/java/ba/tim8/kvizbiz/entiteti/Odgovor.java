@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -21,6 +23,7 @@ public class Odgovor implements java.io.Serializable{
 	
 	@Id
 	@Column(name = "idOdgovor", unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long _id;
 	@Column(name = "tekstOdgovora", nullable = false)
 	private String _tekstOdgovora;
