@@ -14,7 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class PocetnaKlijent_v1 extends JFrame {
+public class PocetnaKlijentZaKlijenta extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel contentPane;
@@ -27,7 +27,7 @@ public class PocetnaKlijent_v1 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PocetnaKlijent_v1 frame = new PocetnaKlijent_v1();
+					PocetnaKlijentZaKlijenta frame = new PocetnaKlijentZaKlijenta();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class PocetnaKlijent_v1 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PocetnaKlijent_v1() {
+	public PocetnaKlijentZaKlijenta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
