@@ -38,6 +38,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -134,12 +137,10 @@ public class PromjenaLicnihPodataka extends JFrame {
 		panel_1.add(label_1, "cell 0 0,growx,aligny center");
 		
 		textField = new JTextField();
-		textField.setEditable(false);
 		textField.setColumns(10);
 		panel_1.add(textField, "cell 1 0 3 1,growx,aligny top");
 		
 		textField_1 = new JTextField();
-		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		panel_1.add(textField_1, "cell 1 1 3 1,growx,aligny top");
 		
@@ -156,7 +157,6 @@ public class PromjenaLicnihPodataka extends JFrame {
 		panel_1.add(textField_2, "cell 1 3 3 1,growx,aligny top");
 		
 		textField_3 = new JTextField();
-		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		panel_1.add(textField_3, "cell 1 4 3 1,growx,aligny top");
 		
@@ -164,12 +164,10 @@ public class PromjenaLicnihPodataka extends JFrame {
 		label_4.setHorizontalAlignment(JLabel.RIGHT);
 		panel_1.add(label_4, "cell 0 2,growx,aligny top");
 		
-		JRadioButton radioButton = new JRadioButton("Muški");
-		radioButton.setEnabled(false);
+		final JRadioButton radioButton = new JRadioButton("Muški");
 		panel_1.add(radioButton, "cell 1 2,growx,aligny top");
 		
 		JRadioButton radioButton_1 = new JRadioButton("Ženski");
-		radioButton_1.setEnabled(false);
 		panel_1.add(radioButton_1, "cell 3 2,alignx left,aligny top");
 		
 		ButtonGroup group = new ButtonGroup();
@@ -216,11 +214,11 @@ public class PromjenaLicnihPodataka extends JFrame {
 		}
 		textField.setText(trazeniAdministrator.get_ime());
 		textField_1.setText(trazeniAdministrator.get_prezime());
-		//textField_2.setText(trazeniAdministrator.get_adresa());
+		textField_2.setText(trazeniAdministrator.get_adresa());
 		textField_3.setText(trazeniAdministrator.get_datumRodjenja()
 				.toString().substring(0, 10));
-		//textField_4.setText(trazeniAdministrator.get_eMail());
-		//textField_5.setText(trazeniAdministrator.get_telefon());
+		textField_4.setText(trazeniAdministrator.get_eMail());
+		textField_5.setText(trazeniAdministrator.get_telefon());
 		
 		if (trazeniAdministrator.get_spol() == Spol.muski)
 			radioButton.setSelected(true);
@@ -280,9 +278,27 @@ public class PromjenaLicnihPodataka extends JFrame {
 							
 						}
 					}
-
+ 
 					
-										
+
+					// datum rodjenja validacija
+					if (textField_3.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Datum rođenja mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					} else {
+						String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_3.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!");
+							lblStatus.setForeground(Color.red);
+
+						}
+					}			
 				    // adresa samo ne smije bit prazna
 					if (textField_2.getText().isEmpty()) {
 						dodaj = false;
@@ -290,14 +306,66 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setForeground(Color.red);
 						
 					}
+					
+					// prezime validacija
+					if (textField_1.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Prezime mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
 
+					} else {
+						String regx = "[a-zA-Z]+\\.?";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_1.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Prezime mora sadržavati samo slova!");
+							lblStatus.setForeground(Color.red);
+						}
+					}
+					
+					// ime validacija
+					if (textField.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Ime mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					} else {
+						String regx = "[a-zA-Z]+\\.?";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Ime mora sadržavati samo slova!");
+							lblStatus.setForeground(Color.red);
+
+						}
+					}
+
+					DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 					if (dodaj == true) {
+						if (radioButton.isSelected()) 
+							trazeniAdministrator.set_spol(Spol.muski);
+						else
+							trazeniAdministrator.set_spol(Spol.muski);
+						trazeniAdministrator.set_ime(textField.getText());
+						trazeniAdministrator.set_prezime(textField_1.getText());
+						try {
+							trazeniAdministrator.set_datumRodjenja(format.parse(textField_3.getText()));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						trazeniAdministrator.set_adresa(textField_2.getText());
 						trazeniAdministrator.set_eMail(textField_4.getText());
 						trazeniAdministrator.set_telefon(textField_5.getText());
 						adao.update(trazeniAdministrator);
 						lblStatus.setText("Uredu");
 						lblStatus.setForeground(Color.blue);
+						int rezultatDijaloga = JOptionPane.showConfirmDialog(null, "Jeste li sigurni da želite promijeniti podatke " , "Promjena ličnih podataka", JOptionPane.YES_NO_OPTION);
+						if (rezultatDijaloga == JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(null,
 								"Podaci su uspješno promijenjeni!",
 								"Promjena licnih podataka",
@@ -306,6 +374,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						JFrame noviFrame = noviProzor.get_frmPromjenaLicnihPodataka();
 						noviFrame.setVisible(true);
 						frmPromjenaLicnihPodataka.dispose();
+						}
 					}
 				}
 			});
