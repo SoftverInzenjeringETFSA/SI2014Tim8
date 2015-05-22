@@ -209,7 +209,8 @@ public class BrisanjeAdministratora extends JFrame {
 		lblStatus.setForeground(Color.BLUE);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		frmBrisanjeAdministratora.getContentPane().add(lblStatus, BorderLayout.SOUTH);
+		frmBrisanjeAdministratora.getContentPane().add(lblStatus,
+				BorderLayout.SOUTH);
 		// LOGIKA
 
 		final JComboBox comboBox = new JComboBox();
@@ -224,7 +225,7 @@ public class BrisanjeAdministratora extends JFrame {
 			Administrator admin = (Administrator) iterator.next();
 			comboBox.addItem(admin.toString());
 		}
-		
+
 		comboBox.setSelectedIndex(-1);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -239,7 +240,8 @@ public class BrisanjeAdministratora extends JFrame {
 				textField.setText(trazeniAdmin.get_ime());
 				textField_1.setText(trazeniAdmin.get_prezime());
 				textField_2.setText(trazeniAdmin.get_adresa());
-				textField_3.setText(trazeniAdmin.get_datumRodjenja().toString().substring(0, 10));
+				textField_3.setText(trazeniAdmin.get_datumRodjenja().toString()
+						.substring(0, 10));
 				textField_4.setText(trazeniAdmin.get_eMail());
 				textField_5.setText(trazeniAdmin.get_telefon());
 				if (trazeniAdmin.get_spol() == Spol.muski)
@@ -252,36 +254,44 @@ public class BrisanjeAdministratora extends JFrame {
 		btnObriiKlijenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					
-					AdministratorDao admindao = AdministratorDao.get();
-					Collection<Administrator> admin = admindao
-							.dajPoUsernamu(comboBox.getSelectedItem().toString());
-					Administrator trazeniAdmin = new Administrator();
-					for (Iterator<Administrator> iterator = admin.iterator(); iterator
-							.hasNext();) {
-						trazeniAdmin = (Administrator) iterator.next();
-					}
-					if (adao.readAll().size() == 1) {
-						lblStatus.setText("Greska");
-						JOptionPane
-								.showMessageDialog(
-										null,
-										"Administrator ne može biti obrisan! U sistemu mora postojati barem jedan administrator!",
-										"Brisanje administratora",
-										JOptionPane.WARNING_MESSAGE);
-					} else {
-						adao.delete(trazeniAdmin.get_id());
+					if (comboBox.getSelectedIndex() == -1) {
 						JOptionPane.showMessageDialog(null,
-								"Administrator je uspješno obrisan!",
+								"Izaberite administratora!",
 								"Brisanje administratora",
-								JOptionPane.INFORMATION_MESSAGE);
-						BrisanjeAdministratora noviProzor = new BrisanjeAdministratora();
-						JFrame noviFrame = noviProzor.get_frmBrisanjeAdministratora();
-						noviFrame.setVisible(true);
-						frmBrisanjeAdministratora.dispose();
-						
+								JOptionPane.WARNING_MESSAGE);
+					} else {
+						AdministratorDao admindao = AdministratorDao.get();
+						Collection<Administrator> admin = admindao
+								.dajPoUsernamu(comboBox.getSelectedItem()
+										.toString());
+						Administrator trazeniAdmin = new Administrator();
+						for (Iterator<Administrator> iterator = admin
+								.iterator(); iterator.hasNext();) {
+							trazeniAdmin = (Administrator) iterator.next();
+						}
+
+						if (adao.readAll().size() == 1) {
+							lblStatus.setText("Greska");
+							JOptionPane
+									.showMessageDialog(
+											null,
+											"Administrator ne može biti obrisan! U sistemu mora postojati barem jedan administrator!",
+											"Brisanje administratora",
+											JOptionPane.WARNING_MESSAGE);
+						} else {
+							adao.delete(trazeniAdmin.get_id());
+							JOptionPane.showMessageDialog(null,
+									"Administrator je uspješno obrisan!",
+									"Brisanje administratora",
+									JOptionPane.INFORMATION_MESSAGE);
+							BrisanjeAdministratora noviProzor = new BrisanjeAdministratora();
+							JFrame noviFrame = noviProzor
+									.get_frmBrisanjeAdministratora();
+							noviFrame.setVisible(true);
+							frmBrisanjeAdministratora.dispose();
+
+						}
 					}
-					
 				} catch (Exception ex) {
 
 				}

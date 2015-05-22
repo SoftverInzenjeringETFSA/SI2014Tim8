@@ -39,7 +39,7 @@ public class LoginAdmina extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginAdmina() {
+		public LoginAdmina() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 200);
 		contentPane = new JPanel();
@@ -69,7 +69,9 @@ public class LoginAdmina extends JFrame {
 									
 					if(a.pretraziAdmina(username,password)){					
 						usernameLogiranogAdmina = username;
-						JOptionPane.showMessageDialog(null, "Logiran je");
+						PocetnaKlijent forma = new PocetnaKlijent();
+						forma.setVisible(true);
+						dispose();
 					}
 					else {
 						lblStatus.setText("Pogrešan unos korisničkog imena ili lozinke.");
