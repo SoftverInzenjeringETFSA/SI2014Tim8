@@ -3,7 +3,9 @@ package ba.tim8.kvizbiz.dao;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -104,6 +106,49 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Query q = session
 				.createQuery("from Administrator a where a._prezime = :nesto order by a._username");
 		q.setParameter("nesto", prezime);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
+	public Collection<Administrator> dajPoDatumu(String datum) throws Exception {
+		
+		Date date = new Date(0);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		try{
+			date = sdf.parse(datum);
+		 }
+		catch(Exception e){e.printStackTrace(); throw e;}
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._datumRodjenja = :nesto order by a._username");
+		q.setParameter("nesto", date);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
+	public Collection<Administrator> dajPoTelefonu(String telefon) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._telefon = :nesto order by a._username");
+		q.setParameter("nesto", telefon);
+		Collection<Administrator> alist = (Collection<Administrator>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
+	public Collection<Administrator> dajPoMailu(String mail) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Administrator a where a._eMail = :nesto order by a._username");
+		q.setParameter("nesto", mail);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
 			t.commit();
 			session.close();
