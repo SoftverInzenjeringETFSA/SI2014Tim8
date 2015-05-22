@@ -237,27 +237,26 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 					tipNovogPitanja = TipPitanja.OtvoreniOdgovor;
 				}
 				else if (cbbTip.getSelectedIndex() == 3) {
-					tipNovogPitanja = TipPitanja.DaNE;
-				}
-				else if (cbbTip.getSelectedIndex() == 4) {
 					tipNovogPitanja = TipPitanja.VisestrukiIzbor;
 				}
-				else if (cbbTip.getSelectedIndex() == 5) {
+				else if (cbbTip.getSelectedIndex() == 4) {
 					tipNovogPitanja = TipPitanja.TacnoNetacno;
+				}
+				else if (cbbTip.getSelectedIndex() == 5) {
+					tipNovogPitanja = TipPitanja.DaNE;
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Došlo je do nepredviđene situacije u izboru tipa pitanja!");
 				}
 				
-				//TODO: Dodati da se registruje o kojem kvizu je rijec
 				Pitanje novoPitanje = null;
 				ArrayList<Odgovor> noviOdgovori = new ArrayList<Odgovor>();
 				
 				// Kreiranje objekata
 				try {
-					//TODO: Faruk: kada sve bude spremno, ovo odkomentirati 
-					//Kviz testniKviz = KreiranjeAnkete_v1.trenutniKviz;
-					Kviz testniKviz = new Kviz(1, "Testni kviz", 5, true, false);
+					KvizDao kdao = KvizDao.get();
+					long idKviza = KreiranjeAnkete.trenutniKvizID;
+					Kviz testniKviz = kdao.read(idKviza);
 					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
 					if (tipNovogPitanja == TipPitanja.Abc) {
 						for (int i = 0; i < listaOdgovori.size(); i++) {
@@ -335,6 +334,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		JButton btnNazad = new JButton("Nazad");
 		btnNazad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				((KreiranjeAnkete) proslaForma).refresh();
 				proslaForma.setVisible(true);
 				dispose();
 			}

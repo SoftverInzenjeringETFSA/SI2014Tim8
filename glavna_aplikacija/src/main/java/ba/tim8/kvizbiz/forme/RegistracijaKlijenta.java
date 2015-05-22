@@ -164,7 +164,7 @@ public class RegistracijaKlijenta {
 							"Registracija klijenta",
 							JOptionPane.ERROR_MESSAGE);
 				}else{
-				PocetnaKlijent_v1 noviFrame = new PocetnaKlijent_v1();
+				PocetnaKlijentZaKlijenta noviFrame = new PocetnaKlijentZaKlijenta();
 				noviFrame.setVisible(true);
 				frmRegistracijaKlijenta.dispose();
 				}

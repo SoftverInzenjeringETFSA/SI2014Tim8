@@ -89,11 +89,11 @@ public class Kviz implements java.io.Serializable{
 	public Kviz(long _id, String _naziv, int _vremenskoOgranicenje,
 			boolean _aktivan, boolean _arhiviran) {
 		super();
-		this._id = _id;
-		this._naziv = _naziv;
-		this._vremenskoOgranicenje = _vremenskoOgranicenje;
-		this._aktivan = _aktivan;
-		this._arhiviran = _arhiviran;
+		set_id(_id);
+		set_naziv(_naziv);
+		set_vremenskoOgranicenje(_vremenskoOgranicenje);
+		set_aktivan(_aktivan);
+		set_arhiviran(_arhiviran);
 	}
 	
 	@Override
