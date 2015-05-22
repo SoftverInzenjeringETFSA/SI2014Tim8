@@ -31,12 +31,12 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	/*
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frmDodavanjePitanja_v2 frame = new frmDodavanjePitanja_v2();
+					frmDodavanjePitanja_v2 frame = new frmDodavanjePitanja_v2(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 			}
 		});
 	}
-	*/
+	
 
 	/**
 	 * Create the frame.
