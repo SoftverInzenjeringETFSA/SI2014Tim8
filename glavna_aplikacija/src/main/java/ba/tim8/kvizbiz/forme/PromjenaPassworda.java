@@ -165,42 +165,49 @@ public class PromjenaPassworda extends JFrame {
 			       trazeniAdministrator = (Administrator) iterator.next();
 		        }
                 
-			 // potvrda password validacija
-				if (passwordField_1.getText().isEmpty()) {
-					dodaj = false;
-					lblStatus.setText("Polje password mora biti popunjeno!");
-					lblStatus.setForeground(Color.red);
-
-				} 
-			    
-				 // novi password validacija
-					if (passwordField_2.getText().isEmpty()) {
-						dodaj = false;
-						lblStatus.setText("Polje Novi password mora biti popunjeno!");
-						lblStatus.setForeground(Color.red);
-
-					}else if(!passwordField_2.getText().equals(passwordField_1.getText())){
+		         
+		         
+					if(!passwordField_2.getText().equals(passwordField_1.getText())){
 						dodaj = false;
 						lblStatus.setText("Polja Novi password i Potvrdi password se ne poklapaju !");
 						lblStatus.setForeground(Color.red);
 					}
-					
+		         
+		         
+			 // potvrda password validacija
+				if (passwordField_1.getText().isEmpty()) {
+					dodaj = false;
+					lblStatus.setText("Polje Potvrdi password mora biti popunjeno!");
+					lblStatus.setForeground(Color.red);
+
+				} 			    
+				
+				     // novi password validacija
+
+					 if (passwordField_2.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Novi password mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					}
 					 // trenutni password validacija
+					char[] c=passwordField.getPassword();
+					
+					 if(!administratordao.pretraziAdmina(neki,c)){
+						dodaj = false;
+						lblStatus.setText("Unijeli ste pogrešan password u polje Trenutni password!");
+						lblStatus.setForeground(Color.red);
+					}
 					if (passwordField.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Trenutni Password mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
                        
 					}
-					char[] c=passwordField.getPassword();
-				
-					 if(!administratordao.pretraziAdmina(neki,c)){
-						dodaj = false;
-						lblStatus.setText("Unijeli ste pogrešan password u polje Trenutni password!");
-						lblStatus.setForeground(Color.red);
-					}
+					
 					
 					if(dodaj==true){
+						trazeniAdministrator.set_password(passwordField_1.getText());
 						administratordao.updatePass(trazeniAdministrator);
 						lblStatus.setText("Uredu");
 						lblStatus.setForeground(Color.blue);
