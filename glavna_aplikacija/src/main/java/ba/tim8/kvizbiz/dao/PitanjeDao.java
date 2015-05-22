@@ -32,14 +32,15 @@ public class PitanjeDao extends BaseDao<Pitanje> {
 		session.close();
 		return c;
 	}
-	public Collection<Long> DajSveIdZaKviz(int kviz) {
+	
+	public Collection<Long> DajSveIdZaKviz(long kviz) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select _id from Pitanje where _kviz = :parametar");
+		Query q = session.createQuery("select _id from Pitanje where _kviz.id = :parametar");
 		q.setParameter("parametar", kviz);
 		Collection<Long> plist = (Collection<Long>) q.list();
 		t.commit();
 		session.close();
 		return plist;
-	 }
+	}
 }

@@ -2,6 +2,7 @@ package ba.tim8.kvizbiz.forme;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Console;
 import java.util.*;
 
 import javax.swing.*;
@@ -302,6 +303,8 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				try {
 					idPitanja = pdao.create(novoPitanje);
 					JOptionPane.showMessageDialog(null, "ID pitanja: " + idPitanja);
+
+					idPitanja = 1;
 					
 					for (int i = 0; i < noviOdgovori.size(); i++) {
 						noviOdgovori.get(i).set_pitanje(novoPitanje);
@@ -317,6 +320,9 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 					}
 					lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
 					lblStatus.setForeground(Color.red);
+					
+					e1.printStackTrace();
+					
 					return;
 				}
 				

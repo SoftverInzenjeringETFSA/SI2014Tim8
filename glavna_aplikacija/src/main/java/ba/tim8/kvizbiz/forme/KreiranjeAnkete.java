@@ -5,13 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Collection;
 
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
+import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.dao.PitanjeDao;
+import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
 import net.miginfocom.swing.MigLayout;
 
 public class KreiranjeAnkete extends JFrame {
@@ -106,29 +110,66 @@ public class KreiranjeAnkete extends JFrame {
 		JButton btnOtkazi = new JButton("Otkaži");
 		kontejner.add(btnOtkazi, "cell 1 2,growx");
 		
-		// Testni podaci
-		Object[] naziviKolona = new Object[]{"Broj", "Tekst", "Tip"};
-		Object[][] podaci = new Object[][]{
-				{new Integer(1), "Koliko je 2+2?", "Ponu�eni odgovori"},
-				{new Integer(2), "šta je polimorfizam?", "Otvoren odgovor"}
-		};
-		
-		DefaultTableModel model = new DefaultTableModel();
-		model.setDataVector(podaci, naziviKolona);
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(175, 25, 348, 139);
+		scrollPane.setBounds(30, 145, 580, 127);
 		pnlPitanja.add(scrollPane, "cell 1 0 1 5,growx");
-		
-		tblPitanja = new JTable(model);
-		tblPitanja.getColumnModel().getColumn(0).setPreferredWidth(20);
+			
+		tblPitanja = new JTable();
 		scrollPane.setViewportView(tblPitanja);
+		tblPitanja.setColumnSelectionAllowed(true);
+		tblPitanja.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tblPitanja.setModel(new DefaultTableModel(
+			new Object[][] {
+				
+			},
+			new String[] {
+				"ID pitanja", "Tekst pitanja", "Tip pitnja"
+			}
+		)
+		{
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		});
 		
 		lblStatus = new JLabel("Statusna traka");
 		lblStatus.setForeground(Color.lightGray);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblStatus, BorderLayout.SOUTH);
+		
+		ucitajSvaPitanja();
 	}
-
+	
+	private void ucitajSvaPitanja()
+	{
+		PitanjeDao pdao = PitanjeDao.get();
+		Collection<Pitanje> pitanja = pdao.readAll();
+		DefaultTableModel model = (DefaultTableModel) tblPitanja.getModel();
+		
+		ucitajPitanja(pitanja);
+	}	
+	
+	private void ucitajPitanja(Collection<Pitanje> pitanja)
+	{
+		DefaultTableModel model = (DefaultTableModel) tblPitanja.getModel();
+		removeAllRows();
+		
+		for(Pitanje p : pitanja)
+		{
+			model.addRow(new Object[]{p.get_id(), p.get_tekstPitanja(), p.get_tipPitanja()});
+		}
+	}
+	
+	private void removeAllRows()
+	{
+		DefaultTableModel dm = (DefaultTableModel) tblPitanja.getModel();
+		int rowCount = dm.getRowCount();
+	
+		for (int i = rowCount - 1; i >= 0; i--) {
+		    dm.removeRow(i);
+		}
+	}
 }
