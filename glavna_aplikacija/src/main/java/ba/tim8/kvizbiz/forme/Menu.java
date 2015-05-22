@@ -110,7 +110,7 @@ public class Menu {
 			JMenuItem mntmDodavanje = new JMenuItem("Dodavanje");
 			mntmDodavanje.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					KreiranjeAnkete noviProzor = new KreiranjeAnkete();
+					KreiranjeAnkete_stara1 noviProzor = new KreiranjeAnkete_stara1();
 					JFrame noviFrame = noviProzor.get_frmKreiranjeAnkete();
 					noviFrame.setVisible(true);
 					frame.dispose();

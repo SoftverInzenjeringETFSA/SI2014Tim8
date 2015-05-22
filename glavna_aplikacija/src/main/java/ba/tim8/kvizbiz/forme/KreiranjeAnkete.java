@@ -1,37 +1,29 @@
 package ba.tim8.kvizbiz.forme;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.SystemColor;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
+import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
-public class KreiranjeAnkete extends JFrame {
+import ba.tim8.kvizbiz.dao.PitanjeDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
+import net.miginfocom.swing.MigLayout;
 
-	private JFrame frmKreiranjeAnkete;
-	private JTextField textField;
-	private JTable tblPitanja;
+public class KreiranjeAnkete extends JFrame {
+	private static final long serialVersionUID = 1L;
 	
-	public JFrame get_frmKreiranjeAnkete () {
-		return frmKreiranjeAnkete;
-	}
+	public static Kviz trenutniKviz;
+	
+	private JPanel contentPane;
+	private JTextField tbxNaslov;
+	private JTable tblPitanja;
+	private JLabel lblStatus;
+	private JSpinner spiVrijeme;
 
 	/**
 	 * Launch the application.
@@ -40,8 +32,8 @@ public class KreiranjeAnkete extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					KreiranjeAnkete window = new KreiranjeAnkete();
-					window.frmKreiranjeAnkete.setVisible(true);
+					KreiranjeAnkete frame = new KreiranjeAnkete();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,68 +42,69 @@ public class KreiranjeAnkete extends JFrame {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
 	public KreiranjeAnkete() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmKreiranjeAnkete = new JFrame();
-		frmKreiranjeAnkete.setTitle("Kreiranje ankete");
-		frmKreiranjeAnkete.setBounds(100, 100, 620, 458);
-		frmKreiranjeAnkete.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmKreiranjeAnkete.getContentPane().setLayout(new BorderLayout(0, 0));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 600, 500);
+		contentPane = new JPanel();
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
 		
-		// Kreiranje menija
 		Menu menu = new Menu();
-		menu.NapraviMenu(frmKreiranjeAnkete);
+		menu.NapraviMenu(this);
 		
-		JPanel panel1 = new JPanel();
-		frmKreiranjeAnkete.getContentPane().add(panel1, BorderLayout.CENTER);
-		panel1.setLayout(null);
+		JPanel kontejner = new JPanel(new MigLayout("", "[grow][100px][100px]", "[fill][grow][fill]"));
+		kontejner.setBorder(null);
+		contentPane.add(kontejner, BorderLayout.CENTER);
 		
+		JPanel pnlPodaci = new JPanel(new MigLayout("", "[grow][fill][220px][grow]", "[fill][fill]"));
+		pnlPodaci.setBorder(new TitledBorder("Unesite osnovne podatke o anketi:"));
+		kontejner.add(pnlPodaci, "cell 0 0 3 1,growx");
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(30, 30, 400, 100);
-		panel.setBorder(new TitledBorder(null, "Unesite osnovne podatke:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel1.add(panel);
-		panel.setLayout(null);
+		pnlPodaci.add(new JLabel("Nalov ankete: "), "cell 1 0,alignx right");
+		pnlPodaci.add(new JLabel("Vremensko ograničenje: "), "cell 1 1,alignx right");
 		
-		textField = new JTextField();
-		textField.setBounds(168, 31, 195, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		tbxNaslov = new JTextField();
+		pnlPodaci.add(tbxNaslov, "cell 2 0,growx");
 		
-		JLabel lblNaziv = new JLabel("Naziv:");
-		lblNaziv.setBounds(25, 34, 133, 14);
-		panel.add(lblNaziv);
+		spiVrijeme = new JSpinner();
+		spiVrijeme.setModel(new SpinnerNumberModel(10, 1, 30, 1));
+		pnlPodaci.add(spiVrijeme, "cell 2 1,alignx left");
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(1, 1, 30, 1));
-		spinner.setBounds(168, 62, 86, 20);
-		panel.add(spinner);
+		JPanel pnlPitanja = new JPanel(new MigLayout("", "[fill][grow]", "[fill][fill][fill][fill][grow]"));
+		pnlPitanja.setBorder(new TitledBorder("Unesite pitanja:"));
+		kontejner.add(pnlPitanja, "cell 0 1 3 1,growx,growy");
 		
-		JLabel lblVremeskoOgranienje = new JLabel("Vremensko ograni\u010Denje:");
-		lblVremeskoOgranienje.setBounds(25, 65, 133, 14);
-		panel.add(lblVremeskoOgranienje);
+		JButton btnDodaj = new JButton("Dodaj novo pitanje");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Component component = (Component) e.getSource();
+				frmDodavanjePitanja_v2 forma = new frmDodavanjePitanja_v2((JFrame) SwingUtilities.getRoot(component));
+				forma.setVisible(true);
+				dispose();
+			}
+		});
+		pnlPitanja.add(btnDodaj, "cell 0 0");
+		
+		pnlPitanja.add(new JLabel("Odaberite ID:"), "cell 0 1,alignx left");
+		JComboBox<Integer> cbbID = new JComboBox<Integer>();
+		PitanjeDao pdao = PitanjeDao.get();
+		for(long id : pdao.DajSveIdZaKviz(1))
+			cbbID.addItem((int)id);
+		pnlPitanja.add(cbbID, "cell 0 1,alignx left");
+		
+		JButton btnPromjeni = new JButton("Promjeni odabrano pitanje");
+		pnlPitanja.add(btnPromjeni, "cell 0 2");
+		
+		JButton btnObrisi = new JButton("Obriši odabrano pitanje");
+		pnlPitanja.add(btnObrisi, "cell 0 3");
 		
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(474, 327, 89, 23);
-		panel1.add(btnOk);
+		kontejner.add(btnOk, "flowx,cell 2 2,growx");
 		
-		JButton btnOtkazi = new JButton("Otka\u017Ei");
-		btnOtkazi.setBounds(360, 327, 89, 23);
-		panel1.add(btnOtkazi);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Unesite pitanja:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(30, 141, 533, 175);
-		panel1.add(panel_1);
-		panel_1.setLayout(null);
+		JButton btnOtkazi = new JButton("Otkaži");
+		kontejner.add(btnOtkazi, "cell 1 2,growx");
 		
 		// Testni podaci
 		Object[] naziviKolona = new Object[]{"Broj", "Tekst", "Tip"};
@@ -123,33 +116,19 @@ public class KreiranjeAnkete extends JFrame {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setDataVector(podaci, naziviKolona);
 		
-		JButton btnDodajNovo = new JButton("Dodaj novo");
-		btnDodajNovo.setBounds(10, 30, 155, 23);
-		panel_1.add(btnDodajNovo);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(175, 25, 348, 139);
-		panel_1.add(scrollPane);
+		pnlPitanja.add(scrollPane, "cell 1 0 1 5,growx");
 		
 		tblPitanja = new JTable(model);
 		tblPitanja.getColumnModel().getColumn(0).setPreferredWidth(20);
 		scrollPane.setViewportView(tblPitanja);
 		
-		JButton btnObrisiOznaceno = new JButton("Obriši označeno");
-		btnObrisiOznaceno.setBounds(10, 64, 155, 23);
-		panel_1.add(btnObrisiOznaceno);
-		
-		JButton btnPromjeniOznaceno = new JButton("Promjeni označeno");
-		btnPromjeniOznaceno.setBounds(10, 98, 155, 23);
-		panel_1.add(btnPromjeniOznaceno);
-		
-
-		
-		JButton btnNewButton = new JButton("Statusna traka");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmKreiranjeAnkete.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		lblStatus = new JLabel("Statusna traka");
+		lblStatus.setForeground(Color.lightGray);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblStatus, BorderLayout.SOUTH);
 	}
 
 }
