@@ -110,7 +110,7 @@ public class KreiranjeAnkete extends JFrame {
 		pnlPitanja.add(btnPromjeni, "cell 0 2");
 		
 		JButton btnObrisi = new JButton("Obriši odabrano pitanje");
-		btnDodaj.addActionListener(new ActionListener() {
+		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int odabraniId = (Integer) cbbID.getSelectedItem();
 				PitanjeDao pdao = PitanjeDao.get();

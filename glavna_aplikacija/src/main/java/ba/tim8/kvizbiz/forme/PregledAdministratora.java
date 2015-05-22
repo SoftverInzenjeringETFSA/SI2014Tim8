@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JLabel;
@@ -46,6 +47,8 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import net.miginfocom.swing.MigLayout;
+
 public class PregledAdministratora extends JFrame {
 
 	private JFrame frmPregledAdministratora;
@@ -53,7 +56,8 @@ public class PregledAdministratora extends JFrame {
 	private JComboBox  comboBox;
 	private JTextField textField;
 	private JButton btnNewButton_1;
-	private JButton btnNewButton;
+	private JLabel lblStatus;
+	private JFrame par;
 	
 	public JFrame get_frmPregledAdministratora() {
 		return frmPregledAdministratora;
@@ -66,7 +70,7 @@ public class PregledAdministratora extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PregledAdministratora window = new PregledAdministratora();
+					PregledAdministratora window = new PregledAdministratora(null);
 					window.frmPregledAdministratora.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,7 +82,8 @@ public class PregledAdministratora extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public PregledAdministratora() {
+	public PregledAdministratora(JFrame parent) {
+		par = parent;
 		initialize();
 	}
 
@@ -88,32 +93,54 @@ public class PregledAdministratora extends JFrame {
 	private void initialize() {
 		frmPregledAdministratora = new JFrame();
 		frmPregledAdministratora.setTitle("Pregled administratora");
-		frmPregledAdministratora.setBounds(100, 100, 650, 380);
+		frmPregledAdministratora.setBounds(100, 100, 600, 500);
 		frmPregledAdministratora.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPregledAdministratora.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		
+		lblStatus = new JLabel("Statusna traka");
+		lblStatus.setForeground(Color.lightGray);
+		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		frmPregledAdministratora.getContentPane().add(lblStatus, BorderLayout.SOUTH);
 		
 		// Kreiranje menija
-		//Menu menu = new Menu();
-		//menu.NapraviMenu(frmPregledAdministratora);		
+		Menu menu = new Menu();
+		menu.NapraviMenu(frmPregledAdministratora);		
 		
-		frmPregledAdministratora.getContentPane().setLayout(new BorderLayout(0, 0));
+		
 		
 		JPanel panel = new JPanel();
 		frmPregledAdministratora.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		panel.setLayout(new MigLayout("", "[grow]", "[grow][grow][fill]"));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga administratora", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(30, 31, 430, 90);
-		panel.add(panel_1);
+		panel.add(panel_1, "cell 0 0,grow");
+		panel_1.setLayout(new MigLayout("", "[grow][fill][220px][91px][grow]", "[fill][fill][fill]"));
+		
+		JButton nazad = new JButton("Nazad");
+		panel.add(nazad, "cell 0 2, alignx right");
+		nazad.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+			
+			par.setVisible(true);
+			frmPregledAdministratora.dispose();
+			
+				
+				
+				
+			}
+				
+			});
+			
 		
 		JLabel label = new JLabel("Izaberite kategoriju:");
-		label.setBounds(30, 32, 132, 14);
-		panel_1.add(label);
+		panel_1.add(label, "cell 1 0,growx,aligny center");
 		
 		JLabel lblUnesiteVrijednost = new JLabel("Unesite vrijednost:");
-		lblUnesiteVrijednost.setBounds(30, 57, 132, 14);
-		panel_1.add(lblUnesiteVrijednost);
+		panel_1.add(lblUnesiteVrijednost, "cell 1 1,growx,aligny center");
 		
 		comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
@@ -152,12 +179,10 @@ public class PregledAdministratora extends JFrame {
 			}
 		});
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"--------", "Username", "Ime", "Prezime", "Adresa", "Datum rođenja", "Telefon", "Email"}));
-		comboBox.setBounds(172, 29, 114, 20);
-		panel_1.add(comboBox);
+		panel_1.add(comboBox, "cell 2 0,growx,aligny top");
 		
 		textField = new JTextField();
-		textField.setBounds(172, 54, 114, 20);
-		panel_1.add(textField);
+		panel_1.add(textField, "cell 2 1,growx,aligny center");
 		textField.setColumns(10);
 		
 		btnNewButton_1 = new JButton("Pretraži");
@@ -199,12 +224,10 @@ public class PregledAdministratora extends JFrame {
 					ucitajAdmine(adao.dajPoMailu(textField.getText()));
 			}
 		});
-		btnNewButton_1.setBounds(314, 53, 89, 23);
-		panel_1.add(btnNewButton_1);
+		panel_1.add(btnNewButton_1, "cell 3 1,growx,aligny top");
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(30, 145, 580, 127);
-		panel.add(scrollPane);
+		panel.add(scrollPane, "cell 0 1,grow");
 			
 		table = new JTable();
 		scrollPane.setViewportView(table);
@@ -217,15 +240,15 @@ public class PregledAdministratora extends JFrame {
 			new String[] {
 				"Username", "Ime", "Prezime", "Spol", "Adresa", "Datum ro\u0111enja", "Email", "Telefon"
 			}
-		));
+		){
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		});
 		table.getColumnModel().getColumn(5).setPreferredWidth(85);
 		table.getColumnModel().getColumn(5).setMinWidth(85);
-		
-		btnNewButton = new JButton("Statusna traka");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmPregledAdministratora.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
 		
 		ucitajSveAdmine();
@@ -272,7 +295,9 @@ public class PregledAdministratora extends JFrame {
 			brojac++;
 		}
 		
-		btnNewButton.setText("Prikazano " + brojac.toString()  + " rezultata.");
+		lblStatus.setText("Prikazano " + brojac.toString() + " rezultata.");
+		
+		lblStatus.setForeground(Color.GREEN);
 	}
 	
 	private void removeAllRows()
@@ -284,4 +309,6 @@ public class PregledAdministratora extends JFrame {
 		    dm.removeRow(i);
 		}
 	}
+	
+	
 }

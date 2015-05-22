@@ -163,7 +163,7 @@ ALTER TABLE `klijent_odgovor`
 -- Constraints for table `odgovor`
 --
 ALTER TABLE `odgovor`
-  ADD CONSTRAINT `fk_Odgovor_Pitanje1` FOREIGN KEY (`idPitanje`) REFERENCES `pitanje` (`idPitanje`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Odgovor_Pitanje1` FOREIGN KEY (`idPitanje`) REFERENCES `pitanje` (`idPitanje`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `pitanje`

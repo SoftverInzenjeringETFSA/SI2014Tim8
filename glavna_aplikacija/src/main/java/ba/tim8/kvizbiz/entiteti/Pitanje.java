@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -42,7 +43,7 @@ public class Pitanje implements java.io.Serializable{
 	@JoinColumn(name = "idKviz", nullable = true, updatable=true)
 	private Kviz _kviz;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje", cascade= CascadeType.ALL)
 	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>();
 	
 	public long get_id() {

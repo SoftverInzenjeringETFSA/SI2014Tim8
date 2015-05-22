@@ -40,7 +40,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 public class ManipulacijaAnketama extends JFrame {
 
 	private JFrame frmManipulacijaAnketama;
