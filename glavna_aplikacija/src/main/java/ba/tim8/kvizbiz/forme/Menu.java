@@ -95,9 +95,8 @@ public class Menu {
 			JMenuItem mntmPregledKlijenata = new JMenuItem("Pregled");
 			mntmPregledKlijenata.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					PregledKlijenata noviProzor = new PregledKlijenata();
-					JFrame noviFrame = noviProzor.get_frmPregledKlijenata();
-					noviFrame.setVisible(true);
+					PregledKlijenatav1 noviProzor = new PregledKlijenatav1();
+					noviProzor.setVisible(true);
 					frame.dispose();
 				}
 			});

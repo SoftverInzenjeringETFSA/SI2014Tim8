@@ -65,7 +65,7 @@ public class PregledKlijenata extends JFrame {
 	private void initialize() {
 		frmPregledKlijenata = new JFrame();
 		frmPregledKlijenata.setTitle("Pregled klijenata");
-		frmPregledKlijenata.setBounds(100, 100, 650, 380);
+		frmPregledKlijenata.setBounds(100, 100, 600, 500);
 		frmPregledKlijenata.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Kreiranje menija
@@ -127,11 +127,5 @@ public class PregledKlijenata extends JFrame {
 		));
 		table.getColumnModel().getColumn(4).setPreferredWidth(85);
 		table.getColumnModel().getColumn(4).setMinWidth(85);
-		
-		JButton btnNewButton = new JButton("Statusna traka");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmPregledKlijenata.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 	}
 }
