@@ -106,8 +106,9 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 				public void mouseClicked(MouseEvent arg0) {
 					int rezultatDijaloga = JOptionPane.showConfirmDialog(novaPanela, "Jeste li sigurni da zelite odabrati kviz " + labela.getText() + " ?", "Provjera izbora kviza", JOptionPane.YES_NO_OPTION);
 					if (rezultatDijaloga == JOptionPane.YES_OPTION) {
-						//OdgovaranjeNaPitanje forma = new OdgovaranjeNaPitanje((long)kviz.get_id());
-						
+						odgovaranje forma = new odgovaranje((long)kviz.get_id());
+						forma.getFrmPopunjavanjeAnkete().setVisible(true);
+						dispose();
 					}
 				}
 			});
