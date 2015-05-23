@@ -147,8 +147,17 @@ public class RegistracijaKlijenta {
 		panelRegistracija.add(txtAdresa);
 		txtAdresa.setColumns(10);
 		
-		JButton btnOtkazi = new JButton("Otka\u017Ei");
+		JButton btnOtkazi = new JButton("Nazads");
 		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnOtkazi, -101, SpringLayout.EAST, panelRegistracija);
+		btnOtkazi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KvizBiz forma = new KvizBiz();
+				forma.get_frame().repaint();
+				forma.get_frame().revalidate();
+				forma.get_frame().setVisible(true);
+				frmRegistracijaKlijenta.dispose();
+			}				
+		});
 		panelRegistracija.add(btnOtkazi);
 		
 		JButton btnRegistrujSe = new JButton("Registruj se");
