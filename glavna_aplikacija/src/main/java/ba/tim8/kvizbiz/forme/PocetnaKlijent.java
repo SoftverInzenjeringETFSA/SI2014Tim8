@@ -57,18 +57,6 @@ private JComboBox comboBox;
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("Pregled anketa");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PregledAnketa p= new PregledAnketa();
-				p.setVisible(true);
-				
-			}
-		});
-	
-		btnNewButton_1.setBounds(37, 186, 120, 23);
-		panel.add(btnNewButton_1);
-		
 		comboBox = new JComboBox();
 		comboBox.setBounds(37, 85, 120, 20);
 		panel.add(comboBox);
