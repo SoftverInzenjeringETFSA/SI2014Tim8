@@ -251,17 +251,20 @@ private JFrame frame;
 		btnArhivirajOznaenu.setBounds(10, 160, 147, 23);
 		panel.add(btnArhivirajOznaenu);
 		
-		JButton btnPregledajOznaenu = new JButton("Pregledaj ozna\u010Denu");
-		btnPregledajOznaenu.setBounds(10, 58, 147, 23);
-		panel.add(btnPregledajOznaenu);
+
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PocetnaKlijent p= new PocetnaKlijent();
+				p.setVisible(true);
+				dispose();
+			}
+		});
 		btnOk.setBounds(500, 304, 89, 23);
 		panel1.add(btnOk);
 		
-		JButton btnOtkai = new JButton("Otka\u017Ei");
-		btnOtkai.setBounds(401, 304, 89, 23);
-		panel1.add(btnOtkai);
+	
 		
 		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
