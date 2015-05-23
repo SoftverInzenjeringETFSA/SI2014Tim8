@@ -14,10 +14,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JButton;
@@ -28,14 +33,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 import javax.swing.border.MatteBorder;
 
+import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.OdgovorDao;
 import ba.tim8.kvizbiz.dao.PitanjeDao;
 import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.entiteti.TipPitanja;
@@ -55,8 +63,11 @@ public class odgovaranje {
 	private final JPanel panelBrojPitanja = new JPanel();
 	private int ukupnoPitanja;
 	private List lista;
-
-	
+	private Klijent klijent;
+	private Set<Odgovor> realOdgovori;
+	private JLabel lblStatus;
+	private JTextArea txtAreaOdgovor;
+	//private long idKviz;
 
 	/**
 	 * Launch the application.
@@ -65,7 +76,7 @@ public class odgovaranje {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					odgovaranje window = new odgovaranje(1);
+					odgovaranje window = new odgovaranje(2);
 					window.frmPopunjavanjeAnkete.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,6 +89,7 @@ public class odgovaranje {
 	 * Create the application.
 	 */
 	public odgovaranje(long kvizID) {
+		//idKviz = kvizID;
 		initialize(kvizID);
 	}
 
@@ -92,12 +104,28 @@ public class odgovaranje {
 		frmPopunjavanjeAnkete.setBounds(100, 100, 450, 372);
 		frmPopunjavanjeAnkete.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		realOdgovori = new HashSet<Odgovor>();
+		//klijent = new Klijent();
+		klijent = RegistracijaKlijenta.logiraniKlijent;
 		
+		/*if(RegistracijaKlijenta.logiraniKlijent==null)
+		{
+			try {
+				throw new Exception("nema ga");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}*/
+		//lblStatus.setText("Status");
+		KvizDao kdao = KvizDao.get();
+		Kviz kviz = kdao.read(kvizID);
+		Collection<Pitanje> pitanja = kviz.get_pitanja();
 		//long ID = Long.valueOf(kvizID).longValue();
 		//PitanjeDao pdao = PitanjeDao.get();
 		//Collection<Pitanje> pitanja = pdao.dajPitanja(ID);
 
-		Collection<Pitanje> pitanja = new HashSet<Pitanje>();
+		/*Collection<Pitanje> pitanja = new HashSet<Pitanje>();
 		Pitanje p = new Pitanje();
 		p.set_id(1);
 		try {
@@ -175,11 +203,24 @@ public class odgovaranje {
 			e.printStackTrace();
 		}
 		p8.set_tipPitanja(TipPitanja.Abc);
-		pitanja.add(p8);
+		pitanja.add(p8);*/
 		
 		ukupnoPitanja = pitanja.size();
 		
 		lista = new ArrayList(pitanja);
+		Collections.sort(lista, new Comparator() {
+			public int compare(Object synchronizedListOne, Object synchronizedListTwo) {
+			//use instanceof to verify the references are indeed of the type in question
+			long id1=((Pitanje)synchronizedListOne).get_id();
+			long id2=((Pitanje)synchronizedListTwo).get_id();
+			if(id1>id2){
+				return 1;
+			}else if(id1==id2){
+				return 0;
+			}else{
+				return -1;
+			}
+			}}); 
 		postaviPitanje((Pitanje) lista.get(0), 0);		
 	}
 	private void postaviPitanje(Pitanje pitanje, int indeks) {
@@ -198,14 +239,16 @@ public class odgovaranje {
 		}
 	}
 
-	private void ucitajVisestrukiIzbor(Pitanje pitanje, final int broj) {
+	private void ucitajVisestrukiIzbor(final Pitanje pitanje, final int broj) {
 		//Odgovor odg = new Odgovor();
 		//OdgovorDao odao = OdgovorDao.get();
 		//List odgovori = odao.dajOdgovore((int) pitanje.get_id());
 		
-		List odgovori = new ArrayList();
+		//List odgovori = new ArrayList();
+		Collection<Odgovor> odgs = pitanje.get_listaOdgovora();
+		List odgovori = new ArrayList(odgs);
 		
-		Odgovor odg = new Odgovor();
+		/*Odgovor odg = new Odgovor();
 		odg.set_id(1);
 		odg.set_pitanje((Pitanje) lista.get(6));
 		try {
@@ -243,7 +286,7 @@ public class odgovaranje {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		odgovori.add(odg4);
+		odgovori.add(odg4);*/
 		
 		JPanel panelStatus = new JPanel();
 		panelStatus.setBorder(null);
@@ -265,7 +308,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		JLabel lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Status");
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -304,10 +347,20 @@ public class odgovaranje {
 				for(int i=0; i < panelOdgovor.getComponentCount(); i++){
 					tmp = (JCheckBox) panelOdgovor.getComponent(i);
 					if(tmp.isSelected()){
-						JOptionPane.showMessageDialog(null,
+						//Set<Odgovor> odgs = new HashSet<Odgovor>();
+						//klijent.set_listaOdgovora(odgs);
+						Odgovor odg = new Odgovor();
+						odg.set_pitanje(pitanje);
+						try {
+							odg.set_tekstOdgovora(tmp.getText());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						realOdgovori.add(odg);
+						/*JOptionPane.showMessageDialog(null,
 								tmp.getText(),
 								"Registracija klijenta",
-								JOptionPane.ERROR_MESSAGE);
+								JOptionPane.ERROR_MESSAGE);*/
 					}
 				}
 				if(broj+1 < ukupnoPitanja){
@@ -319,6 +372,8 @@ public class odgovaranje {
 					frmPopunjavanjeAnkete.validate();
 					frmPopunjavanjeAnkete.repaint();
 				}else{
+					klijent.set_listaOdgovora(realOdgovori);
+					klijent.set_popunjeniKviz(pitanje.get_kviz());
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -357,14 +412,22 @@ public class odgovaranje {
 		panelOdgovor.add(chckbxHljeb);*/
 		
 		int dim = 0;
+		int visina = 390;
+		//JScrollPane jsp = new JScrollPane();
 		Odgovor tmp = new Odgovor();
 		for(int i=0; i < odgovori.size(); i++){
 			tmp = (Odgovor) odgovori.get(i);
 			JCheckBox checkBox = new JCheckBox(tmp.get_tekstOdgovora());
 			checkBox.setBounds(6, dim, 97, 23);
 			panelOdgovor.add(checkBox);
+			//jsp.add(checkBox);
 			dim += 25;
+			if(i > 3){
+				frmPopunjavanjeAnkete.setSize(450, visina);
+				visina+=20;
+			}
 		}
+		//panelOdgovor.add(jsp);
 		
 		panelPitanje.add(btnNazad);
 		
@@ -400,7 +463,7 @@ public class odgovaranje {
 		
 	}
 
-	private void ucitajTacnoNetacno(Pitanje p, final int broj) {
+	private void ucitajTacnoNetacno(final Pitanje p, final int broj) {
 		JPanel panelStatus = new JPanel();
 		panelStatus.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
 		frmPopunjavanjeAnkete.getContentPane().add(panelStatus, BorderLayout.SOUTH);
@@ -421,7 +484,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		JLabel lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Status");
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -452,16 +515,16 @@ public class odgovaranje {
 		panelOdgovor.setLayout(null);
 		
 		ButtonGroup btngr = new ButtonGroup();
-		JRadioButton radioBtnDa = new JRadioButton("Tacno");
-		radioBtnDa.setBounds(6, 7, 200, 41);
-		radioBtnDa.setSelected(true);
-		panelOdgovor.add(radioBtnDa);
+		final JRadioButton radioBtnTacno = new JRadioButton("Tacno");
+		radioBtnTacno.setBounds(6, 7, 200, 41);
+		radioBtnTacno.setSelected(true);
+		panelOdgovor.add(radioBtnTacno);
 		
-		JRadioButton radioBtnNe = new JRadioButton("Netacno");
-		radioBtnNe.setBounds(6, 51, 200, 41);
-		panelOdgovor.add(radioBtnNe);
-		btngr.add(radioBtnDa);
-		btngr.add(radioBtnNe);
+		final JRadioButton radioBtnNetacno = new JRadioButton("Netacno");
+		radioBtnNetacno.setBounds(6, 51, 200, 41);
+		panelOdgovor.add(radioBtnNetacno);
+		btngr.add(radioBtnTacno);
+		btngr.add(radioBtnNetacno);
 		
 		JButton btnNaprijed = new JButton("Naprijed");
 		sl_panelPitanje.putConstraint(SpringLayout.NORTH, btnNaprijed, 6, SpringLayout.SOUTH, panelOdgovor);
@@ -469,6 +532,22 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Odgovor odg = new Odgovor();
+				odg.set_pitanje(p);
+				if(radioBtnTacno.isSelected()){
+					try {
+						odg.set_tekstOdgovora(radioBtnTacno.getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					try {
+						odg.set_tekstOdgovora(radioBtnNetacno.getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				realOdgovori.add(odg);
 				if(broj+1 < ukupnoPitanja){
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();
@@ -478,6 +557,8 @@ public class odgovaranje {
 					frmPopunjavanjeAnkete.validate();
 					frmPopunjavanjeAnkete.repaint();
 				}else{
+					klijent.set_listaOdgovora(realOdgovori);
+					klijent.set_popunjeniKviz(p.get_kviz());
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -534,7 +615,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		JLabel lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Status");
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -570,7 +651,21 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				if(broj+1 < ukupnoPitanja){
+					if(pitanje.isObavezno() && txtAreaOdgovor.getText().equals("")){
+						lblStatus.setText("Odgovor ne smije biti prazan");
+						lblStatus.setForeground(Color.red);
+						return;
+					}
+					Odgovor odg = new Odgovor();
+					odg.set_pitanje(pitanje);
+					try {
+						odg.set_tekstOdgovora(txtAreaOdgovor.getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					realOdgovori.add(odg);
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();
 					postaviPitanje((Pitanje) lista.get(broj+1), broj+1);
@@ -579,6 +674,8 @@ public class odgovaranje {
 					frmPopunjavanjeAnkete.validate();
 					frmPopunjavanjeAnkete.repaint();
 				}else{
+					klijent.set_listaOdgovora(realOdgovori);
+					klijent.set_popunjeniKviz(pitanje.get_kviz());
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -593,7 +690,7 @@ public class odgovaranje {
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -8, SpringLayout.WEST, btnNaprijed);
 		btnNazad.setMargin(new Insets(2, 5, 2, 5));
 		
-		JTextArea txtAreaOdgovor = new JTextArea();
+		txtAreaOdgovor = new JTextArea();
 		txtAreaOdgovor.setBounds(0, 0, 244, 143);
 		panelOdgovor.add(txtAreaOdgovor);
 		panelPitanje.add(btnNazad);
@@ -623,13 +720,14 @@ public class odgovaranje {
 		panelBrojPitanja.add(lblPitanjeBroj, gbc_lblPitanjeBroj);
 	}
 
-	private void ucitajAbc(Pitanje p, final int broj){
+	private void ucitajAbc(final Pitanje p, final int broj){
 		//OdgovorDao odao = OdgovorDao.get();
 		//List odgovori = odao.dajOdgovore((int) pitanje.get_id());
 		
-		List odgovori = new ArrayList();
+		Collection<Odgovor> odgs = p.get_listaOdgovora();
+		List odgovori = new ArrayList(odgs);
 		
-		Odgovor odg = new Odgovor();
+		/*Odgovor odg = new Odgovor();
 		odg.set_id(1);
 		odg.set_pitanje((Pitanje) lista.get(6));
 		try {
@@ -667,7 +765,7 @@ public class odgovaranje {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		odgovori.add(odg4);
+		odgovori.add(odg4);*/
 		
 		JPanel panelStatus = new JPanel();
 		panelStatus.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -733,7 +831,7 @@ public class odgovaranje {
 		
 		int dim = 0;
 		Odgovor tmp = new Odgovor();
-		ButtonGroup btnGrOdg = new ButtonGroup();
+		final ButtonGroup btnGrOdg = new ButtonGroup();
 		for(int i=0; i < odgovori.size(); i++){
 			tmp = (Odgovor) odgovori.get(i);
 			JRadioButton radioButton = new JRadioButton(tmp.get_tekstOdgovora());
@@ -752,6 +850,21 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				Odgovor o = new Odgovor();
+				o.set_pitanje(p);
+				for(Enumeration<AbstractButton> buttons = btnGrOdg.getElements(); buttons.hasMoreElements();) {
+		            AbstractButton button = buttons.nextElement();
+		            if (button.isSelected()) {
+		                try {
+							o.set_tekstOdgovora(button.getText());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+		                break;
+		            }
+		        }
+				realOdgovori.add(o);
 				if(broj+1 < ukupnoPitanja){
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();
@@ -761,6 +874,8 @@ public class odgovaranje {
 					frmPopunjavanjeAnkete.validate();
 					frmPopunjavanjeAnkete.repaint();
 				}else{
+					klijent.set_listaOdgovora(realOdgovori);
+					klijent.set_popunjeniKviz(p.get_kviz());
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -792,7 +907,7 @@ public class odgovaranje {
 		panelBrojPitanja.add(lblPitanjeBroj, gbc_lblPitanjeBroj);
 	}
 	
-	private void ucitajDaNe(Pitanje p, final int broj){
+	private void ucitajDaNe(final Pitanje p, final int broj){
 		//Implementiraj
 		JPanel panelStatus = new JPanel();
 		panelStatus.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -845,12 +960,12 @@ public class odgovaranje {
 		panelOdgovor.setLayout(null);
 		
 		ButtonGroup btngr = new ButtonGroup();
-		JRadioButton radioBtnDa = new JRadioButton("Da");
+		final JRadioButton radioBtnDa = new JRadioButton("Da");
 		radioBtnDa.setBounds(6, 7, 200, 41);
 		radioBtnDa.setSelected(true);
 		panelOdgovor.add(radioBtnDa);
 		
-		JRadioButton radioBtnNe = new JRadioButton("Ne");
+		final JRadioButton radioBtnNe = new JRadioButton("Ne");
 		radioBtnNe.setBounds(6, 51, 200, 41);
 		panelOdgovor.add(radioBtnNe);
 		btngr.add(radioBtnDa);
@@ -862,6 +977,22 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Odgovor odg = new Odgovor();
+				odg.set_pitanje(p);
+				if(radioBtnDa.isSelected()){
+					try {
+						odg.set_tekstOdgovora(radioBtnDa.getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}else{
+					try {
+						odg.set_tekstOdgovora(radioBtnNe.getText());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				realOdgovori.add(odg);
 				if(broj+1 < ukupnoPitanja){
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();
@@ -871,6 +1002,8 @@ public class odgovaranje {
 					frmPopunjavanjeAnkete.validate();
 					frmPopunjavanjeAnkete.repaint();
 				}else{
+					klijent.set_listaOdgovora(realOdgovori);
+					klijent.set_popunjeniKviz(p.get_kviz());
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
