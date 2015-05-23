@@ -56,7 +56,7 @@ public class odgovaranje {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					odgovaranje window = new odgovaranje("1");
+					odgovaranje window = new odgovaranje(1);
 					window.frmPopunjavanjeAnkete.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,14 +68,14 @@ public class odgovaranje {
 	/**
 	 * Create the application.
 	 */
-	public odgovaranje(String kvizID) {
+	public odgovaranje(long kvizID) {
 		initialize(kvizID);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(String kvizID) {
+	private void initialize(long kvizID) {
 		
 		frmPopunjavanjeAnkete = new JFrame();
 		frmPopunjavanjeAnkete.setTitle("Popunjavanje ankete");
