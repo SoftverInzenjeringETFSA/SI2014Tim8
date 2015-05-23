@@ -37,6 +37,7 @@ public class PocetnaKlijent extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	
 private JComboBox comboBox;
 	/**
 	 * Create the frame.
@@ -55,20 +56,6 @@ private JComboBox comboBox;
 		panel.setBounds(10, 29, 574, 377);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
-		JButton btnNewButton_1 = new JButton("Pregled anketa");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PregledAnketa p= new PregledAnketa();
-				p.setVisible(true);
-				
-			}
-		});
-	
-		btnNewButton_1.setBounds(37, 186, 120, 23);
-		panel.add(btnNewButton_1);
-		KvizDao k= KvizDao.get();
-		List<Long> l = (List<Long>) k.ispisAktivnihAnketa();
 		
 		comboBox = new JComboBox();
 		comboBox.setBounds(37, 85, 120, 20);
@@ -128,11 +115,14 @@ private JComboBox comboBox;
 		menu.NapraviMenu(this);
 	
 	
-	IscitajSveAktivneTabele(l);
+		KvizDao kv= KvizDao.get();
+		List<Long> l1 = (List<Long>) kv.ispisSvihAnketa();
+		IscitajSveAktivneTabele(l1);
 
 
 	
 	}
+	
 	
 	private void IscitajSveAktivneTabele(List<Long> lista)
 	{

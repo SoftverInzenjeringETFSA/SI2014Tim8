@@ -6,7 +6,9 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,11 +29,17 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.PitanjeDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 
 public class ModifikacijaAnkete extends JFrame {
+	private JFrame frame;
+	
+	public JFrame get_frame () {
+		return frame;
+	}
 
 	private static final long serialVersionUID = 1L;
 	
@@ -39,11 +47,16 @@ public class ModifikacijaAnkete extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField tbxNaslov;
+	private JTextField tbxStatus;	
 	private JTable tblPitanja;
 	private JLabel lblStatus;
 	private JSpinner spiVrijeme;
+	public static Kviz kviz = null;
+	public String test;
+	private JComboBox<Integer> cbbID;
 
 
+	List<Pitanje> lk = new ArrayList<Pitanje>();
 
 	/**
 	 * Launch the application.
@@ -52,7 +65,7 @@ public class ModifikacijaAnkete extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModifikacijaAnkete frame = new ModifikacijaAnkete();
+					ModifikacijaAnkete frame = new ModifikacijaAnkete(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +77,8 @@ public class ModifikacijaAnkete extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ModifikacijaAnkete() {
+	public ModifikacijaAnkete(final Kviz kviz, final JFrame proslaForma) {
+		this.kviz = kviz;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
@@ -74,34 +88,45 @@ public class ModifikacijaAnkete extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(this);
 		
-		JPanel kontejner = new JPanel(new MigLayout("", "[grow][100px][100px]", "[fill][grow][fill]"));
+		JPanel kontejner = new JPanel();
 		kontejner.setBorder(null);
 		contentPane.add(kontejner, BorderLayout.CENTER);
+		kontejner.setLayout(null);
 		
 		JPanel pnlPodaci = new JPanel(new MigLayout("", "[grow][fill][220px][grow]", "[fill][fill]"));
+		pnlPodaci.setBounds(7, 7, 570, 99);
 		pnlPodaci.setBorder(new TitledBorder("Unesite nove podatke o anketi:"));
-		kontejner.add(pnlPodaci, "cell 0 0 3 1,growx");
+		kontejner.add(pnlPodaci);
 		
 		pnlPodaci.add(new JLabel("Naslov ankete: "), "cell 1 0,alignx right");
 		pnlPodaci.add(new JLabel("Vremensko ograničenje: "), "cell 1 1,alignx right");
+		pnlPodaci.add(new JLabel("Status ankete: "), "cell 1 2,alignx right");
 		
 		tbxNaslov = new JTextField();
 		pnlPodaci.add(tbxNaslov, "cell 2 0,growx");
+		tbxNaslov.setText(kviz.get_naziv());
 		
 		spiVrijeme = new JSpinner();
-		spiVrijeme.setModel(new SpinnerNumberModel(10, 1, 30, 1));
+		spiVrijeme.setModel(new SpinnerNumberModel(kviz.get_vremenskoOgranicenje(), 1, 100, 1));
 		pnlPodaci.add(spiVrijeme, "cell 2 1,alignx left");
 		
+		tbxStatus = new JTextField();
+		pnlPodaci.add(tbxStatus, "cell 2 2,growx");
+		tbxStatus.setText("Otvorena");
+		
+		
 		JPanel pnlPitanja = new JPanel();
+		pnlPitanja.setBounds(7, 104, 570, 308);
 		pnlPitanja.setBorder(new TitledBorder("Unesite pitanja:"));
-		kontejner.add(pnlPitanja, "cell 0 1 3 1,growx,growy");
+		kontejner.add(pnlPitanja);
 		
 		JButton btnDodaj = new JButton("Dodaj novo pitanje");
 		btnDodaj.setBounds(13, 23, 159, 23);
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				Component component = (Component) e.getSource();
-				frmDodavanjePitanja_v2 forma = new frmDodavanjePitanja_v2((JFrame) SwingUtilities.getRoot(component));
+				DodavanjeManipulacija forma = new DodavanjeManipulacija(kviz.get_id(), (JFrame) SwingUtilities.getRoot(component));
 				forma.setVisible(true);
 				dispose();
 			}
@@ -109,17 +134,41 @@ public class ModifikacijaAnkete extends JFrame {
 		pnlPitanja.setLayout(null);
 		pnlPitanja.add(btnDodaj);
 		
-		JLabel label = new JLabel("Odaberite ID:");
-		label.setBounds(13, 50, 97, 20);
-		pnlPitanja.add(label);
-		final JComboBox<Integer> cbbID = new JComboBox<Integer>();
-		cbbID.setBounds(114, 50, 58, 20);
-		PitanjeDao pdao = PitanjeDao.get();
-		for(long id : pdao.DajSveIdZaKviz(1))
-			cbbID.addItem((int)id);
-		pnlPitanja.add(cbbID);
+//		JLabel label = new JLabel("Odaberite ID:");
+//		label.setBounds(13, 50, 97, 20);
+//		pnlPitanja.add(label);
+//		cbbID = new JComboBox<Integer>();
+//		cbbID.setBounds(114, 50, 58, 20);
+//		PitanjeDao pdao = PitanjeDao.get();
+//		
+//		if (kviz.get_id() != -1)
+//			for(long id : pdao.DajSveIdZaKviz(kviz.get_id()))
+//				cbbID.addItem((int)id);
+//		
+		
+		
+//		if (kviz.get_id() != -1){
+//			List<Long> a = (List<Long>) pdao.DajSveIdZaKviz(kviz.get_id());
+//			for(int i=0; i<a.size();i++)
+//			{
+//				long id= a.get(i);
+//				cbbID.addItem((int)id);
+//				
+//			}
+//		}
+//			for(long id : pdao.DajSveIdZaKviz(kviz.get_id()))
+//				cbbID.addItem((int)id);
+		
+		
+//		pnlPitanja.add(cbbID);
 		
 		JButton btnPromjeni = new JButton("Promjeni odabrano pitanje");
+		btnPromjeni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
 		btnPromjeni.setBounds(13, 74, 159, 23);
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +183,13 @@ public class ModifikacijaAnkete extends JFrame {
 		btnObrisi.setBounds(13, 101, 159, 23);
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int odabraniId = (Integer) cbbID.getSelectedItem();
+				Pitanje selected = new Pitanje();
+				int selectedRow = tblPitanja.getSelectedRow();
+				
+				selected = lk.get(tblPitanja.convertRowIndexToModel(selectedRow));
+				
+				long id = selected.get_id();
+				int odabraniId = (int) id;
 				PitanjeDao pdao = PitanjeDao.get();
 				try {
 					pdao.delete((long) odabraniId);
@@ -144,9 +199,9 @@ public class ModifikacijaAnkete extends JFrame {
 					removeAllRows();
 					ucitajSvaPitanja();
 					
-					cbbID.removeAllItems();
-					for(long id : pdao.DajSveIdZaKviz(1))
-						cbbID.addItem((int)id);
+//					cbbID.removeAllItems();
+//					for(long id : pdao.DajSveIdZaKviz(1))
+//						cbbID.addItem((int)id);
 					
 					contentPane.revalidate();
 					contentPane.repaint();
@@ -160,10 +215,40 @@ public class ModifikacijaAnkete extends JFrame {
 		pnlPitanja.add(btnObrisi);
 		
 		JButton btnOk = new JButton("OK");
-		kontejner.add(btnOk, "flowx,cell 2 2,growx");
+		btnOk.setBounds(477, 416, 100, 23);
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				kviz.set_naziv(tbxNaslov.getText());
+				kviz.set_vremenskoOgranicenje((Integer)spiVrijeme.getValue());
+				KvizDao kdao = KvizDao.get();
+				try {
+					kdao.update(kviz);
+					lblStatus.setText("Uspjesan unos početnih podataka");
+					lblStatus.setForeground(Color.green);
+				}
+				catch(Exception e1) {
+					lblStatus.setText("Greska: " + e1.getMessage());
+					lblStatus.setForeground(Color.red);
+				}
+			
+				
+				
+			
+			}
+			
+			
+		});
+		kontejner.add(btnOk);
 		
 		JButton btnOtkazi = new JButton("Otkaži");
-		kontejner.add(btnOtkazi, "cell 1 2,growx");
+		btnOtkazi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				dispose();
+			}
+		});
+		btnOtkazi.setBounds(373, 416, 100, 23);
+		kontejner.add(btnOtkazi);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(176, 23, 381, 283);
@@ -195,10 +280,40 @@ public class ModifikacijaAnkete extends JFrame {
 		JButton btnNewButton = new JButton("Promjena statusa ankete");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				kviz.set_aktivan(true);
+				kviz.set_arhiviran(false);					
+					KvizDao kdao = KvizDao.get();
+					try {
+						kdao.update(kviz);
+						lblStatus.setText("Uspjesan unos početnih podataka");
+						lblStatus.setForeground(Color.green);
+					}
+					catch(Exception e1) {
+						lblStatus.setText("Greska: " + e1.getMessage());
+						lblStatus.setForeground(Color.red);
+					}
+				
 			}
 		});
 		btnNewButton.setBounds(13, 174, 159, 23);
 		pnlPitanja.add(btnNewButton);
+		
+		JButton btnNazad = new JButton("Nazad");
+		btnNazad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+//				ManipulacijaAnketama m= new ManipulacijaAnketama();
+//				m.setVisible(true);
+//				((ManipulacijaAnketama) proslaForma).refresh();
+//				proslaForma.setVisible(true);
+				setVisible(false);
+				dispose();
+				dispose();
+				
+			}
+		});
+		btnNazad.setBounds(274, 416, 89, 23);
+		kontejner.add(btnNazad);
 		
 		lblStatus = new JLabel("Statusna traka");
 		lblStatus.setForeground(Color.lightGray);
@@ -212,10 +327,13 @@ public class ModifikacijaAnkete extends JFrame {
 	private void ucitajSvaPitanja()
 	{
 		PitanjeDao pdao = PitanjeDao.get();
-		Collection<Pitanje> pitanja = pdao.readAll();
+//		Collection<Pitanje> pitanja = pdao.readAll();
+		Collection<Pitanje> pitanja = pdao.DajSveZaKviz(kviz.get_id());
 		DefaultTableModel model = (DefaultTableModel) tblPitanja.getModel();
 		
 		ucitajPitanja(pitanja);
+		
+		lk = (List<Pitanje>) pdao.readAll();
 	}	
 	
 	private void ucitajPitanja(Collection<Pitanje> pitanja)
