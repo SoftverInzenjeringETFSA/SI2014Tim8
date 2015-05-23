@@ -31,6 +31,11 @@ import java.awt.CardLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Kviz;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
@@ -45,6 +50,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 
 import java.awt.ComponentOrientation;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class StatistikaPoAnketama extends JFrame {
 	
@@ -104,10 +113,29 @@ public class StatistikaPoAnketama extends JFrame {
 		lblIzaberiteAdministratora.setBounds(22, 35, 101, 14);
 		panelAnketa.add(lblIzaberiteAdministratora);
 		
-		JComboBox comboBox = new JComboBox();
+		/*JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Klix", "RadioSarajevo"}));
 		comboBox.setBounds(131, 32, 189, 20);
+		panelAnketa.add(comboBox);*/
+		
+		final KvizDao kdao = KvizDao.get();
+		Collection<Kviz> kvizovi = kdao.readAll();
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(131, 32, 189, 20);
 		panelAnketa.add(comboBox);
+
+		Kviz kviz = new Kviz();
+		for (Iterator<Kviz> iterator = kvizovi.iterator(); iterator
+				.hasNext();) {
+			kviz = (Kviz) iterator.next();
+			comboBox.addItem(kviz.toString());
+		}
+		comboBox.setSelectedIndex(-1);
+
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				//Implement
+			}});
 		
 		JPanel panelStatistika = new JPanel();
 		panelStatistika.setAutoscrolls(true);

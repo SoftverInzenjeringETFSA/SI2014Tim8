@@ -43,11 +43,20 @@ import ba.tim8.kvizbiz.entiteti.TipPitanja;
 public class odgovaranje {
 
 	private JFrame frmPopunjavanjeAnkete;
+	public JFrame getFrmPopunjavanjeAnkete() {
+		return frmPopunjavanjeAnkete;
+	}
+
+	public void setFrmPopunjavanjeAnkete(JFrame frmPopunjavanjeAnkete) {
+		this.frmPopunjavanjeAnkete = frmPopunjavanjeAnkete;
+	}
+
 	private final JProgressBar progressBar = new JProgressBar();
 	private final JPanel panelBrojPitanja = new JPanel();
 	private int ukupnoPitanja;
 	private List lista;
 
+	
 
 	/**
 	 * Launch the application.

@@ -30,6 +30,13 @@ import java.awt.GridLayout;
 import java.awt.CardLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Collection;
+import java.util.Iterator;
+
+import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.entiteti.Klijent;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -101,11 +108,29 @@ public class StatistikaPoKlijentima extends JFrame {
 		lblIzaberiteAdministratora.setBounds(22, 35, 103, 14);
 		panelKlijent.add(lblIzaberiteAdministratora);
 		
-		JComboBox comboBox = new JComboBox();
+		/*JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Kurt Cobain"}));
 		comboBox.setBounds(135, 32, 185, 20);
-		panelKlijent.add(comboBox);
+		panelKlijent.add(comboBox);*/
 		
+		final KlijentDao kdao = KlijentDao.get();
+		Collection<Klijent> klijenti = kdao.readAll();
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(135, 32, 185, 20);
+		panelKlijent.add(comboBox);
+
+		Klijent klijent = new Klijent();
+		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
+				.hasNext();) {
+			klijent = (Klijent) iterator.next();
+			comboBox.addItem(klijent.toString());
+		}
+		comboBox.setSelectedIndex(-1);
+
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				//Implement
+			}});
 		JPanel panelAnketa = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelAnketa.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
