@@ -167,7 +167,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 		final JRadioButton radioButton = new JRadioButton("Muški");
 		panel_1.add(radioButton, "cell 1 2,growx,aligny top");
 		
-		JRadioButton radioButton_1 = new JRadioButton("Ženski");
+		final JRadioButton radioButton_1 = new JRadioButton("Ženski");
 		panel_1.add(radioButton_1, "cell 3 2,alignx left,aligny top");
 		
 		ButtonGroup group = new ButtonGroup();
@@ -348,8 +348,8 @@ public class PromjenaLicnihPodataka extends JFrame {
 					if (dodaj == true) {
 						if (radioButton.isSelected()) 
 							trazeniAdministrator.set_spol(Spol.muski);
-						else
-							trazeniAdministrator.set_spol(Spol.muski);
+						else if(radioButton_1.isSelected())
+							trazeniAdministrator.set_spol(Spol.zenski);
 						trazeniAdministrator.set_ime(textField.getText());
 						trazeniAdministrator.set_prezime(textField_1.getText());
 						try {
