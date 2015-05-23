@@ -80,7 +80,7 @@ public class ModifikacijaAnkete extends JFrame {
 	public ModifikacijaAnkete(final Kviz kviz, final JFrame proslaForma) {
 		this.kviz = kviz;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 500);
+		setBounds(100, 100, 666, 520);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -116,7 +116,7 @@ public class ModifikacijaAnkete extends JFrame {
 		
 		
 		JPanel pnlPitanja = new JPanel();
-		pnlPitanja.setBounds(7, 104, 570, 308);
+		pnlPitanja.setBounds(7, 104, 633, 308);
 		pnlPitanja.setBorder(new TitledBorder("Unesite pitanja:"));
 		kontejner.add(pnlPitanja);
 		
@@ -162,14 +162,7 @@ public class ModifikacijaAnkete extends JFrame {
 		
 //		pnlPitanja.add(cbbID);
 		
-		JButton btnPromjeni = new JButton("Promjeni odabrano pitanje");
-		btnPromjeni.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}
-		});
-		btnPromjeni.setBounds(13, 74, 159, 23);
+		
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Component component = (Component) e.getSource();
@@ -177,10 +170,9 @@ public class ModifikacijaAnkete extends JFrame {
 				//dispose();
 			}
 		});
-		pnlPitanja.add(btnPromjeni);
-		
+			
 		JButton btnObrisi = new JButton("Obriši odabrano pitanje");
-		btnObrisi.setBounds(13, 101, 159, 23);
+		btnObrisi.setBounds(13, 129, 159, 23);
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pitanje selected = new Pitanje();
@@ -215,7 +207,7 @@ public class ModifikacijaAnkete extends JFrame {
 		pnlPitanja.add(btnObrisi);
 		
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(477, 416, 100, 23);
+		btnOk.setBounds(477, 423, 100, 23);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				kviz.set_naziv(tbxNaslov.getText());
@@ -247,7 +239,7 @@ public class ModifikacijaAnkete extends JFrame {
 				dispose();
 			}
 		});
-		btnOtkazi.setBounds(373, 416, 100, 23);
+		btnOtkazi.setBounds(373, 423, 100, 23);
 		kontejner.add(btnOtkazi);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -263,7 +255,7 @@ public class ModifikacijaAnkete extends JFrame {
 				
 			},
 			new String[] {
-				"ID pitanja", "Tekst pitanja", "Tip pitnja", "Status ankete"
+				"ID pitanja", "Tekst pitanja", "Tip pitanja"
 			}
 		)
 		{
@@ -312,7 +304,7 @@ public class ModifikacijaAnkete extends JFrame {
 				
 			}
 		});
-		btnNazad.setBounds(274, 416, 89, 23);
+		btnNazad.setBounds(274, 423, 89, 23);
 		kontejner.add(btnNazad);
 		
 		lblStatus = new JLabel("Statusna traka");

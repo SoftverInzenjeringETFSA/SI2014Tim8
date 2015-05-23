@@ -335,8 +335,10 @@ public class DodavanjeManipulacija extends JFrame {
 		JButton btnNazad = new JButton("Nazad");
 		btnNazad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				((KreiranjeAnkete) proslaForma).refresh();
-				proslaForma.setVisible(true);
+				
+				//((KreiranjeAnkete) proslaForma).refresh();
+				//proslaForma.setVisible(true);
+				setVisible(false);
 				dispose();
 			}
 		});
