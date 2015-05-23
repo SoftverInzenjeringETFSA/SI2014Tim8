@@ -133,12 +133,12 @@ public class KreiranjeAnkete extends JFrame {
 		
 		btnPromjeni = new JButton("Promjeni odabrano pitanje");
 		btnPromjeni.setEnabled(false);
-		btnDodaj.addActionListener(new ActionListener() {
+		btnPromjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Component component = (Component) e.getSource();
-				//frmDodavanjePitanja_v2 forma = new frmDodavanjePitanja_v2((JFrame) SwingUtilities.getRoot(component));
-				//forma.setVisible(true);
-				//dispose();
+				Component component = (Component) e.getSource();
+				ModifikacijaPitanja forma = new ModifikacijaPitanja((JFrame) SwingUtilities.getRoot(component), (Integer) cbbID.getSelectedItem());
+				forma.setVisible(true);
+				dispose();
 			}
 		});
 		pnlPitanja.add(btnPromjeni, "cell 0 2");
@@ -165,10 +165,14 @@ public class KreiranjeAnkete extends JFrame {
 		pnlPitanja.add(btnObrisi, "cell 0 3");
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PocetnaKlijent forma = new PocetnaKlijent();
+				forma.setVisible(true);
+				dispose();
+			}
+		});
 		kontejner.add(btnOk, "flowx,cell 2 2,growx");
-		
-		JButton btnOtkazi = new JButton("Otkaži");
-		kontejner.add(btnOtkazi, "cell 1 2,growx");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 145, 580, 127);
@@ -208,10 +212,10 @@ public class KreiranjeAnkete extends JFrame {
 	private void ucitajSvaPitanja()
 	{
 		PitanjeDao pdao = PitanjeDao.get();
-		//Collection<Pitanje> pitanja = pdao.DajSveZaKviz(trenutniKvizID);
+		Collection<Pitanje> pitanja = pdao.DajSveZaKviz(trenutniKvizID);
 		DefaultTableModel model = (DefaultTableModel) tblPitanja.getModel();
 		
-		//ucitajPitanja(pitanja);
+		ucitajPitanja(pitanja);
 	}	
 	
 	private void ucitajPitanja(Collection<Pitanje> pitanja)

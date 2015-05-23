@@ -1,19 +1,40 @@
 package ba.tim8.kvizbiz.forme;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.Console;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
-import ba.tim8.kvizbiz.dao.*;
-import ba.tim8.kvizbiz.entiteti.*;
 import net.miginfocom.swing.MigLayout;
+import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.dao.OdgovorDao;
+import ba.tim8.kvizbiz.dao.PitanjeDao;
+import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.entiteti.Odgovor;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
+import ba.tim8.kvizbiz.entiteti.TipPitanja;
 
-public class frmDodavanjePitanja_v2 extends JFrame {
-	private static final long serialVersionUID = 1L;
+public class ModifikacijaPitanja extends JFrame {
 
 	private JPanel contentPane;
 	
@@ -31,12 +52,11 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frmDodavanjePitanja_v2 frame = new frmDodavanjePitanja_v2(null);
+					ModifikacijaPitanja frame = new ModifikacijaPitanja(null, 3);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,17 +64,16 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 			}
 		});
 	}
-	
 
 	/**
 	 * Create the frame.
 	 */
-	public frmDodavanjePitanja_v2(final JFrame proslaForma) {
+	public ModifikacijaPitanja(final JFrame proslaForma, final int pitanjeZaModicikaciju) {
 		listaOdgovori = new ArrayList<JTextField>();
 		listaIzbori = new ArrayList<JTextField>();
 		listaLabeleOdgovori = new ArrayList<JLabel>();
 		listaLabeleIzbori = new ArrayList<JLabel>();
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
@@ -96,16 +115,6 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 			}
 		});
 		pnlOdgovor.add(btnDodajOdgovor, "cell 0 8 4 1,alignx center");
-		
-		for (int i = 0; i < 3; i++) {
-			JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaOdgovori.size())) + ")");
-			pnlOdgovor.add(novaLabela, "cell 1 " + listaOdgovori.size());
-			listaLabeleOdgovori.add(novaLabela);
-			JTextField noviOdgovor = new JTextField();
-			pnlOdgovor.add(noviOdgovor, "cell 2 " + listaOdgovori.size() + ",growx");
-			listaOdgovori.add(noviOdgovor);
-		}
-		pnlOdgovor.revalidate();
 		
 		JButton btnObrisiOdgovor = new JButton("Obrisi odgovor");
 		btnObrisiOdgovor.addActionListener(new ActionListener() {
@@ -152,16 +161,6 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 			}
 		});
 		pnlIzbor.add(btnDodajIzbor, "cell 0 8 4 1,alignx center");
-		
-		for (int i = 0; i < 3; i++) {
-			JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
-			pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
-			listaLabeleIzbori.add(novaLabela);
-			JTextField noviOdgovor = new JTextField();
-			pnlIzbor.add(noviOdgovor, "cell 2 " + listaIzbori.size() + ",growx");
-			listaIzbori.add(noviOdgovor);
-		}
-		pnlIzbor.revalidate();
 		
 		JButton btnObrisiIzbor = new JButton("Obrisi Odgovor");
 		btnObrisiIzbor.addActionListener(new ActionListener() {
@@ -257,7 +256,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 					KvizDao kdao = KvizDao.get();
 					long idKviza = KreiranjeAnkete.trenutniKvizID;
 					Kviz testniKviz = kdao.read(idKviza);
-					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
+					novoPitanje = new Pitanje(pitanjeZaModicikaciju, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
 					if (tipNovogPitanja == TipPitanja.Abc) {
 						for (int i = 0; i < listaOdgovori.size(); i++) {
 							Odgovor noviOdgovor = new Odgovor(0, listaOdgovori.get(i).getText(), null, null);
@@ -296,11 +295,13 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				}
 				
 				// Upis u bazu
-				long idPitanja = -1;
+				long idPitanja = pitanjeZaModicikaciju;
 				ArrayList<Long> idjeviOdgovora = new ArrayList<Long>();
 				
 				try {
-					idPitanja = pdao.create(novoPitanje);
+					pdao.update(novoPitanje);
+					
+					odao.IzbrisiSveOdgovorePitanja(pitanjeZaModicikaciju);
 					
 					for (int i = 0; i < noviOdgovori.size(); i++) {
 						noviOdgovori.get(i).set_pitanje(novoPitanje);
@@ -343,6 +344,136 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblStatus, BorderLayout.SOUTH);
+		
+		PitanjeDao pdao = PitanjeDao.get();
+		Pitanje pitanjeZaUcitanjavanje = pdao.read((long) pitanjeZaModicikaciju);
+		tbxTekst.setText(pitanjeZaUcitanjavanje.get_tekstPitanja());
+		if (pitanjeZaUcitanjavanje.get_tipPitanja() == TipPitanja.Abc) {
+			cbbTip.setSelectedIndex(1);
+			
+			OdgovorDao odao = OdgovorDao.get();
+			Collection<Odgovor> odgovori = odao.DajSveZaPitanje(pitanjeZaModicikaciju);
+			
+			for (int i = 0; i < odgovori.size(); i++) {
+				JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaOdgovori.size())) + ")");
+				pnlOdgovor.add(novaLabela, "cell 1 " + listaOdgovori.size());
+				listaLabeleOdgovori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				noviOdgovor.setText(((Odgovor)odgovori.toArray()[i]).get_tekstOdgovora());
+				pnlOdgovor.add(noviOdgovor, "cell 2 " + listaOdgovori.size() + ",growx");
+				listaOdgovori.add(noviOdgovor);
+			}
+			pnlOdgovor.revalidate();
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
+				pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
+				listaLabeleIzbori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlIzbor.add(noviOdgovor, "cell 2 " + listaIzbori.size() + ",growx");
+				listaIzbori.add(noviOdgovor);
+			}
+			pnlIzbor.revalidate();
+		}
+		else if (pitanjeZaUcitanjavanje.get_tipPitanja() == TipPitanja.OtvoreniOdgovor) {
+			cbbTip.setSelectedIndex(2);
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaOdgovori.size())) + ")");
+				pnlOdgovor.add(novaLabela, "cell 1 " + listaOdgovori.size());
+				listaLabeleOdgovori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlOdgovor.add(noviOdgovor, "cell 2 " + listaOdgovori.size() + ",growx");
+				listaOdgovori.add(noviOdgovor);
+			}
+			pnlOdgovor.revalidate();
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
+				pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
+				listaLabeleIzbori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlIzbor.add(noviOdgovor, "cell 2 " + listaIzbori.size() + ",growx");
+				listaIzbori.add(noviOdgovor);
+			}
+			pnlIzbor.revalidate();
+		}
+		else if (pitanjeZaUcitanjavanje.get_tipPitanja() == TipPitanja.VisestrukiIzbor) {
+			cbbTip.setSelectedIndex(3);
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaOdgovori.size())) + ")");
+				pnlOdgovor.add(novaLabela, "cell 1 " + listaOdgovori.size());
+				listaLabeleOdgovori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlOdgovor.add(noviOdgovor, "cell 2 " + listaOdgovori.size() + ",growx");
+				listaOdgovori.add(noviOdgovor);
+			}
+			pnlOdgovor.revalidate();
+			
+			OdgovorDao odao = OdgovorDao.get();
+			Collection<Odgovor> odgovori = odao.DajSveZaPitanje(3);
+			
+			JOptionPane.showMessageDialog(null, odgovori.size());
+			
+			for (int i = 0; i < odgovori.size(); i++) {
+				JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
+				pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
+				listaLabeleIzbori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				noviOdgovor.setText(((Odgovor)odgovori.toArray()[i]).get_tekstOdgovora());
+				pnlIzbor.add(noviOdgovor, "cell 2 " + listaIzbori.size() + ",growx");
+				listaIzbori.add(noviOdgovor);
+			}
+			pnlIzbor.revalidate();
+		}
+		else if (pitanjeZaUcitanjavanje.get_tipPitanja() == TipPitanja.TacnoNetacno) {
+			cbbTip.setSelectedIndex(4);
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaOdgovori.size())) + ")");
+				pnlOdgovor.add(novaLabela, "cell 1 " + listaOdgovori.size());
+				listaLabeleOdgovori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlOdgovor.add(noviOdgovor, "cell 2 " + listaOdgovori.size() + ",growx");
+				listaOdgovori.add(noviOdgovor);
+			}
+			pnlOdgovor.revalidate();
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
+				pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
+				listaLabeleIzbori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlIzbor.add(noviOdgovor, "cell 2 " + listaIzbori.size() + ",growx");
+				listaIzbori.add(noviOdgovor);
+			}
+			pnlIzbor.revalidate();
+		}
+		else if (pitanjeZaUcitanjavanje.get_tipPitanja() == TipPitanja.DaNE) {
+			cbbTip.setSelectedIndex(5);
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(Character.toString((char)('a' + listaOdgovori.size())) + ")");
+				pnlOdgovor.add(novaLabela, "cell 1 " + listaOdgovori.size());
+				listaLabeleOdgovori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlOdgovor.add(noviOdgovor, "cell 2 " + listaOdgovori.size() + ",growx");
+				listaOdgovori.add(noviOdgovor);
+			}
+			pnlOdgovor.revalidate();
+			
+			for (int i = 0; i < 3; i++) {
+				JLabel novaLabela = new JLabel(listaIzbori.size() + ". izbor: ");
+				pnlIzbor.add(novaLabela, "cell 1 " + listaIzbori.size());
+				listaLabeleIzbori.add(novaLabela);
+				JTextField noviOdgovor = new JTextField();
+				pnlIzbor.add(noviOdgovor, "cell 2 " + listaIzbori.size() + ",growx");
+				listaIzbori.add(noviOdgovor);
+			}
+			pnlIzbor.revalidate();
+		}
+		ckbObavezno.setSelected(pitanjeZaUcitanjavanje.isObavezno());
 	}
 
 }
