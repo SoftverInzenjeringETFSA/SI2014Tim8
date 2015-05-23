@@ -52,6 +52,8 @@ import javax.swing.JRadioButton;
 
 public class RegistracijaKlijenta {
 
+	public static Klijent logiraniKlijent;
+	
 	public JFrame frmRegistracijaKlijenta;
 	private JTextField txtIme;
 	private JTextField txtPrezime;
@@ -425,6 +427,9 @@ public class RegistracijaKlijenta {
 				}
 				k.set_datumPrijave(dt);
 				kdao.create(k);
+				
+				logiraniKlijent = k;
+				
 				JOptionPane.showMessageDialog(null,
 						"Klijent je uspješno registrovan!",
 						"Registracija klijenta",
