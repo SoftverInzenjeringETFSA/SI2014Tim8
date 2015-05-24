@@ -60,7 +60,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class StatistikaPoAnketama extends JFrame {
+	
+	final static Logger logger = Logger.getLogger(StatistikaPoAnketama.class);
 	
 	//TODO: Rename obavezan, cuj glavna forma forma statistike (rename i u klasi Menu!!!)
 	
@@ -80,7 +84,7 @@ public class StatistikaPoAnketama extends JFrame {
 					StatistikaPoAnketama window = new StatistikaPoAnketama();
 					window.frmGlavnaForma.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});
