@@ -7,8 +7,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ba.tim8.kvizbiz.entiteti.Administrator;
-import ba.tim8.kvizbiz.entiteti.Osoba;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 

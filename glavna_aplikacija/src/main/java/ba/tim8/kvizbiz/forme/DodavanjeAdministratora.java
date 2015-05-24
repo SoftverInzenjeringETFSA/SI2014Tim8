@@ -3,17 +3,12 @@ package ba.tim8.kvizbiz.forme;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.SystemColor;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -33,10 +28,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JPasswordField;
 
-public class DodavanjeAdministratora extends JFrame {
+import org.apache.log4j.Logger;
 
+public class DodavanjeAdministratora extends JFrame {
+	private static final long serialVersionUID = 1L;
+	final static Logger logger = Logger.getLogger(DodavanjeAdministratora.class);
 	private JFrame frmDodavanjeAdministratora;
 	private JTextField textField_5;
 	private JTextField textField;
@@ -50,22 +49,6 @@ public class DodavanjeAdministratora extends JFrame {
 
 	public JFrame get_frmDodavanjeAdministratora() {
 		return frmDodavanjeAdministratora;
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DodavanjeAdministratora window = new DodavanjeAdministratora();
-					window.frmDodavanjeAdministratora.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	/**
@@ -341,7 +324,7 @@ public class DodavanjeAdministratora extends JFrame {
 							
 							
 						} catch (ParseException e1) {
-							e1.printStackTrace();
+							logger.error("Greska: ", e1);
 						}
 
 					} else {
@@ -357,7 +340,7 @@ public class DodavanjeAdministratora extends JFrame {
 							adao.create(a);
 							adao.updatePass(a);
 						} catch (Exception e1) {
-
+							logger.error("Greska: ", e1);
 						}
 
 					}

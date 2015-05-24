@@ -33,7 +33,7 @@ public class Klijent extends Osoba implements  java.io.Serializable {
 			@JoinColumn(name = "idKlijent", nullable = true, updatable = true) }, 
 			inverseJoinColumns = { @JoinColumn(name = "idOdgovor", 
 					nullable = true, updatable = true) })
-	private Set<Odgovor> _listaOdgovora = new HashSet(0);
+	private HashSet<Odgovor> _listaOdgovora = new HashSet(0);
 	
 	public Date get_datumPrijave() {
 		return _datumPrijave;
@@ -55,7 +55,7 @@ public class Klijent extends Osoba implements  java.io.Serializable {
 		return _listaOdgovora;
 	}
 
-	public void set_listaOdgovora(Set<Odgovor> _listaOdgovora) {
+	public void set_listaOdgovora(HashSet<Odgovor> _listaOdgovora) {
 		this._listaOdgovora = _listaOdgovora;
 	}
 
@@ -81,7 +81,7 @@ public class Klijent extends Osoba implements  java.io.Serializable {
 	
 	public Klijent(long _id, String _ime, String _prezime, Spol _spol,
 			String _adresa, Date _datumRodjenja, String _brojtelefona,
-			String _eMail, Date _datumPrijave, Kviz _popunjeniKviz, Set<Odgovor> _listaOdgovora) {
+			String _eMail, Date _datumPrijave, Kviz _popunjeniKviz, HashSet<Odgovor> _listaOdgovora) {
 		super(_id,_ime,_prezime,_spol,_adresa,_datumRodjenja);
 		this._telefon=_brojtelefona;
 		this._eMail=_eMail;

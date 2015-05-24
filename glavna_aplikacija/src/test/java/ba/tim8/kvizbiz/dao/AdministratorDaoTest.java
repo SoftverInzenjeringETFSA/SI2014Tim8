@@ -137,65 +137,13 @@ public class AdministratorDaoTest {
 		
 	}
 	
-	@Test
-	public void testdajImena() {
-		
-		ArrayList<String> alist = (ArrayList<String>) adao.dajImena();
-		
-		assertEquals("Josip", alist.get(0));
-		assertEquals("Orhan", alist.get(1));
-		
-		
-		assertEquals(alist.size(), 2);
-		
-		
-	}
 	
-	@Test
-	public void testdajUsernames() {
-		
-		ArrayList<String> alist = (ArrayList<String>) adao.dajUsernames();
-		
-		assertEquals("jkvesic1", alist.get(0));
-		assertEquals("jkvesic2", alist.get(1));
-		assertEquals("oljubuncic1", alist.get(2));
-		assertEquals("oljubuncic2", alist.get(3));
-		assertEquals("oljubuncic3", alist.get(4));
-		
-		
-		assertEquals(alist.size(), 5);
-		
-		
-	}
 	
-	@Test
-	public void testdajPrezimena() {
-		
-		ArrayList<String> alist = (ArrayList<String>) adao.dajPrezimena();
-		
-		assertEquals("Kvesic", alist.get(0));
-		assertEquals("Ljubuncic", alist.get(1));
-		
-		
-		assertEquals(alist.size(), 2);
-		
-		
-	}
 	
-	@Test
-	public void testdajAdrese() {
-		
-		ArrayList<String> alist = (ArrayList<String>) adao.dajAdrese();
-		
-		assertEquals("Titova 10", alist.get(0));
-		assertEquals("Titova 12", alist.get(1));
-		assertEquals("Titova 13", alist.get(2));
-		
-		
-		assertEquals(alist.size(), 3);
-		
-		
-	}
+	
+	
+	
+	
 	
 	
 		

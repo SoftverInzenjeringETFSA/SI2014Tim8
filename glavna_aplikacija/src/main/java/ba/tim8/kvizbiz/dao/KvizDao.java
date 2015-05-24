@@ -6,10 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Kviz;
-import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 
 public class KvizDao extends BaseDao<Kviz>{

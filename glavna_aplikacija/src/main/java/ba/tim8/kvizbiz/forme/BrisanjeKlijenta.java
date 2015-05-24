@@ -2,8 +2,6 @@ package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.SystemColor;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -11,9 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -22,16 +17,12 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.OdgovorDao;
-import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Spol;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.util.Collection;
@@ -39,10 +30,12 @@ import java.util.Iterator;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import org.apache.log4j.Logger;
+
 public class BrisanjeKlijenta extends JFrame {
 
-	// TODO: Rename textField u smislene izraze
-
+	final static Logger logger = Logger.getLogger(BrisanjeKlijenta.class);
+	private static final long serialVersionUID = 1L;
 	private JFrame frmBrisanjeKlijenta;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -55,22 +48,6 @@ public class BrisanjeKlijenta extends JFrame {
 
 	public JFrame get_frmBrisanjeKlijenta() {
 		return frmBrisanjeKlijenta;
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BrisanjeKlijenta window = new BrisanjeKlijenta();
-					window.frmBrisanjeKlijenta.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	/**
@@ -222,7 +199,7 @@ public class BrisanjeKlijenta extends JFrame {
 
 		final KlijentDao kdao = KlijentDao.get();
 		Collection<Klijent> klijenti = kdao.readAll();
-		final JComboBox comboBox = new JComboBox();
+		final JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(170, 32, 195, 20);
 		panel_1.add(comboBox);
 
@@ -294,6 +271,7 @@ public class BrisanjeKlijenta extends JFrame {
 						frmBrisanjeKlijenta.dispose();
 					}
 				} catch (Exception ex) {
+					logger.error("Greska: ", ex);
 				}
 			}
 		});

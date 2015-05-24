@@ -155,62 +155,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 			return alist;
 		 }
 	
-	public Collection<String> dajUsernames()
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._username from Administrator a order by a._username");
-		t.commit();
-		Collection<String> c = q.list();
-		session.close();
-		return c;
-	}
 	
-	public Collection<String> dajPassword()
-	{Session session = HibernateUtil.getSessionFactory().openSession();
-	Transaction t = session.beginTransaction();
-	Query q = session.createQuery("select distinct a._password from Administrator a order by a._password");
-	t.commit();
-	Collection<String> c = q.list();
-	session.close();
-	return c;
-		
-		
-	}
-	
-	public Collection<String> dajImena()
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._ime from Administrator a  order by a._ime");
-		t.commit();
-		Collection<String> c = q.list();
-		session.close();
-		return c;
-	}
-	
-	public Collection<String> dajPrezimena()
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._prezime from Administrator a order by a._prezime");
-		t.commit();
-		Collection<String> c = q.list();
-		session.close();
-		return c;
-	}
-
-	
-	public Collection<String> dajAdrese()
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select distinct a._adresa from Administrator a order by a._adresa");
-		t.commit();
-		Collection<String> c = q.list();
-		session.close();
-		return c;
-	}
 	
 	public static Administrator  nadjiAdministratora(Session s, String ime)
 	{
