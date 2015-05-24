@@ -70,22 +70,6 @@ public class StatistikaPoAnketama extends JFrame {
 	}
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StatistikaPoAnketama window = new StatistikaPoAnketama();
-					window.frmGlavnaForma.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public StatistikaPoAnketama() {
