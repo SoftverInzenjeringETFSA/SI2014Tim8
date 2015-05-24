@@ -1,60 +1,46 @@
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.SystemColor;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-
-import javax.swing.JTextPane;
-import javax.swing.JSpinner;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
-
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
-import ba.tim8.kvizbiz.entiteti.Klijent;
-import ba.tim8.kvizbiz.entiteti.Spol;
 import net.miginfocom.swing.MigLayout;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class PromjenaPassworda extends JFrame {
 
-	//TODO: Rename textField u smislena imena
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	final static Logger logger = Logger.getLogger(PromjenaLicnihPodataka.class);
+
 	private JFrame frmPromjenaPassworda;
-	private JTextField textField;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
-	private JPasswordField passwordField_2;
+	private JTextField username;
+	private JPasswordField trenutniPassword;
+	private JPasswordField noviPassword;
+	private JPasswordField potvrdiPassword;
 	private JLabel lblStatus;
 
 	
@@ -62,22 +48,8 @@ public class PromjenaPassworda extends JFrame {
 		return frmPromjenaPassworda;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PromjenaPassworda window = new PromjenaPassworda();
-					window.frmPromjenaPassworda.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -123,36 +95,37 @@ public class PromjenaPassworda extends JFrame {
 		lblUsername.setHorizontalAlignment(JLabel.RIGHT);
 		panel_2.add(lblUsername, "cell 1 0,growx,aligny center");
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setColumns(10);
-		panel_2.add(textField, "cell 2 0,growx,aligny top");
+		username = new JTextField();
+		username.setEditable(false);
+		username.setColumns(10);
+		panel_2.add(username, "cell 2 0,growx,aligny top");
 		
 		JLabel lblPonoviteNoviPassword = new JLabel("Ponovite novi password:");
 		lblPonoviteNoviPassword.setHorizontalAlignment(JLabel.RIGHT);
 		panel_2.add(lblPonoviteNoviPassword, "cell 1 3,growx,aligny center");
 		
-		passwordField = new JPasswordField();
-	    passwordField.setColumns(10);
-		panel_2.add(passwordField, "cell 2 1,growx,aligny top");
+		trenutniPassword = new JPasswordField();
+		trenutniPassword.setColumns(10);
+		panel_2.add(trenutniPassword, "cell 2 1,growx,aligny top");
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setColumns(10);
-		panel_2.add(passwordField_1, "cell 2 3,growx,aligny top");
+		noviPassword = new JPasswordField();
+		noviPassword.setColumns(10);
+		panel_2.add(noviPassword, "cell 2 3,growx,aligny top");
 		
 		JLabel lblNoviPassword = new JLabel("Novi password:");
 		lblNoviPassword.setHorizontalAlignment(JLabel.RIGHT);
 		panel_2.add(lblNoviPassword, "cell 1 2,growx,aligny center");
 		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setColumns(10);
-		panel_2.add(passwordField_2, "cell 2 2,growx,aligny top");
+		potvrdiPassword = new JPasswordField();
+		potvrdiPassword.setColumns(10);
+		panel_2.add(potvrdiPassword, "cell 2 2,growx,aligny top");
 		
 		String neki = LoginAdmina.usernameLogiranogAdmina;
-        textField.setText(neki);
+		username.setText(neki);
 		
 		JButton btnPromjeniLinePodatke = new JButton("Promjeni password");
 		btnPromjeniLinePodatke.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				
 				boolean dodaj=true;
@@ -167,7 +140,7 @@ public class PromjenaPassworda extends JFrame {
                 
 		         
 		         
-					if(!passwordField_2.getText().equals(passwordField_1.getText())){
+					if(!potvrdiPassword.getText().equals(noviPassword.getText())){
 						dodaj = false;
 						lblStatus.setText("Polja Novi password i Potvrdi password se ne poklapaju !");
 						lblStatus.setForeground(Color.red);
@@ -175,7 +148,7 @@ public class PromjenaPassworda extends JFrame {
 		         
 		         
 			 // potvrda password validacija
-				if (passwordField_1.getText().isEmpty()) {
+				if (noviPassword.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Potvrdi password mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
@@ -184,21 +157,21 @@ public class PromjenaPassworda extends JFrame {
 				
 				     // novi password validacija
 
-					 if (passwordField_2.getText().isEmpty()) {
+					 if (potvrdiPassword.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Novi password mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
 
 					}
 					 // trenutni password validacija
-					char[] c=passwordField.getPassword();
+					char[] c=trenutniPassword.getPassword();
 					
 					 if(!administratordao.pretraziAdmina(neki,c)){
 						dodaj = false;
 						lblStatus.setText("Unijeli ste pogrešan password u polje Trenutni password!");
 						lblStatus.setForeground(Color.red);
 					}
-					if (passwordField.getText().isEmpty()) {
+					if (trenutniPassword.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Trenutni Password mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
@@ -207,7 +180,18 @@ public class PromjenaPassworda extends JFrame {
 					
 					
 					if(dodaj==true){
-						trazeniAdministrator.set_password(passwordField_1.getText());
+						trazeniAdministrator.set_password(noviPassword.getText());
+						try {
+							administratordao.updatePass(trazeniAdministrator);
+							}
+							catch (Exception e1) {
+								lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
+								lblStatus.setForeground(Color.red);
+								
+								logger.error("Greska: ", e1);
+								
+								return;
+							}
 						administratordao.updatePass(trazeniAdministrator);
 						lblStatus.setText("Uredu");
 						lblStatus.setForeground(Color.blue);

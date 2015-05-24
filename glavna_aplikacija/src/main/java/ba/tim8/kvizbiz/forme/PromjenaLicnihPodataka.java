@@ -1,19 +1,13 @@
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.SystemColor;
 import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -22,24 +16,14 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-
-import javax.swing.JTextPane;
-import javax.swing.JSpinner;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
+import org.apache.log4j.Logger;
 
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
-import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Spol;
 import net.miginfocom.swing.MigLayout;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Iterator;
@@ -47,18 +31,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import org.apache.log4j.Logger;
 
-public class PromjenaLicnihPodataka extends JFrame {
 
-	//TODO: Rename textField u smislene nazive
-	
+public class PromjenaLicnihPodataka extends JFrame {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	final static Logger logger = Logger.getLogger(PromjenaLicnihPodataka.class);
+
 	private JFrame frmPromjenaLicnihPodataka;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField textIme;
+	private JTextField textPrezime;
+	private JTextField textAdresa;
+	private JTextField textDatumRodjena;
+	private JTextField textEmail;
+	private JTextField textTelefon;
 	private JLabel lblStatus;
 
 	
@@ -66,22 +56,8 @@ public class PromjenaLicnihPodataka extends JFrame {
 		return frmPromjenaLicnihPodataka;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PromjenaLicnihPodataka window = new PromjenaLicnihPodataka();
-					window.frmPromjenaLicnihPodataka.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -136,13 +112,13 @@ public class PromjenaLicnihPodataka extends JFrame {
 		label_1.setHorizontalAlignment(JLabel.RIGHT);
 		panel_1.add(label_1, "cell 0 0,growx,aligny center");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		panel_1.add(textField, "cell 1 0 3 1,growx,aligny top");
+		textIme = new JTextField();
+		textIme.setColumns(10);
+		panel_1.add(textIme, "cell 1 0 3 1,growx,aligny top");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		panel_1.add(textField_1, "cell 1 1 3 1,growx,aligny top");
+		textPrezime = new JTextField();
+		textPrezime.setColumns(10);
+		panel_1.add(textPrezime, "cell 1 1 3 1,growx,aligny top");
 		
 		JLabel label_2 = new JLabel("Datum rođenja:");
 		label_2.setHorizontalAlignment(JLabel.RIGHT);
@@ -152,13 +128,13 @@ public class PromjenaLicnihPodataka extends JFrame {
 		label_3.setHorizontalAlignment(JLabel.RIGHT);
 		panel_1.add(label_3, "cell 0 3,growx,aligny center");
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		panel_1.add(textField_2, "cell 1 3 3 1,growx,aligny top");
+		textAdresa = new JTextField();
+		textAdresa.setColumns(10);
+		panel_1.add(textAdresa, "cell 1 3 3 1,growx,aligny top");
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		panel_1.add(textField_3, "cell 1 4 3 1,growx,aligny top");
+		textDatumRodjena = new JTextField();
+		textDatumRodjena.setColumns(10);
+		panel_1.add(textDatumRodjena, "cell 1 4 3 1,growx,aligny top");
 		
 		JLabel label_4 = new JLabel("Spol:");
 		label_4.setHorizontalAlignment(JLabel.RIGHT);
@@ -174,9 +150,9 @@ public class PromjenaLicnihPodataka extends JFrame {
 		group.add(radioButton);
 		group.add(radioButton_1);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		panel_1.add(textField_4, "cell 1 5 3 1,growx,aligny top");
+		textEmail = new JTextField();
+		textEmail.setColumns(10);
+		panel_1.add(textEmail, "cell 1 5 3 1,growx,aligny top");
 		
 		JLabel label_5 = new JLabel("Email:");
 		label_5.setHorizontalAlignment(JLabel.RIGHT);
@@ -186,9 +162,9 @@ public class PromjenaLicnihPodataka extends JFrame {
 		label_6.setHorizontalAlignment(JLabel.RIGHT);
 		panel_1.add(label_6, "cell 0 6,growx,aligny center");
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		panel_1.add(textField_5, "cell 1 6 3 1,grow");
+		textTelefon= new JTextField();
+		textTelefon.setColumns(10);
+		panel_1.add(textTelefon, "cell 1 6 3 1,grow");
 			
 		/*JButton btnNewButton = new JButton("Uredu");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -212,13 +188,13 @@ public class PromjenaLicnihPodataka extends JFrame {
 				.hasNext();) {
 			trazeniAdministrator = (Administrator) iterator.next();
 		}
-		textField.setText(trazeniAdministrator.get_ime());
-		textField_1.setText(trazeniAdministrator.get_prezime());
-		textField_2.setText(trazeniAdministrator.get_adresa());
-		textField_3.setText(trazeniAdministrator.get_datumRodjenja()
+		textIme.setText(trazeniAdministrator.get_ime());
+		textPrezime.setText(trazeniAdministrator.get_prezime());
+		textAdresa.setText(trazeniAdministrator.get_adresa());
+		textDatumRodjena.setText(trazeniAdministrator.get_datumRodjenja()
 				.toString().substring(0, 10));
-		textField_4.setText(trazeniAdministrator.get_eMail());
-		textField_5.setText(trazeniAdministrator.get_telefon());
+		textEmail.setText(trazeniAdministrator.get_eMail());
+		textTelefon.setText(trazeniAdministrator.get_telefon());
 		
 		if (trazeniAdministrator.get_spol() == Spol.muski)
 			radioButton.setSelected(true);
@@ -242,7 +218,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 		        }
 		  
 		      // telefon validacija
-					if (textField_5.getText().isEmpty()) {
+					if (textTelefon.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Telefon mora biti popunjeno");
 						lblStatus.setForeground(Color.red);
@@ -251,7 +227,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						String regx = "^[0-9]*$";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textField_5.getText());
+						Matcher matcher = pattern.matcher(textTelefon.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
 							lblStatus.setText("Polje Telefon mora sadržavati samo brojeve!");
@@ -261,7 +237,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 					}
 
 					// email validacija
-					if (textField_4.getText().isEmpty()) {
+					if (textEmail.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Email mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
@@ -270,7 +246,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textField_4.getText());
+						Matcher matcher = pattern.matcher(textEmail.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
 							lblStatus.setText("Polje Email mora biti u pravilnom formatu!");
@@ -282,7 +258,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 					
 
 					// datum rodjenja validacija
-					if (textField_3.getText().isEmpty()) {
+					if (textDatumRodjena.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Datum rođenja mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
@@ -291,7 +267,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textField_3.getText());
+						Matcher matcher = pattern.matcher(textDatumRodjena.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
 							lblStatus.setText("Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!");
@@ -300,7 +276,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						}
 					}			
 				    // adresa samo ne smije bit prazna
-					if (textField_2.getText().isEmpty()) {
+					if (textAdresa.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Adresa mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
@@ -308,7 +284,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 					}
 					
 					// prezime validacija
-					if (textField_1.getText().isEmpty()) {
+					if (textPrezime.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Prezime mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
@@ -317,7 +293,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						String regx = "[a-zA-Z]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textField_1.getText());
+						Matcher matcher = pattern.matcher(textPrezime.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
 							lblStatus.setText("Polje Prezime mora sadržavati samo slova!");
@@ -326,7 +302,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 					}
 					
 					// ime validacija
-					if (textField.getText().isEmpty()) {
+					if (textIme.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Ime mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
@@ -335,7 +311,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						String regx = "[a-zA-Z]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textField.getText());
+						Matcher matcher = pattern.matcher(textIme.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
 							lblStatus.setText("Polje Ime mora sadržavati samo slova!");
@@ -350,18 +326,33 @@ public class PromjenaLicnihPodataka extends JFrame {
 							trazeniAdministrator.set_spol(Spol.muski);
 						else if(radioButton_1.isSelected())
 							trazeniAdministrator.set_spol(Spol.zenski);
-						trazeniAdministrator.set_ime(textField.getText());
-						trazeniAdministrator.set_prezime(textField_1.getText());
+						trazeniAdministrator.set_ime(textIme.getText());
+						trazeniAdministrator.set_prezime(textPrezime.getText());
 						try {
-							trazeniAdministrator.set_datumRodjenja(format.parse(textField_3.getText()));
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							trazeniAdministrator.set_datumRodjenja(format.parse(textDatumRodjena.getText()));
+						} catch (Exception e1) {
+							lblStatus.setText(e1.getMessage());
+							lblStatus.setForeground(Color.red);
+							
+							logger.error("Greska: ", e1);
+							
+							return;
 						}
-						trazeniAdministrator.set_adresa(textField_2.getText());
-						trazeniAdministrator.set_eMail(textField_4.getText());
-						trazeniAdministrator.set_telefon(textField_5.getText());
+						trazeniAdministrator.set_adresa(textAdresa.getText());
+						trazeniAdministrator.set_eMail(textEmail.getText());
+						trazeniAdministrator.set_telefon(textTelefon.getText());
+						try {
 						adao.update(trazeniAdministrator);
+						}
+						catch (Exception e1) {
+							lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
+							lblStatus.setForeground(Color.red);
+							
+							logger.error("Greska: ", e1);
+							
+							return;
+						}
+						
 						lblStatus.setText("Uredu");
 						lblStatus.setForeground(Color.blue);
 						int rezultatDijaloga = JOptionPane.showConfirmDialog(null, "Jeste li sigurni da želite promijeniti podatke " , "Promjena ličnih podataka", JOptionPane.YES_NO_OPTION);
