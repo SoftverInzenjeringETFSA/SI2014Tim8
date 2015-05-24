@@ -51,22 +51,6 @@ private JFrame frame;
 	}
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ManipulacijaAnketama window = new ManipulacijaAnketama();
-					window.frmManipulacijaAnketama.setVisible(true);
-				} catch (Exception e) {
-					logger.error("Greska: ", e);
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public ManipulacijaAnketama() {

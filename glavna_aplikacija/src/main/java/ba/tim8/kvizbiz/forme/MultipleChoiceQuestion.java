@@ -35,22 +35,6 @@ public class MultipleChoiceQuestion extends JFrame {
 	private final JPanel panelBrojPitanja = new JPanel();
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MultipleChoiceQuestion window = new MultipleChoiceQuestion();
-					window.frmPopunjavanjeAnkete.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public MultipleChoiceQuestion() {
