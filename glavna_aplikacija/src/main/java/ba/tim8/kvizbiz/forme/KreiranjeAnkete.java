@@ -22,7 +22,7 @@ public class KreiranjeAnkete extends JFrame {
 	
 	final static Logger logger = Logger.getLogger(KreiranjeAnkete.class);
 	
-	public static long trenutniKvizID = -1;
+	public static long trenutniKvizID = -1; //NOSONAR
 	
 	private JPanel contentPane;
 	private JTextField tbxNaslov;
