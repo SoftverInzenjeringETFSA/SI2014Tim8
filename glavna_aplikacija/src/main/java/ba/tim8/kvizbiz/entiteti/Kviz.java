@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "kviz")
 public class Kviz implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "idKviz", unique = true, nullable = false)
 	@GeneratedValue(strategy=GenerationType.AUTO)

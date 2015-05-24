@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Table(name = "osoba")
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Osoba implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "idOsoba", unique = true, nullable = false)
 	@GeneratedValue(strategy=GenerationType.AUTO)
