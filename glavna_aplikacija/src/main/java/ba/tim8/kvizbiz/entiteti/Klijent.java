@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -24,7 +25,10 @@ public class Klijent extends Osoba implements  java.io.Serializable {
 	private String _eMail;
 	@Column(name = "datumPrijave", nullable = false)
 	private Date _datumPrijave;
-	@Column(name = "idKviz", nullable = true)
+	
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idKviz", nullable = false)
 	private Kviz _popunjeniKviz;
 	
 	
