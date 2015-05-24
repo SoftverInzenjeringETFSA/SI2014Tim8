@@ -38,7 +38,24 @@ public class PocetnaKlijent extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	
-private JComboBox comboBox;
+	private JComboBox comboBox;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PocetnaKlijent frame = new PocetnaKlijent();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -84,7 +101,7 @@ private JComboBox comboBox;
 		panel.add(scrollPane);
 		scrollPane.setViewportView(table);
 		
-		JButton btnNewButton_2 = new JButton("Popuni anketu");
+		JButton btnNewButton_2 = new JButton("Pregledaj anketu");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
