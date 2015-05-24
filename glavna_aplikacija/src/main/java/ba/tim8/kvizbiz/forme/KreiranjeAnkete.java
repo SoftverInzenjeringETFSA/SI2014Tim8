@@ -154,6 +154,7 @@ public class KreiranjeAnkete extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				PocetnaKlijent forma = new PocetnaKlijent();
 				forma.setVisible(true);
+				trenutniKvizID = -1;
 				dispose();
 			}
 		});
