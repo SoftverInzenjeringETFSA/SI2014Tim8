@@ -56,7 +56,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 
+import org.apache.log4j.Logger;
+
 public class StatistikaPoKlijentima extends JFrame {
+	
+	final static Logger logger = Logger.getLogger(StatistikaPoKlijentima.class);
 
 	private JFrame frmStatistikaPoKlijentimaForma;
 	
@@ -74,7 +78,7 @@ public class StatistikaPoKlijentima extends JFrame {
 					StatistikaPoKlijentima window = new StatistikaPoKlijentima();
 					window.frmStatistikaPoKlijentimaForma.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});
