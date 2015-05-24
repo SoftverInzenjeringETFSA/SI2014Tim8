@@ -12,8 +12,12 @@ import ba.tim8.kvizbiz.dao.*;
 import ba.tim8.kvizbiz.entiteti.*;
 import net.miginfocom.swing.MigLayout;
 
+import org.apache.log4j.Logger;
+
 public class DodavanjeManipulacija extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(DodavanjeManipulacija.class);
 
 	private JPanel contentPane;
 	
@@ -27,25 +31,7 @@ public class DodavanjeManipulacija extends JFrame {
 	private ArrayList<JLabel> listaLabeleOdgovori;
 	private ArrayList<JLabel> listaLabeleIzbori;
 	
-	private JLabel lblStatus;
-
-	/**
-	 * Launch the application.
-	 */
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DodavanjeManipulacija frame = new DodavanjeManipulacija(null,null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
+	private JLabel lblStatus;	
 
 	/**
 	 * Create the frame.
@@ -296,7 +282,7 @@ public class DodavanjeManipulacija extends JFrame {
 				catch (Exception e1) {
 					lblStatus.setText(e1.getMessage());
 					lblStatus.setForeground(Color.red);
-					return;
+					logger.error("Greska: ", e1);
 				}
 				
 				// Upis u bazu
@@ -321,7 +307,7 @@ public class DodavanjeManipulacija extends JFrame {
 					lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
 					lblStatus.setForeground(Color.red);
 					
-					e1.printStackTrace();
+					logger.error("Greska: ", e1);
 					
 					return;
 				}

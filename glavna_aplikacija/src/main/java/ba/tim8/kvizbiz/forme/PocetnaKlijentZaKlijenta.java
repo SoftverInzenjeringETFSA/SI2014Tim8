@@ -21,22 +21,6 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 	private JLabel lblStatus;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PocetnaKlijentZaKlijenta frame = new PocetnaKlijentZaKlijenta();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public PocetnaKlijentZaKlijenta() {

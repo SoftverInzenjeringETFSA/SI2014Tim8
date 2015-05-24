@@ -2,7 +2,6 @@ package ba.tim8.kvizbiz.forme;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.Console;
 import java.util.*;
 
 import javax.swing.*;
@@ -12,8 +11,12 @@ import ba.tim8.kvizbiz.dao.*;
 import ba.tim8.kvizbiz.entiteti.*;
 import net.miginfocom.swing.MigLayout;
 
+import org.apache.log4j.Logger;
+
 public class frmDodavanjePitanja_v2 extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(frmDodavanjePitanja_v2.class);
 
 	private JPanel contentPane;
 	
@@ -27,25 +30,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 	private ArrayList<JLabel> listaLabeleIzbori;
 	
 	private JLabel lblStatus;
-
-	/**
-	 * Launch the application.
-	 */
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frmDodavanjePitanja_v2 frame = new frmDodavanjePitanja_v2(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-
 	/**
 	 * Create the frame.
 	 */
@@ -292,6 +277,9 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				catch (Exception e1) {
 					lblStatus.setText(e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					
+					logger.error("Greska: ", e1);
+					
 					return;
 				}
 				
@@ -317,7 +305,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 					lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
 					lblStatus.setForeground(Color.red);
 					
-					e1.printStackTrace();
+					logger.error("Greska: ", e1);
 					
 					return;
 				}
