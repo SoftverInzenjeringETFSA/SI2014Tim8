@@ -73,25 +73,6 @@ public class StatistikaPoKlijentima extends JFrame {
 		return frmStatistikaKlijent;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StatistikaPoKlijentima window = new StatistikaPoKlijentima();
-					window.frmStatistikaKlijent.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public StatistikaPoKlijentima() {
 		initialize();
 	}
@@ -147,23 +128,20 @@ public class StatistikaPoKlijentima extends JFrame {
 				//Implement
 				Klijent k = (Klijent) comboBox.getSelectedItem();
 				Kviz anketa = k.get_popunjeniKviz();
+				btnNewButton.setText(anketa.get_naziv());
 				String tekst = "\n";
-				tekst += anketa.get_naziv()+"\n"; 
+				tekst += "\tNaziv kviza: "+anketa.get_naziv()+"\n"; 
 				Set<Pitanje> pitanja = k.get_popunjeniKviz().get_pitanja();
 				int count = 1;
 				for(Pitanje p:pitanja){
 					Set<Odgovor> odgs = k.get_listaOdgovora();
-					tekst += count+". "+p.get_tekstPitanja()+"\n";
+					tekst += "\n  "+count+". "+p.get_tekstPitanja()+"\n";
 					for(Odgovor o:odgs){
 						if(o.get_pitanje().equals(p)){
 							tekst += "        "+o.get_tekstOdgovora()+"\n";
 						}
 					}
 					count++;
-				}
-				for(int j=0; j<70;j++)
-				{
-					tekst+="test\n";
 				}
 				textArea.setText(tekst);
 			}});
