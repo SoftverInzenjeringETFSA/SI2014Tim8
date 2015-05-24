@@ -149,7 +149,7 @@ public class RegistracijaKlijenta {
 		panelRegistracija.add(txtAdresa);
 		txtAdresa.setColumns(10);
 		
-		JButton btnOtkazi = new JButton("Nazads");
+		JButton btnOtkazi = new JButton("Nazad");
 		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnOtkazi, -101, SpringLayout.EAST, panelRegistracija);
 		btnOtkazi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
