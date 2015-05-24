@@ -26,6 +26,19 @@ public class KvizBiz extends JFrame {
 	public JFrame get_frame () {
 		return frame;
 	}
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					KvizBiz window = new KvizBiz();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the application.

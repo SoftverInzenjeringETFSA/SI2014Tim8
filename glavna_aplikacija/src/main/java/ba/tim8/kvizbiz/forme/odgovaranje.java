@@ -65,7 +65,7 @@ public class odgovaranje {
 	private int ukupnoPitanja;
 	private List lista;
 	private Klijent klijent;
-	private Set<Odgovor> realOdgovori;
+	private HashSet<Odgovor> realOdgovori;
 	private JLabel lblStatus;
 	private JTextArea txtAreaOdgovor;
 	//private long idKviz;
@@ -106,10 +106,10 @@ public class odgovaranje {
 		frmPopunjavanjeAnkete.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		realOdgovori = new HashSet<Odgovor>();
-		//klijent = new Klijent();
+		klijent = new Klijent();
 		//klijent = RegistracijaKlijenta.logiraniKlijent;
-		klijent=KlijentDao.get().read(72);
-		/*if(RegistracijaKlijenta.logiraniKlijent==null)
+		klijent=KlijentDao.get().read(77);
+		if(klijent==null)
 		{
 			try {
 				throw new Exception("nema ga");
@@ -117,7 +117,7 @@ public class odgovaranje {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}*/
+		}
 		//lblStatus.setText("Status");
 		KvizDao kdao = KvizDao.get();
 		Kviz kviz = kdao.read(kvizID);
@@ -1008,7 +1008,7 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Odgovor odg = new Odgovor();
+				/*Odgovor odg = new Odgovor();
 				odg.set_pitanje(p);
 				if(radioBtnDa.isSelected()){
 					try {
@@ -1022,8 +1022,16 @@ public class odgovaranje {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+				}*/
+				Set<Odgovor> odgs = p.get_listaOdgovora();
+				for(Odgovor o:odgs){
+					if(o.get_tekstOdgovora().equals(radioBtnDa.getText()))
+					{
+						realOdgovori.add(o);
+						break;
+					}
 				}
-				realOdgovori.add(odg);
+				
 				if(broj+1 < ukupnoPitanja){
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();

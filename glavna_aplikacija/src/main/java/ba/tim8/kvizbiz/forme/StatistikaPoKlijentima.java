@@ -37,6 +37,7 @@ import java.util.Iterator;
 
 import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Kviz;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -123,18 +124,16 @@ public class StatistikaPoKlijentima extends JFrame {
 		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
 				.hasNext();) {
 			klijent = (Klijent) iterator.next();
-			comboBox.addItem(klijent.toString());
+			if(klijent.get_popunjeniKviz()!= null)
+				comboBox.addItem(klijent);
 		}
 		comboBox.setSelectedIndex(-1);
 
-		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				//Implement
-			}});
-		JPanel panelAnketa = new JPanel();
+		
+		final JPanel panelAnketa = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panelAnketa.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		panelAnketa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Anketa broj 1", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelAnketa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Anketa broj ?", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -204,5 +203,17 @@ public class StatistikaPoKlijentima extends JFrame {
 		btnNewButton.setEnabled(false);
 		frmStatistikaPoKlijentimaForma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				//Implement
+				Klijent k = (Klijent) comboBox.getSelectedItem();
+				Kviz anketa = k.get_popunjeniKviz();
+				panelAnketa.removeAll();
+				panelAnketa.revalidate();
+				panelAnketa.repaint();
+				panelAnketa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), anketa.get_naziv(), 
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				
+			}});
 	}
 }

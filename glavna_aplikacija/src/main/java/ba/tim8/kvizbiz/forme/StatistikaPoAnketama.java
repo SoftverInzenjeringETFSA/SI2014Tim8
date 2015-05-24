@@ -207,6 +207,7 @@ public class StatistikaPoAnketama extends JFrame {
 		JLabel label_6 = new JLabel("2. Ne - 67% (24 od 36)");
 		label_6.setPreferredSize(new Dimension(280, 14));
 		panel_1.add(label_6);*/
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -278,7 +279,6 @@ public class StatistikaPoAnketama extends JFrame {
 						 panelStatistika,
 				            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-				 jp.setPreferredSize(new Dimension(350, 408));
 				 frmGlavnaForma.add(jp);
 
 			 			//frmGlavnaForma.pack();
