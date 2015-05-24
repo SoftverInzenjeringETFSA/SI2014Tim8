@@ -31,10 +31,10 @@ public class Kviz implements java.io.Serializable{
 	private boolean _arhiviran;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_popunjeniKviz")
-	private HashSet<Klijent> _klijenti = new HashSet<Klijent>();
+	private Set<Klijent> _klijenti = new HashSet<Klijent>();
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz")
-	private HashSet<Pitanje> _pitanja = new HashSet<Pitanje>();
+	private Set<Pitanje> _pitanja = new HashSet<Pitanje>();
 	
 	public long get_id() {
 		return _id;
@@ -71,7 +71,7 @@ public class Kviz implements java.io.Serializable{
 	{
 		return _klijenti;
 	}
-	public void set_klijenti(HashSet<Klijent> _klijenti)
+	public void set_klijenti(Set<Klijent> _klijenti)
 	{
 		this._klijenti = _klijenti;
 	}
@@ -80,7 +80,7 @@ public class Kviz implements java.io.Serializable{
 	{
 		return _pitanja;
 	}
-	public void set_pitanja(HashSet<Pitanje> _pitanja)
+	public void set_pitanja(Set<Pitanje> _pitanja)
 	{
 		this._pitanja = _pitanja;
 	}
