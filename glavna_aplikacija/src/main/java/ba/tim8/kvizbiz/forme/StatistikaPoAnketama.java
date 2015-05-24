@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -114,7 +115,7 @@ public class StatistikaPoAnketama extends JFrame {
 		final JPanel panel = new JPanel();
 		frmGlavnaForma.getContentPane().add(panel, BorderLayout.CENTER);
 		
-		JPanel panelAnketa = new JPanel();
+		final JPanel panelAnketa = new JPanel();
 		panelAnketa.setLayout(null);
 		panelAnketa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga anketa", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
@@ -205,7 +206,14 @@ public class StatistikaPoAnketama extends JFrame {
 				lblNewLabel.setPreferredSize(new Dimension(247, 14));
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				
-				
+				JTextArea tekst = new JTextArea("Tekst");
+				tekst.setPreferredSize(new Dimension(300, 400));
+			    JScrollPane jScrollPane = new JScrollPane(tekst);
+			    String tmpTekst = "";
+			    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			    
+			    
 				JPanel panelUkupno = new JPanel();
 				panelStatistika.add(panelUkupno);
 				panelUkupno.setLayout(new BorderLayout(0, 0));
@@ -213,10 +221,7 @@ public class StatistikaPoAnketama extends JFrame {
 				for(Pitanje p:pitanja){
 					if(p.get_tipPitanja().equals(TipPitanja.OtvoreniOdgovor))
 						continue;
-					JPanel panelD = new JPanel();
-					panelD.setPreferredSize(new Dimension(300, 80));
-					panelD.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), p.get_tekstPitanja(), TitledBorder.LEADING, TitledBorder.TOP, null, Color.blue));
-					panelD.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+					tmpTekst +="  "+p.get_tekstPitanja()+"\n";
 					Set<Odgovor> odgovori = p.get_listaOdgovora();
 					int count = 1;
 					for(Odgovor o:odgovori){
@@ -224,15 +229,15 @@ public class StatistikaPoAnketama extends JFrame {
 						int ukOdgovora=tmp.get_klijenti().size();
 						Double postotak = Double.valueOf(brOdgovora)/Double.valueOf(ukOdgovora);
 						postotak *= 100;
-						JLabel label = new JLabel(count+". "+o.get_tekstOdgovora()+" - "+String.format("%.2f",postotak)+"% ("+brOdgovora+" od "+ukOdgovora+")");
-						label.setPreferredSize(new Dimension(280, 14));
-						panelD.add(label);
+						tmpTekst += "        "+count+". "+o.get_tekstOdgovora()+" - "+String.format("%.2f",postotak)+"% ("+brOdgovora+" od "+ukOdgovora+")\n";
 						count++;
 					}
-					panelStatistika.add(panelD);
 				}
-				
-				
+				tekst.setText(tmpTekst);
+				tekst.disable();
+				frmGlavnaForma.add(jScrollPane, BorderLayout.CENTER);
+				frmGlavnaForma.setSize(400, 150);
+				frmGlavnaForma.setVisible(true);
 			}});
 	}
 }
