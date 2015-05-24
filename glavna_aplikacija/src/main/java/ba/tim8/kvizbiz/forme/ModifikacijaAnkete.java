@@ -61,22 +61,6 @@ public class ModifikacijaAnkete extends JFrame {
 	List<Pitanje> lk = new ArrayList<Pitanje>(); //NOSONAR
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ModifikacijaAnkete frame = new ModifikacijaAnkete(null,null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					logger.error("Greska: ", e);
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public ModifikacijaAnkete(final Kviz kviz, final JFrame proslaForma) {
@@ -291,6 +275,8 @@ public class ModifikacijaAnkete extends JFrame {
 					catch(Exception e1) {
 						lblStatus.setText("Greska: " + e1.getMessage());
 						lblStatus.setForeground(Color.red);
+						
+						logger.error("Greska: ", e1);
 					}
 				
 			}
