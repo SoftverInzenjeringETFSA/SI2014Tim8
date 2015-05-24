@@ -61,18 +61,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
-
 public class StatistikaPoAnketama extends JFrame {
 	
-	final static Logger logger = Logger.getLogger(StatistikaPoAnketama.class);
-	
-	//TODO: Rename obavezan, cuj glavna forma forma statistike (rename i u klasi Menu!!!)
-	
-	private JFrame frmGlavnaForma;
+	private JFrame frmStatistikaKviz;
 	
 	public JFrame get_frmGlavnaForma () {
-		return frmGlavnaForma;
+		return frmStatistikaKviz;
 	}
 
 	/**
@@ -83,9 +77,9 @@ public class StatistikaPoAnketama extends JFrame {
 			public void run() {
 				try {
 					StatistikaPoAnketama window = new StatistikaPoAnketama();
-					window.frmGlavnaForma.setVisible(true);
+					window.frmStatistikaKviz.setVisible(true);
 				} catch (Exception e) {
-					logger.error("Greska: ", e);
+					e.printStackTrace();
 				}
 			}
 		});
@@ -102,37 +96,40 @@ public class StatistikaPoAnketama extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmGlavnaForma = new JFrame();
-		frmGlavnaForma.setTitle("Statistika po anketama");
-		frmGlavnaForma.setBounds(100, 100, 430, 518);
-		frmGlavnaForma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmGlavnaForma.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmStatistikaKviz = new JFrame();
+		frmStatistikaKviz.setTitle("Statistika po anketama");
+		frmStatistikaKviz.setBounds(100, 100, 430, 518);
+		frmStatistikaKviz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmStatistikaKviz.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		// Kreiranje menija
+		
 		Menu menu = new Menu();
-		menu.NapraviMenu(frmGlavnaForma);
+		menu.NapraviMenu(frmStatistikaKviz);		
 		
-		final JPanel panel = new JPanel();
-		frmGlavnaForma.getContentPane().add(panel, BorderLayout.CENTER);
 		
-		final JPanel panelAnketa = new JPanel();
-		panelAnketa.setLayout(null);
-		panelAnketa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pretraga anketa", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		final JButton btnNewButton = new JButton("Statusna traka");
+		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
+		btnNewButton.setForeground(SystemColor.textHighlight);
+		btnNewButton.setEnabled(false);
+		frmStatistikaKviz.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
-		JLabel lblIzaberiteAdministratora = new JLabel("Izaberite anketu:");
-		lblIzaberiteAdministratora.setBounds(22, 35, 101, 14);
-		panelAnketa.add(lblIzaberiteAdministratora);
+		final JScrollPane scrollPane = new JScrollPane();
+		frmStatistikaKviz.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
-		/*JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Klix", "RadioSarajevo"}));
-		comboBox.setBounds(131, 32, 189, 20);
-		panelAnketa.add(comboBox);*/
+		final JTextArea textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
+		
+		textArea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textArea.setEnabled(false);
+		textArea.setDisabledTextColor(Color.black);
+		textArea.setBackground(frmStatistikaKviz.getBackground());
+		
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		scrollPane.setColumnHeaderView(comboBox);
 		
 		final KvizDao kdao = KvizDao.get();
 		Collection<Kviz> kvizovi = kdao.readAll();
-		final JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(131, 32, 189, 20);
-		panelAnketa.add(comboBox);
 
 		Kviz kviz = new Kviz();
 		for (Iterator<Kviz> iterator = kvizovi.iterator(); iterator
@@ -140,88 +137,27 @@ public class StatistikaPoAnketama extends JFrame {
 			kviz = (Kviz) iterator.next();
 			comboBox.addItem(kviz);
 		}
+		
 		comboBox.setSelectedIndex(-1);
-
-		
-		
-		final JPanel panelStatistika = new JPanel();
-		panelStatistika.setAutoscrolls(true);
-		panelStatistika.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "O anketi", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelStatistika.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		
-		final JLabel lblNewLabel = new JLabel("Ukupno popunjenih anketa: ?");
-		panelStatistika.add(lblNewLabel);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setPreferredSize(new Dimension(247, 14));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		
-		JPanel panelUkupno = new JPanel();
-		panelStatistika.add(panelUkupno);
-		panelUkupno.setLayout(new BorderLayout(0, 0));
-		
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(30)
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(panelStatistika, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-						.addComponent(panelAnketa, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
-					.addGap(48))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(30)
-					.addComponent(panelAnketa, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-					.addGap(12)
-					.addComponent(panelStatistika, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
-					.addGap(5))
-		);
-		panel.setLayout(gl_panel);
-		
-		JButton btnNewButton = new JButton("Statusna traka");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNewButton.setForeground(SystemColor.textHighlight);
-		btnNewButton.setEnabled(false);
-		frmGlavnaForma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
-		
-		JScrollPane js =new JScrollPane(panelStatistika);
-		//js.setPreferredSize(panelStatistika.getSize());
-		panel.add(js);
-		
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				//Implement
-				panelStatistika.removeAll();
-				panelStatistika.revalidate();
-				panelStatistika.repaint();
-				
+								
+				String tekst = "";
 				Kviz tmp = (Kviz) comboBox.getSelectedItem();
-				final JLabel lblNewLabel = new JLabel();
-				lblNewLabel.setText("Ukupno popunjenih anketa: "+String.valueOf(tmp.get_klijenti().size()));
-				panelStatistika.add(lblNewLabel);
-				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				lblNewLabel.setPreferredSize(new Dimension(247, 14));
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				btnNewButton.setText(tmp.get_naziv());
+				tekst += "\n  Ukupno popunjenih anketa: "+String.valueOf(tmp.get_klijenti().size())+"\n";
 				
-				JTextArea tekst = new JTextArea("Tekst");
-				tekst.setPreferredSize(new Dimension(300, 400));
-			    JScrollPane jScrollPane = new JScrollPane(tekst);
-			    String tmpTekst = "";
-			    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-			    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			    
+				
 			    
 				JPanel panelUkupno = new JPanel();
-				panelStatistika.add(panelUkupno);
 				panelUkupno.setLayout(new BorderLayout(0, 0));
 				Set<Pitanje> pitanja = tmp.get_pitanja();
+				int brojac = 1;
 				for(Pitanje p:pitanja){
 					if(p.get_tipPitanja().equals(TipPitanja.OtvoreniOdgovor))
 						continue;
-					tmpTekst +="  "+p.get_tekstPitanja()+"\n";
+					tekst +="\n    "+brojac+". "+p.get_tekstPitanja()+"\n";
 					Set<Odgovor> odgovori = p.get_listaOdgovora();
 					int count = 1;
 					for(Odgovor o:odgovori){
@@ -229,15 +165,18 @@ public class StatistikaPoAnketama extends JFrame {
 						int ukOdgovora=tmp.get_klijenti().size();
 						Double postotak = Double.valueOf(brOdgovora)/Double.valueOf(ukOdgovora);
 						postotak *= 100;
-						tmpTekst += "        "+count+". "+o.get_tekstOdgovora()+" - "+String.format("%.2f",postotak)+"% ("+brOdgovora+" od "+ukOdgovora+")\n";
+						tekst += "        "+count+". "+o.get_tekstOdgovora()+" - "+String.format("%.2f",postotak)+"% ("+brOdgovora+" od "+ukOdgovora+")\n";
 						count++;
 					}
+					brojac++;
 				}
-				tekst.setText(tmpTekst);
-				tekst.disable();
-				frmGlavnaForma.add(jScrollPane, BorderLayout.CENTER);
-				frmGlavnaForma.setSize(400, 150);
-				frmGlavnaForma.setVisible(true);
+				textArea.setText(tekst);
+				
 			}});
+		
+		JLabel lblIzaberiteAnketu = new JLabel("Izaberite anketu:");
+		lblIzaberiteAnketu.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblIzaberiteAnketu.setHorizontalAlignment(SwingConstants.CENTER);
+		frmStatistikaKviz.getContentPane().add(lblIzaberiteAnketu, BorderLayout.NORTH);
 	}
 }
