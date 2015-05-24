@@ -106,9 +106,9 @@ public class odgovaranje {
 		frmPopunjavanjeAnkete.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		realOdgovori = new HashSet<Odgovor>();
-		klijent = new Klijent();
-		//klijent = RegistracijaKlijenta.logiraniKlijent;
-		klijent=KlijentDao.get().read(77);
+		//klijent = new Klijent();
+		klijent = RegistracijaKlijenta.logiraniKlijent;
+		//klijent=KlijentDao.get().read(77);
 		if(klijent==null)
 		{
 			try {

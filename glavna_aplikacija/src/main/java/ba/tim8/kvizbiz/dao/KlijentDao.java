@@ -130,4 +130,14 @@ public class KlijentDao extends BaseDao<Klijent> {
 			session.close();
 			return alist;
 		 }
+	public Collection<Klijent> dajPoPopunjenomKvizu() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session
+				.createQuery("from Klijent a where a._popunjeniKviz is not null");
+		Collection<Klijent> alist = (Collection<Klijent>) q.list();
+			t.commit();
+			session.close();
+			return alist;
+		 }
 }

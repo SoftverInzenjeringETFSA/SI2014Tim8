@@ -115,7 +115,7 @@ public class StatistikaPoKlijentima extends JFrame {
 		panelKlijent.add(comboBox);*/
 		
 		final KlijentDao kdao = KlijentDao.get();
-		Collection<Klijent> klijenti = kdao.readAll();
+		Collection<Klijent> klijenti = kdao.dajPoPopunjenomKvizu();
 		final JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(135, 32, 185, 20);
 		panelKlijent.add(comboBox);
@@ -124,7 +124,7 @@ public class StatistikaPoKlijentima extends JFrame {
 		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
 				.hasNext();) {
 			klijent = (Klijent) iterator.next();
-			if(klijent.get_popunjeniKviz()!= null)
+			//if(klijent.get_listaOdgovora()==null)
 				comboBox.addItem(klijent);
 		}
 		comboBox.setSelectedIndex(-1);
