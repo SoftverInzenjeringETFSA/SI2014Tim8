@@ -2,7 +2,6 @@ package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -29,8 +28,11 @@ import java.awt.event.ItemListener;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
+
 public class BrisanjeAdministratora extends JFrame {
 	private static final long serialVersionUID = 1L;
+	final static Logger logger = Logger.getLogger(BrisanjeAdministratora.class);
 	private JFrame frmBrisanjeAdministratora;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -42,22 +44,6 @@ public class BrisanjeAdministratora extends JFrame {
 
 	public JFrame get_frmBrisanjeAdministratora() {
 		return frmBrisanjeAdministratora;
-	}
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BrisanjeAdministratora window = new BrisanjeAdministratora();
-					window.frmBrisanjeAdministratora.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	/**
@@ -201,7 +187,7 @@ public class BrisanjeAdministratora extends JFrame {
 				BorderLayout.SOUTH);
 		// LOGIKA
 
-		final JComboBox comboBox = new JComboBox();
+		final JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(170, 32, 195, 20);
 		panel_1.add(comboBox);
 
@@ -281,7 +267,7 @@ public class BrisanjeAdministratora extends JFrame {
 						}
 					}
 				} catch (Exception ex) {
-
+					logger.error("Greska: ", ex);
 				}
 			}
 		});
