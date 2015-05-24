@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2015 at 09:34 PM
+-- Generation Time: May 24, 2015 at 06:42 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -16,14 +16,14 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- Database: `tim8`
---
 CREATE DATABASE IF NOT EXISTS tim8;
 
 ALTER DATABASE tim8 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 USE tim8;
+
+GRANT ALL PRIVILEGES ON tim8.* To 'EtfSI2014'@'localhost' IDENTIFIED BY '2014SIEtf';
+
 -- --------------------------------------------------------
 
 --
@@ -39,7 +39,15 @@ CREATE TABLE IF NOT EXISTS `administrator` (
   PRIMARY KEY (`idAdministrator`),
   UNIQUE KEY `idAdministrator_UNIQUE` (`idAdministrator`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
+
+--
+-- Dumping data for table `administrator`
+--
+
+INSERT INTO `administrator` (`idAdministrator`, `username`, `password`, `telefon`, `email`) VALUES
+(73, 'admin', '98b347ae0606d2d1bc2c4e19fe3f3db3', '000', 'Admin'),
+(74, 'faruk', '9ff41dc4b232afef1d884bc1b9231c24', '061111111', 'fljuca1@etf.unsa.ba');
 
 -- --------------------------------------------------------
 
@@ -56,7 +64,15 @@ CREATE TABLE IF NOT EXISTS `klijent` (
   PRIMARY KEY (`idKlijent`),
   UNIQUE KEY `idKlijent_UNIQUE` (`idKlijent`),
   KEY `fk_Klijent_Kviz1_idx` (`idKviz`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=72 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=77 ;
+
+--
+-- Dumping data for table `klijent`
+--
+
+INSERT INTO `klijent` (`idKlijent`, `telefon`, `email`, `datumPrijave`, `idKviz`) VALUES
+(75, '062222222', 'oljubuncic1@etf.unsa.ba', '2015-05-24', NULL),
+(76, '063333333', 'tmilicevic1@etf.unsa.ba', '2015-05-24', NULL);
 
 -- --------------------------------------------------------
 
@@ -88,7 +104,15 @@ CREATE TABLE IF NOT EXISTS `kviz` (
   `arhiviran` tinyint(1) NOT NULL,
   PRIMARY KEY (`idKviz`),
   UNIQUE KEY `idKviz_UNIQUE` (`idKviz`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `kviz`
+--
+
+INSERT INTO `kviz` (`idKviz`, `naziv`, `vremenskoOgranicenje`, `aktivan`, `arhiviran`) VALUES
+(1, 'Anketa znanja', 13, 1, 0),
+(2, 'Druga anketa', 10, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -103,7 +127,26 @@ CREATE TABLE IF NOT EXISTS `odgovor` (
   PRIMARY KEY (`idOdgovor`),
   UNIQUE KEY `idOdgovor_UNIQUE` (`idOdgovor`),
   KEY `fk_Odgovor_Pitanje1_idx` (`idPitanje`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `odgovor`
+--
+
+INSERT INTO `odgovor` (`idOdgovor`, `idPitanje`, `tekstOdgovora`) VALUES
+(1, 1, '1'),
+(2, 1, '2'),
+(3, 1, '3'),
+(4, 1, '4'),
+(5, 1, '5'),
+(6, 2, 'Plava'),
+(7, 2, 'Zelena'),
+(8, 2, 'Crvena'),
+(9, 2, 'Neka druga'),
+(10, 3, 'Tacno'),
+(11, 3, 'Netacno'),
+(12, 7, 'Tacno'),
+(13, 7, 'Netacno');
 
 -- --------------------------------------------------------
 
@@ -120,7 +163,17 @@ CREATE TABLE IF NOT EXISTS `osoba` (
   `datumRodjenja` date NOT NULL,
   PRIMARY KEY (`idOsoba`),
   UNIQUE KEY `idOsoba_UNIQUE` (`idOsoba`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=72 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=77 ;
+
+--
+-- Dumping data for table `osoba`
+--
+
+INSERT INTO `osoba` (`idOsoba`, `ime`, `prezime`, `spol`, `adresa`, `datumRodjenja`) VALUES
+(73, 'Admin', 'Admin', 'muski', 'Admin', '1993-11-28'),
+(74, 'Faruk', 'Ljuca', 'muski', 'Kemala Kapetanovi?a', '1993-01-28'),
+(75, 'Orhan', 'Ljubincic', 'muski', 'Neka adresa', '1999-11-11'),
+(76, 'Milicevic', 'Toni', 'muski', 'Neka adresa', '1999-11-11');
 
 -- --------------------------------------------------------
 
@@ -137,7 +190,20 @@ CREATE TABLE IF NOT EXISTS `pitanje` (
   PRIMARY KEY (`idPitanje`),
   UNIQUE KEY `idPitanje_UNIQUE` (`idPitanje`),
   KEY `fk_Pitanje_Kviz1_idx` (`idKviz`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `pitanje`
+--
+
+INSERT INTO `pitanje` (`idPitanje`, `tipPitanja`, `idKviz`, `tekstPitanja`, `obavezno`) VALUES
+(1, '4', 1, 'Koliko je 2 i 2', 0),
+(2, '3', 1, 'Koja ti je najdraza boja', 0),
+(3, '2', 1, 'Da li je ovaj projekat dobar', 1),
+(4, '0', 1, 'Ko je najvise radio', 1),
+(5, '0', 2, 'Sta je po tebi static metoda', 0),
+(6, '0', 2, 'Sta je po tebi public metoda', 0),
+(7, '2', 2, 'Da li je danas lijep dan', 0);
 
 --
 -- Constraints for dumped tables

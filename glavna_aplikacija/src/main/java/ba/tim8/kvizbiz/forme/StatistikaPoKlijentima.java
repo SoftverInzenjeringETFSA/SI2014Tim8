@@ -34,10 +34,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.entiteti.Odgovor;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -53,7 +56,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 
+import org.apache.log4j.Logger;
+
 public class StatistikaPoKlijentima extends JFrame {
+	
+	final static Logger logger = Logger.getLogger(StatistikaPoKlijentima.class);
 
 	private JFrame frmStatistikaPoKlijentimaForma;
 	
@@ -71,7 +78,7 @@ public class StatistikaPoKlijentima extends JFrame {
 					StatistikaPoKlijentima window = new StatistikaPoKlijentima();
 					window.frmStatistikaPoKlijentimaForma.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});
@@ -98,7 +105,7 @@ public class StatistikaPoKlijentima extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmStatistikaPoKlijentimaForma);
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		frmStatistikaPoKlijentimaForma.getContentPane().add(panel, BorderLayout.CENTER);
 		
 		JPanel panelKlijent = new JPanel();
@@ -108,11 +115,6 @@ public class StatistikaPoKlijentima extends JFrame {
 		JLabel lblIzaberiteAdministratora = new JLabel("Izaberite klijenta:");
 		lblIzaberiteAdministratora.setBounds(22, 35, 103, 14);
 		panelKlijent.add(lblIzaberiteAdministratora);
-		
-		/*JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Kurt Cobain"}));
-		comboBox.setBounds(135, 32, 185, 20);
-		panelKlijent.add(comboBox);*/
 		
 		final KlijentDao kdao = KlijentDao.get();
 		Collection<Klijent> klijenti = kdao.dajPoPopunjenomKvizu();
@@ -124,8 +126,7 @@ public class StatistikaPoKlijentima extends JFrame {
 		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
 				.hasNext();) {
 			klijent = (Klijent) iterator.next();
-			//if(klijent.get_listaOdgovora()==null)
-				comboBox.addItem(klijent);
+			comboBox.addItem(klijent);
 		}
 		comboBox.setSelectedIndex(-1);
 
@@ -154,47 +155,6 @@ public class StatistikaPoKlijentima extends JFrame {
 					.addContainerGap())
 		);
 		
-		JPanel panel_1 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pitanje 1", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panel_1.setPreferredSize(new Dimension(290, 70));
-		panelAnketa.add(panel_1);
-		
-		JLabel lblDaLiSte = new JLabel("Da li ste zadovoljni uslugom?");
-		lblDaLiSte.setPreferredSize(new Dimension(260, 14));
-		panel_1.add(lblDaLiSte);
-		
-		JLabel lblDa = new JLabel("1. Da");
-		panel_1.add(lblDa);
-		
-		JPanel panel_2 = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) panel_2.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		panel_2.setPreferredSize(new Dimension(290, 70));
-		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pitanje 2", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panelAnketa.add(panel_2);
-		
-		JLabel lblKolikoestoKoristite = new JLabel("Koliko \u010Desto koristite na\u0161e usluge?");
-		lblKolikoestoKoristite.setPreferredSize(new Dimension(260, 14));
-		panel_2.add(lblKolikoestoKoristite);
-		
-		JLabel lblesto = new JLabel("3. \u010Cesto");
-		panel_2.add(lblesto);
-		
-		JPanel panel_3 = new JPanel();
-		FlowLayout flowLayout_3 = (FlowLayout) panel_3.getLayout();
-		flowLayout_3.setAlignment(FlowLayout.LEFT);
-		panel_3.setPreferredSize(new Dimension(290, 70));
-		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Pitanje 3", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panelAnketa.add(panel_3);
-		
-		JLabel lblKomentarNaUsluge = new JLabel("Komentar na usluge:");
-		lblKomentarNaUsluge.setPreferredSize(new Dimension(260, 14));
-		panel_3.add(lblKomentarNaUsluge);
-		
-		JLabel lblUslugaJeKorektna = new JLabel("Usluga je korektna, osoblje je ljubazno");
-		panel_3.add(lblUslugaJeKorektna);
 		panel.setLayout(gl_panel);
 		
 		JButton btnNewButton = new JButton("Statusna traka");
@@ -203,6 +163,8 @@ public class StatistikaPoKlijentima extends JFrame {
 		btnNewButton.setEnabled(false);
 		frmStatistikaPoKlijentimaForma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
+		final JScrollPane jp = new JScrollPane(panelAnketa);
+		jp.setPreferredSize(new Dimension(300, 300));
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				//Implement
@@ -213,7 +175,30 @@ public class StatistikaPoKlijentima extends JFrame {
 				panelAnketa.repaint();
 				panelAnketa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), anketa.get_naziv(), 
 						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-				
+				Set<Pitanje> pitanja = k.get_popunjeniKviz().get_pitanja();
+				int count = 1;
+				for(Pitanje p:pitanja){
+					Set<Odgovor> odgs = k.get_listaOdgovora();
+					JLabel ques = new JLabel(count+". "+p.get_tekstPitanja());
+					ques.setPreferredSize(new Dimension(250, 20));
+					panelAnketa.add(ques);
+					for(Odgovor o:odgs){
+						if(o.get_pitanje().equals(p)){
+							JLabel ans = new JLabel("        "+o.get_tekstOdgovora());
+							ans.setPreferredSize(new Dimension(250, 20));
+							panelAnketa.add(ans);
+							
+						}
+					}
+					count++;
+				}
+				for(int j=0; j<10;j++)
+				{
+					JLabel dump = new JLabel("Test");
+					dump.setPreferredSize(new Dimension(250, 20));
+					panelAnketa.add(dump);
+				}
+				frmStatistikaPoKlijentimaForma.add(jp);
 			}});
 	}
 }

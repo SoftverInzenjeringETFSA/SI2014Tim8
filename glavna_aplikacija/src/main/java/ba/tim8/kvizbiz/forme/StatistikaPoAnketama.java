@@ -38,6 +38,7 @@ import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
+import ba.tim8.kvizbiz.entiteti.TipPitanja;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -59,7 +60,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 public class StatistikaPoAnketama extends JFrame {
+	
+	final static Logger logger = Logger.getLogger(StatistikaPoAnketama.class);
 	
 	//TODO: Rename obavezan, cuj glavna forma forma statistike (rename i u klasi Menu!!!)
 	
@@ -79,7 +84,7 @@ public class StatistikaPoAnketama extends JFrame {
 					StatistikaPoAnketama window = new StatistikaPoAnketama();
 					window.frmGlavnaForma.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});
@@ -106,7 +111,7 @@ public class StatistikaPoAnketama extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmGlavnaForma);
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		frmGlavnaForma.getContentPane().add(panel, BorderLayout.CENTER);
 		
 		JPanel panelAnketa = new JPanel();
@@ -141,7 +146,7 @@ public class StatistikaPoAnketama extends JFrame {
 		final JPanel panelStatistika = new JPanel();
 		panelStatistika.setAutoscrolls(true);
 		panelStatistika.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "O anketi", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelStatistika.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		panelStatistika.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
 		final JLabel lblNewLabel = new JLabel("Ukupno popunjenih anketa: ?");
@@ -153,60 +158,6 @@ public class StatistikaPoAnketama extends JFrame {
 		JPanel panelUkupno = new JPanel();
 		panelStatistika.add(panelUkupno);
 		panelUkupno.setLayout(new BorderLayout(0, 0));
-		
-		/*JPanel panelPitanje1 = new JPanel();
-		panelPitanje1.setPreferredSize(new Dimension(300, 80));
-		panelPitanje1.setBorder(new TitledBorder(null, "Prvo pitanje", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelStatistika.add(panelPitanje1);
-		panelPitanje1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		JLabel lblDaLiSte = new JLabel("Da li ste zadovoljni uslugom?");
-		lblDaLiSte.setPreferredSize(new Dimension(280, 14));
-		panelPitanje1.add(lblDaLiSte);
-		
-		JLabel label = new JLabel("1. Da - 33% (12 od 36)");
-		label.setPreferredSize(new Dimension(280, 14));
-		panelPitanje1.add(label);
-		
-		JLabel lblNe = new JLabel("2. Ne - 67% (24 od 36)");
-		lblNe.setPreferredSize(new Dimension(280, 14));
-		panelPitanje1.add(lblNe);
-		
-		JPanel panelPitanje2 = new JPanel();
-		panelPitanje2.setPreferredSize(new Dimension(300, 80));
-		panelPitanje2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Drugo pitanje", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelStatistika.add(panelPitanje2);
-		panelPitanje2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		JLabel label_1 = new JLabel("Da li ste zadovoljni uslugom?");
-		label_1.setPreferredSize(new Dimension(280, 14));
-		panelPitanje2.add(label_1);
-		
-		JLabel label_2 = new JLabel("1. Da - 33% (12 od 36)");
-		label_2.setPreferredSize(new Dimension(280, 14));
-		panelPitanje2.add(label_2);
-		
-		JLabel label_3 = new JLabel("2. Ne - 67% (24 od 36)");
-		label_3.setPreferredSize(new Dimension(280, 14));
-		panelPitanje2.add(label_3);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setPreferredSize(new Dimension(300, 80));
-		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Drugo pitanje", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelStatistika.add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		JLabel label_4 = new JLabel("Da li ste zadovoljni uslugom?");
-		label_4.setPreferredSize(new Dimension(280, 14));
-		panel_1.add(label_4);
-		
-		JLabel label_5 = new JLabel("1. Da - 33% (12 od 36)");
-		label_5.setPreferredSize(new Dimension(280, 14));
-		panel_1.add(label_5);
-		
-		JLabel label_6 = new JLabel("2. Ne - 67% (24 od 36)");
-		label_6.setPreferredSize(new Dimension(280, 14));
-		panel_1.add(label_6);*/
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -235,6 +186,9 @@ public class StatistikaPoAnketama extends JFrame {
 		btnNewButton.setEnabled(false);
 		frmGlavnaForma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
+		JScrollPane js =new JScrollPane(panelStatistika);
+		//js.setPreferredSize(panelStatistika.getSize());
+		panel.add(js);
 		
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -242,6 +196,7 @@ public class StatistikaPoAnketama extends JFrame {
 				panelStatistika.removeAll();
 				panelStatistika.revalidate();
 				panelStatistika.repaint();
+				
 				Kviz tmp = (Kviz) comboBox.getSelectedItem();
 				final JLabel lblNewLabel = new JLabel();
 				lblNewLabel.setText("Ukupno popunjenih anketa: "+String.valueOf(tmp.get_klijenti().size()));
@@ -250,44 +205,34 @@ public class StatistikaPoAnketama extends JFrame {
 				lblNewLabel.setPreferredSize(new Dimension(247, 14));
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				
+				
 				JPanel panelUkupno = new JPanel();
 				panelStatistika.add(panelUkupno);
 				panelUkupno.setLayout(new BorderLayout(0, 0));
 				Set<Pitanje> pitanja = tmp.get_pitanja();
 				for(Pitanje p:pitanja){
-					JPanel panel = new JPanel();
-					panel.setPreferredSize(new Dimension(300, 80));
-					panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), p.get_tekstPitanja(), TitledBorder.LEADING, TitledBorder.TOP, null, Color.blue));
-					panelStatistika.add(panel);
-					panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+					if(p.get_tipPitanja().equals(TipPitanja.OtvoreniOdgovor))
+						continue;
+					JPanel panelD = new JPanel();
+					panelD.setPreferredSize(new Dimension(300, 80));
+					panelD.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), p.get_tekstPitanja(), TitledBorder.LEADING, TitledBorder.TOP, null, Color.blue));
+					panelD.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 					Set<Odgovor> odgovori = p.get_listaOdgovora();
 					int count = 1;
 					for(Odgovor o:odgovori){
-						
-						JLabel label = new JLabel(count+". "+o.get_tekstOdgovora()+" - 33% (12 od "+odgovori.size()+")");
+						int brOdgovora = o.get_klijenti().size();
+						int ukOdgovora=tmp.get_klijenti().size();
+						Double postotak = Double.valueOf(brOdgovora)/Double.valueOf(ukOdgovora);
+						postotak *= 100;
+						JLabel label = new JLabel(count+". "+o.get_tekstOdgovora()+" - "+String.format("%.2f",postotak)+"% ("+brOdgovora+" od "+ukOdgovora+")");
 						label.setPreferredSize(new Dimension(280, 14));
-						panel.add(label);
+						panelD.add(label);
 						count++;
 					}
+					panelStatistika.add(panelD);
 				}
-				/*JScrollPane jp = new JScrollPane(
-						panelStatistika,
-			            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-			            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				frmGlavnaForma.add(jp);*/
-				 JScrollPane jp = new JScrollPane(
-						 panelStatistika,
-				            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-				 frmGlavnaForma.add(jp);
-
-			 			//frmGlavnaForma.pack();
-				        /*Dimension d = frmGlavnaForma.getSize();
-				        int w = (int)d.getWidth();
-				        int h = (int)d.getHeight();
-				        w = (w>350 ? 350 : w);
-				        Dimension shrinkHeight = new Dimension(w,h);
-				        frmGlavnaForma.setSize(shrinkHeight);*/
+				
+				
 			}});
 	}
 }

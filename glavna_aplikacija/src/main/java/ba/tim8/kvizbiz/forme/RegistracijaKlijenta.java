@@ -423,12 +423,8 @@ public class RegistracijaKlijenta {
 				k.set_datumPrijave(dt);
 				kdao.create(k);
 				
-				logiraniKlijent = k;
+				logiraniKlijent = k; //NOSONAR
 				
-				JOptionPane.showMessageDialog(null,
-						"Klijent je uspješno registrovan!",
-						"Registracija klijenta",
-						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
 				logger.error("Greska: ", e1);
 			}	

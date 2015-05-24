@@ -13,14 +13,17 @@ import java.awt.Insets;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class KvizBiz extends JFrame {
+import net.miginfocom.swing.MigLayout;
 
+import org.apache.log4j.Logger;
+
+public class KvizBiz extends JFrame {
+	final static Logger logger = Logger.getLogger(KvizBiz.class);
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	
 	public JFrame get_frame () {
@@ -34,7 +37,7 @@ public class KvizBiz extends JFrame {
 					KvizBiz window = new KvizBiz();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});
@@ -51,6 +54,32 @@ public class KvizBiz extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 300, 200);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new MigLayout("", "[grow][fill][grow]", "[grow][fill][fill][grow]"));
+		
+		JButton btnRegistrujSeKao = new JButton("Registruj se kao korisnik");
+		btnRegistrujSeKao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RegistracijaKlijenta noviFrame = new RegistracijaKlijenta();
+				noviFrame.frmRegistracijaKlijenta.setVisible(true);
+				frame.dispose();
+			}
+		});
+		frame.getContentPane().add(btnRegistrujSeKao, "cell 1 1");
+		
+		JButton btnRegistrujSeKao_1 = new JButton("Registruj se kao administrator");
+		btnRegistrujSeKao_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginAdmina noviFrame = new LoginAdmina();
+				noviFrame.setVisible(true);			
+				frame.dispose();
+			}
+		});
+		frame.getContentPane().add(btnRegistrujSeKao_1, "cell 1 2");
+		
+		/* Staro
 		frame = new JFrame();
 		frame.setBounds(100, 100, 300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,12 +117,7 @@ public class KvizBiz extends JFrame {
 		gbc_btnRegistrujSeKao_1.gridx = 1;
 		gbc_btnRegistrujSeKao_1.gridy = 2;
 		frame.getContentPane().add(btnRegistrujSeKao_1, gbc_btnRegistrujSeKao_1);
-		
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		
-		JMenu mnPomo = new JMenu("Pomo\u0107");
-		menuBar.add(mnPomo);
+		*/
 	}
 
 }

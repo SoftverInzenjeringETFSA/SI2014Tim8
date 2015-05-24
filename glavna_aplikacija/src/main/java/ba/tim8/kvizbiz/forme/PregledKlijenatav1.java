@@ -139,6 +139,7 @@ public class PregledKlijenatav1 extends JFrame {
 								"Datum mora biti u formatu dd/mm/yyyy",
 								"Pogrešan format datuma",
 								JOptionPane.ERROR_MESSAGE);
+						logger.error("Greska: ", ex);
 					}
 				}
 				else if(kategorija.getSelectedItem().toString() == "Telefon")
@@ -164,6 +165,8 @@ public class PregledKlijenatav1 extends JFrame {
 				"Ime", "Prezime", "Spol", "Adresa", "Datum rođenja", "Email", "Telefon"
 			}
 		){
+			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false
