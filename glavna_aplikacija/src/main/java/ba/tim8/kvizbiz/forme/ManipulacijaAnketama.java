@@ -117,7 +117,7 @@ private JFrame frame;
 		panel.add(scrollPane);
 		
 		// Testni podaci
-		Object[] naziviKolona = new Object[]{"Broj", "Naziv", "Ograni�enjes", "Status"};
+		Object[] naziviKolona = new Object[]{"Broj", "Naziv", "Ograni\u010Denje", "Status"};
 		Object[][] podaci = new Object[][]{
 				
 		};
@@ -141,6 +141,9 @@ private JFrame frame;
 				
 				Kviz selected = new Kviz();
 				int selectedRow = tblAnkete.getSelectedRow();
+				if(selectedRow<0){JOptionPane.showMessageDialog(null, "Morate oznaciti anketu!");}
+				else{
+				
 				
 				selected = lk.get(tblAnkete.convertRowIndexToModel(selectedRow));
 				
@@ -175,7 +178,7 @@ private JFrame frame;
 				
 				selected = null;
 				
-				
+				}
 			}
 		});
 		btnObriiOznaenu.setBounds(10, 92, 147, 23);
@@ -186,7 +189,7 @@ private JFrame frame;
 			public void actionPerformed(ActionEvent arg0) {
 				
 				int selectedRow = tblAnkete.getSelectedRow();
-				if(selectedRow<0){JOptionPane.showMessageDialog(null, "Morate oznaciti anketu!");}
+				if(selectedRow<0){JOptionPane.showMessageDialog(null, "Morate ozna\u010Diti anketu!");}
 				else{
 				kviz = lk.get(tblAnkete.convertRowIndexToModel(selectedRow));
 				if(!kviz.is_aktivan() && !kviz.is_arhiviran()){
@@ -222,6 +225,9 @@ private JFrame frame;
 			public void actionPerformed(ActionEvent arg0) {
 				Kviz selected = new Kviz();
 				int selectedRow = tblAnkete.getSelectedRow();
+				if(selectedRow<0){JOptionPane.showMessageDialog(null, "Morate ozna\u010Diti anketu!");}
+				else{
+				
 				
 				selected = lk.get(tblAnkete.convertRowIndexToModel(selectedRow));
 				if(selected.is_arhiviran())
@@ -246,6 +252,7 @@ private JFrame frame;
 				KvizDao k= KvizDao.get();
 				List<Long> l = (List<Long>) k.ispisSvihAnketa();
 				IscitajSveAnkete(l);
+			}
 			}
 		});
 		btnArhivirajOznaenu.setBounds(10, 160, 147, 23);
