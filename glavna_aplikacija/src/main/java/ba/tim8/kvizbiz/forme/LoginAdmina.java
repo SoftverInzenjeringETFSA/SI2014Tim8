@@ -10,31 +10,19 @@ import javax.swing.border.*;
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import net.miginfocom.swing.MigLayout;
 
+import org.apache.log4j.Logger;
+
 public class LoginAdmina extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(LoginAdmina.class);
 
-	public static String usernameLogiranogAdmina = "";
+	public static String usernameLogiranogAdmina = ""; //NOSONAR
 	
 	private JPanel contentPane;
 	private JLabel lblStatus;
 	private JTextField tbxUsername;
 	private JPasswordField pasPassword;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginAdmina frame = new LoginAdmina();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -68,7 +56,7 @@ public class LoginAdmina extends JFrame {
 					AdministratorDao a= AdministratorDao.get();					
 									
 					if(a.pretraziAdmina(username,password)){					
-						usernameLogiranogAdmina = username;
+						usernameLogiranogAdmina = username; //NOSONAR
 						PocetnaKlijent forma = new PocetnaKlijent();
 						forma.setVisible(true);
 						dispose();
@@ -80,7 +68,7 @@ public class LoginAdmina extends JFrame {
 				}
 				catch(Exception e2)
 				{
-					
+					logger.error("Greska: ", e2);
 				}
 			}				
 		});

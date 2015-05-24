@@ -33,7 +33,7 @@ public class Odgovor implements java.io.Serializable{
 	private Pitanje _pitanje;
 	
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "_listaOdgovora")
-	private Set<Klijent> _klijenti = new HashSet<Klijent>();
+	private Set<Klijent> _klijenti = new HashSet<Klijent>(); //NOSONAR
 	
 	public long get_id() {
 		return _id;

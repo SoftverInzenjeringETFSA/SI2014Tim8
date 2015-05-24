@@ -1,9 +1,6 @@
 package ba.tim8.kvizbiz.dao;
 
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import java.util.Collection;
 import java.util.Date;
 
@@ -12,9 +9,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.forme.KreiranjeAnkete;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 
+import org.apache.log4j.Logger;
+
 public class KlijentDao extends BaseDao<Klijent> {
+	
+	final static Logger logger = Logger.getLogger(KlijentDao.class);
 
 	private static KlijentDao kdao = null;
 	public KlijentDao() {}
@@ -94,7 +96,7 @@ public class KlijentDao extends BaseDao<Klijent> {
 		try{
 			date = sdf.parse(datum);
 		 }
-		catch(Exception e){e.printStackTrace(); throw e;}
+		catch(Exception e){logger.error("Greska: ", e); throw e;}
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();

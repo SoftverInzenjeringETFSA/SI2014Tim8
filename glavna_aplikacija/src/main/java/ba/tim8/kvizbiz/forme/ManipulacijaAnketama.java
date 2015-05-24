@@ -1,64 +1,50 @@
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import ba.tim8.kvizbiz.dao.BaseDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
-import ba.tim8.kvizbiz.dao.PitanjeDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
-import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 //import javafx.scene.control.Alert;
 public class ManipulacijaAnketama extends JFrame {
+	private static final long serialVersionUID = 1L;
+	final static Logger logger = Logger.getLogger(ManipulacijaAnketama.class);
 private JFrame frame;
 	
 	public JFrame get_frame () {
 		return frame;
 	}
 
-	public static long trenutniKvizID = -1;
+	public static long trenutniKvizID = -1; //NOSONAR
 	private JFrame frmManipulacijaAnketama;
 	private JTable tblAnkete;
 	private JPanel panel1;
-	List<Kviz> lk = new ArrayList<Kviz>();
+	List<Kviz> lk = new ArrayList<Kviz>(); //NOSONAR
 	public Kviz kviz = null;
 	public JFrame get_frmManipulacijaAnketama () {
 		return frmManipulacijaAnketama;
@@ -74,7 +60,7 @@ private JFrame frame;
 					ManipulacijaAnketama window = new ManipulacijaAnketama();
 					window.frmManipulacijaAnketama.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});

@@ -23,6 +23,7 @@ public class AdministratorDaoTest {
 
 	
 	private static Date testDate = new Date(0);
+	private static Date testDate2 = new Date(0);
 	private static AdministratorDao adao = AdministratorDao.get();
 	private static long testId1;
 	private static long testId2;
@@ -38,6 +39,7 @@ public class AdministratorDaoTest {
 		
 		try{
 			testDate = sdf.parse("21/12/2012");
+			testDate2 = sdf.parse("21/11/2012");
 		 }
 		catch(Exception e){e.printStackTrace();}
 		
@@ -52,10 +54,10 @@ public class AdministratorDaoTest {
 				"Titova 12", testDate, "061-688-900",
 				"orhanljubuncic@yahoo.com", "oljubuncic3", "pass3");
 		Administrator admin4 = new Administrator(1, "Josip", "Kvesic", Spol.muski,
-				"Titova 10", testDate, "061-328-900",
+				"Titova 10", testDate2, "061-328-900",
 				"jkvesic@yahoo.com", "jkvesic1", "pass");
 		Administrator admin5 = new Administrator(1, "Josip", "Kvesic", Spol.muski,
-				"Titova 10", testDate, "061-328-900",
+				"Titova 10", testDate2, "061-328-900",
 				"jkvesic@yahoo.com", "jkvesic2", "pass");
 		
 		testId1 = adao.create(admin1);
@@ -163,6 +165,20 @@ public class AdministratorDaoTest {
 	}
 	
 	@Test
+	public void testdajPoDatumu2() throws Exception {
+		
+		ArrayList<Administrator> alist = (ArrayList<Administrator>) adao.dajPoDatumu("21/12/2012");
+		
+		assertEquals(alist.get(0).get_id(), testId1);
+		assertEquals(alist.get(1).get_id(), testId2);
+		assertEquals(alist.get(2).get_id(), testId3);
+		
+		assertEquals(alist.size(), 3);
+		
+		
+	}
+	
+	@Test
 	public void testdajPoMailu() {
 		
 		ArrayList<Administrator> alist = (ArrayList<Administrator>) adao.dajPoMailu("orhanljubuncic@yahoo.com");
@@ -211,6 +227,13 @@ public class AdministratorDaoTest {
 	public void testDelete() {
 		adao.delete(testId4);
 		assertNull(adao.read(testId4));
+	}
+	
+	@Test
+	public void testpretraziPoUsernamu() {
+		assertTrue(adao.pretraziPoUsernamu("oljubuncic1"));
+		assertFalse(adao.pretraziPoUsernamu("oljubuncic1222"));
+		
 	}
 
 	

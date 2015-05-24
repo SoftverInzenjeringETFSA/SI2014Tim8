@@ -26,10 +26,7 @@ public class KvizBiz extends JFrame {
 	public JFrame get_frame () {
 		return frame;
 	}
-
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

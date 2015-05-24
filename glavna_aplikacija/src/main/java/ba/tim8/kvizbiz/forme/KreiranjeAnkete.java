@@ -70,7 +70,7 @@ public class KreiranjeAnkete extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				KvizDao kdao = KvizDao.get();
 				try {
-					trenutniKvizID = kdao.create(new Kviz(0, tbxNaslov.getText(), (Integer)spiVrijeme.getValue(), false, false));
+					trenutniKvizID = kdao.create(new Kviz(0, tbxNaslov.getText(), (Integer)spiVrijeme.getValue(), false, false)); //NOSONAR
 					lblStatus.setText("Uspjesan unos početnih podataka");
 					lblStatus.setForeground(Color.green);
 					

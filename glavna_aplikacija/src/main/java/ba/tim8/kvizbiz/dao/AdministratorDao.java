@@ -2,7 +2,6 @@ package ba.tim8.kvizbiz.dao;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -11,12 +10,15 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
-import org.hibernate.mapping.List;
 
 import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 
+import org.apache.log4j.Logger;
+
 public class AdministratorDao extends BaseDao<Administrator> {
+	
+	final static Logger logger = Logger.getLogger(AdministratorDao.class);
 
 	private static AdministratorDao adao = null;
 
@@ -47,8 +49,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	public boolean pretraziAdmina(String username,char [] password) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session
-				.createQuery("from Administrator a where a._username = :nesto and a._password=md5(:nestodrugo)");
+		Query q = session.createQuery("from Administrator a where a._username = :nesto and a._password=md5(:nestodrugo)"); //NOSONAR
 		q.setParameter("nesto", username);
 		q.setParameter("nestodrugo", password);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
@@ -80,7 +81,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
 		Query q = session
-				.createQuery("from Administrator a where a._ime = :nesto order by a._username");
+				.createQuery("from Administrator a where a._ime = :nesto order by a._username");  //NOSONAR
 		q.setParameter("nesto", ime);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
 			t.commit();
@@ -120,7 +121,11 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		try{
 			date = sdf.parse(datum);
 		 }
-		catch(Exception e){ throw e;}
+
+		
+
+		catch(Exception e){logger.error("Greska: ", e); throw e;}
+
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
@@ -191,7 +196,9 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		session.close();	
 		}
 		catch(Exception ex)
-		{}
+		{
+			logger.error("Greska: ", ex);
+		}
 	}
 	
 }

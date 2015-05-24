@@ -44,7 +44,7 @@ public class Pitanje implements java.io.Serializable{
 	private Kviz _kviz;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje", cascade= CascadeType.ALL)
-	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>();
+	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>(); //NOSONAR
 	
 	public long get_id() {
 		return _id;

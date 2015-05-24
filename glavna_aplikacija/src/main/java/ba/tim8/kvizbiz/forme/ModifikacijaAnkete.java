@@ -23,7 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +33,10 @@ import ba.tim8.kvizbiz.dao.PitanjeDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 
+import org.apache.log4j.Logger;
+
 public class ModifikacijaAnkete extends JFrame {
+	final static Logger logger = Logger.getLogger(ModifikacijaAnkete.class);
 	private JFrame frame;
 	
 	public JFrame get_frame () {
@@ -43,7 +45,7 @@ public class ModifikacijaAnkete extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
-	public static Kviz trenutniKviz;
+	public static Kviz trenutniKviz; //NOSONAR
 	
 	private JPanel contentPane;
 	private JTextField tbxNaslov;
@@ -51,12 +53,12 @@ public class ModifikacijaAnkete extends JFrame {
 	private JTable tblPitanja;
 	private JLabel lblStatus;
 	private JSpinner spiVrijeme;
-	public static Kviz kviz = null;
+	public static Kviz kviz = null; //NOSONAR
 	public String test;
 	private JComboBox<Integer> cbbID;
 
 
-	List<Pitanje> lk = new ArrayList<Pitanje>();
+	List<Pitanje> lk = new ArrayList<Pitanje>(); //NOSONAR
 
 	/**
 	 * Launch the application.
@@ -68,7 +70,7 @@ public class ModifikacijaAnkete extends JFrame {
 					ModifikacijaAnkete frame = new ModifikacijaAnkete(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});
@@ -201,6 +203,8 @@ public class ModifikacijaAnkete extends JFrame {
 				catch (Exception e1) {
 					lblStatus.setText("Greska: " + e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					
+					logger.error("Greska: ", e1);
 				}
 			}
 		});
@@ -221,6 +225,8 @@ public class ModifikacijaAnkete extends JFrame {
 				catch(Exception e1) {
 					lblStatus.setText("Greska: " + e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					
+					logger.error("Greska: ", e1);
 				}
 			
 				
@@ -259,6 +265,8 @@ public class ModifikacijaAnkete extends JFrame {
 			}
 		)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false

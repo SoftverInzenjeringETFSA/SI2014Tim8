@@ -14,13 +14,7 @@ import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
-
-import java.awt.FlowLayout;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -32,9 +26,7 @@ import java.awt.Font;
 
 import javax.swing.SwingConstants;
 
-import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.dao.KlijentDao;
-import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Spol;
 
@@ -42,7 +34,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -50,9 +41,13 @@ import java.util.regex.Pattern;
 
 import javax.swing.JRadioButton;
 
+import org.apache.log4j.Logger;
+
 public class RegistracijaKlijenta {
 
-	public static Klijent logiraniKlijent;
+	public static Klijent logiraniKlijent; //NOSONAR
+	
+	final static Logger logger = Logger.getLogger(RegistracijaKlijenta.class);
 	
 	public JFrame frmRegistracijaKlijenta;
 	private JTextField txtIme;
@@ -270,7 +265,7 @@ public class RegistracijaKlijenta {
 		sl_panelRegistracija.putConstraint(SpringLayout.EAST, label_5, 0, SpringLayout.EAST, lblIme);
 		panelRegistracija.add(label_5);
 		
-		JLabel lblStatus = new JLabel("Statusna traka");
+		lblStatus = new JLabel("Statusna traka");
 		lblStatus.setForeground(Color.lightGray);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
@@ -435,7 +430,7 @@ public class RegistracijaKlijenta {
 						"Registracija klijenta",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				logger.error("Greska: ", e1);
 			}	
 		}
 		return dodaj;
