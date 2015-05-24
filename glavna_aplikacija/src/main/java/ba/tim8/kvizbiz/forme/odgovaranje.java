@@ -8,9 +8,12 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +30,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,6 +41,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import org.apache.log4j.Logger;
@@ -70,12 +75,13 @@ public class odgovaranje {
 	private HashSet<Odgovor> realOdgovori;
 	private JLabel lblStatus;
 	private JTextArea txtAreaOdgovor;
-	//private long idKviz;
+	private long idKviz;
 	
 	/**
 	 * Create the application.
 	 */
 	public odgovaranje(long kvizID) {
+		idKviz = kvizID;
 		initialize(kvizID);
 	}
 
@@ -791,10 +797,7 @@ public class odgovaranje {
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(p.get_kviz());
 					KlijentDao.get().update(klijent);
-					JOptionPane.showMessageDialog(null,
-							"Kviz uspješno popunjen.",
-							"Registracija klijenta",
-							JOptionPane.ERROR_MESSAGE);
+					prikaziKviz(frmPopunjavanjeAnkete);
 				}
 			}
 		});
@@ -821,5 +824,62 @@ public class odgovaranje {
 		gbc_lblPitanjeBroj.gridx = 0;
 		gbc_lblPitanjeBroj.gridy = 0;
 		panelBrojPitanja.add(lblPitanjeBroj, gbc_lblPitanjeBroj);
+	}
+	public void prikaziKviz(JFrame forma){
+		forma.dispose();
+		forma = new JFrame();
+		forma.setVisible(true);
+		forma.setTitle("Statistika po klijentima");
+		forma.setBounds(100, 100, 430, 518);
+		forma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		forma.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		
+		
+		final JButton btnNewButton = new JButton("Potvrdi");
+		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
+		forma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null,
+				"Kviz uspješno popunjen.",
+				"Registracija klijenta",
+				JOptionPane.ERROR_MESSAGE);
+				PocetnaKlijentZaKlijenta noviProzor = new PocetnaKlijentZaKlijenta();
+				noviProzor.setVisible(true);
+				frmPopunjavanjeAnkete.dispose();
+			}});
+		
+		final JScrollPane scrollPane = new JScrollPane();
+		forma.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		
+		final JTextArea textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
+		
+		textArea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textArea.setEnabled(false);
+		textArea.setDisabledTextColor(Color.black);
+		textArea.setBackground(forma.getBackground());
+		
+
+				Kviz anketa = KvizDao.get().read(idKviz);
+				String tekst = "\n";
+				tekst += "\tNaziv kviza: "+anketa.get_naziv()+"\n"; 
+				Set<Pitanje> pitanja = anketa.get_pitanja();
+				int count = 1;
+				for(Pitanje p:pitanja){
+					Set<Odgovor> odgs = klijent.get_listaOdgovora();
+					tekst += "\n  "+count+". "+p.get_tekstPitanja()+"\n";
+					for(Odgovor o:odgs){
+						if(o.get_pitanje().equals(p)){
+							tekst += "        "+o.get_tekstOdgovora()+"\n";
+						}
+					}
+					count++;
+				}
+				textArea.setText(tekst);
+		
+	
 	}
 }

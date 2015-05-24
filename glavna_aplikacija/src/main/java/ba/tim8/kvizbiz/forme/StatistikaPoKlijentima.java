@@ -146,7 +146,7 @@ public class StatistikaPoKlijentima extends JFrame {
 				textArea.setText(tekst);
 			}});
 		
-		JLabel lblIzaberiteAnketu = new JLabel("Izaberite anketu:");
+		JLabel lblIzaberiteAnketu = new JLabel("Izaberite klijenta:");
 		lblIzaberiteAnketu.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblIzaberiteAnketu.setHorizontalAlignment(SwingConstants.CENTER);
 		frmStatistikaKlijent.getContentPane().add(lblIzaberiteAnketu, BorderLayout.NORTH);
