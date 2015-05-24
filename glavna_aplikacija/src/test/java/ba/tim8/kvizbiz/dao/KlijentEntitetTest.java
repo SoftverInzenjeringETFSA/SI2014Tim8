@@ -3,14 +3,10 @@ package ba.tim8.kvizbiz.dao;
 import static org.junit.Assert.*;
 
 import java.util.Date;
-import java.util.Set;
 
 import org.junit.Test;
 
-import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Klijent;
-import ba.tim8.kvizbiz.entiteti.Kviz;
-import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.entiteti.Spol;
 
 public class KlijentEntitetTest {
