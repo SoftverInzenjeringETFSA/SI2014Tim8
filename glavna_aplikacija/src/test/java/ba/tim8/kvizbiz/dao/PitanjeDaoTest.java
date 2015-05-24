@@ -18,12 +18,13 @@ public class PitanjeDaoTest {
 	private static long testId1;
 	private static long testId2;
 	private static Kviz k = new Kviz();
+	private static Long i;
 	
 	@BeforeClass
 	public static void prepare() throws Exception
 	{
 		
-		Long i = ldao.create(new Kviz(1, "naziv", 10, true, false));
+		i = ldao.create(new Kviz(1, "naziv", 10, true, false));
 		k = ldao.read(i);
 		
 		Pitanje pitanje1= new Pitanje (1, "Tekst pitanja", TipPitanja.DaNE, true, k);
@@ -74,6 +75,24 @@ public class PitanjeDaoTest {
 		assertEquals(2, pdao.readAll().size());
 	
 	}
+
+@Test
+public void testdajPitanja() {
+
+	assertEquals(2, pdao.DajSveIdZaKviz(i).size());
+
+}
+
+
+@Test
+public void testdajPitanja2() {
+
+	assertEquals(2, pdao.DajSveZaKviz(i).size());
+	
+
+}
+
+
 	@AfterClass
 	public static void deleteTestDataAfter()
 	{
