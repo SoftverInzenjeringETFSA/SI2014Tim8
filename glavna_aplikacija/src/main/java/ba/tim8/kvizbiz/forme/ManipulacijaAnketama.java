@@ -2,6 +2,7 @@ package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 
@@ -18,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +29,9 @@ import org.hibernate.Transaction;
 
 import ba.tim8.kvizbiz.dao.BaseDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.dao.PitanjeDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.konekcija.HibernateUtil;
 
 import org.hibernate.Query;
@@ -37,16 +41,25 @@ import org.hibernate.Transaction;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 //import javafx.scene.control.Alert;
 public class ManipulacijaAnketama extends JFrame {
+private JFrame frame;
+	
+	public JFrame get_frame () {
+		return frame;
+	}
 
+	public static long trenutniKvizID = -1;
 	private JFrame frmManipulacijaAnketama;
 	private JTable tblAnkete;
+	private JPanel panel1;
 	List<Kviz> lk = new ArrayList<Kviz>();
-	
+	public Kviz kviz = null;
 	public JFrame get_frmManipulacijaAnketama () {
 		return frmManipulacijaAnketama;
 	}
@@ -77,7 +90,8 @@ public class ManipulacijaAnketama extends JFrame {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmManipulacijaAnketama = new JFrame();
 		frmManipulacijaAnketama.setTitle("Manipulacija anketama");
 		frmManipulacijaAnketama.setBounds(100, 100, 630, 430);
@@ -167,13 +181,39 @@ public class ManipulacijaAnketama extends JFrame {
 		btnObriiOznaenu.setBounds(10, 92, 147, 23);
 		panel.add(btnObriiOznaenu);
 		
-		JButton btnModifikujOznaenu = new JButton("Modifikuj ozna\u010Denu");
+		final JButton btnModifikujOznaenu = new JButton("Modifikuj ozna\u010Denu");
 		btnModifikujOznaenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ModifikacijaAnkete m= new ModifikacijaAnkete();
-				m.setVisible(true);
+				
+				int selectedRow = tblAnkete.getSelectedRow();
+				if(selectedRow<0){JOptionPane.showMessageDialog(null, "Morate oznaciti anketu!");}
+				else{
+				kviz = lk.get(tblAnkete.convertRowIndexToModel(selectedRow));
+				if(!kviz.is_aktivan() && !kviz.is_arhiviran()){
+					
+				
+				Component component = (Component) arg0.getSource();
+				ModifikacijaAnkete forma = new ModifikacijaAnkete(kviz,(JFrame) SwingUtilities.getRoot(component));
+				
+				forma.setVisible(true);
+					
+					
+					
+				dispose();		
+				
+				}else{
+					JOptionPane.showMessageDialog(null, "Mozete modifikovati samo otvorenu anketu!");
+				}
+				}
+				
 			}
 		});
+		
+		
+		
+		
+		
+		
 		btnModifikujOznaenu.setBounds(10, 126, 147, 23);
 		panel.add(btnModifikujOznaenu);
 		
@@ -211,17 +251,20 @@ public class ManipulacijaAnketama extends JFrame {
 		btnArhivirajOznaenu.setBounds(10, 160, 147, 23);
 		panel.add(btnArhivirajOznaenu);
 		
-		JButton btnPregledajOznaenu = new JButton("Pregledaj ozna\u010Denu");
-		btnPregledajOznaenu.setBounds(10, 58, 147, 23);
-		panel.add(btnPregledajOznaenu);
+
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PocetnaKlijent p= new PocetnaKlijent();
+				p.setVisible(true);
+				dispose();
+			}
+		});
 		btnOk.setBounds(500, 304, 89, 23);
 		panel1.add(btnOk);
 		
-		JButton btnOtkai = new JButton("Otka\u017Ei");
-		btnOtkai.setBounds(401, 304, 89, 23);
-		panel1.add(btnOtkai);
+	
 		
 		JButton btnNewButton = new JButton("Statusna traka");
 		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -230,7 +273,29 @@ public class ManipulacijaAnketama extends JFrame {
 		frmManipulacijaAnketama.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
 		
+		
+		
 	}
+	
+//	public void update(){
+//		
+//		
+//		int a= model.getRowCount()-1;
+//		
+//		while(a>=0){
+//			
+//			model.removeRow(a);
+//			lk.remove(a);
+//			a--;
+//			
+//		}
+//		KvizDao k= KvizDao.get();
+//		List<Long> l = (List<Long>) k.ispisSvihAnketa();
+//		IscitajSveAnkete(l);
+//		
+//		tblAnkete.repaint();
+//	}
+	
 	private List<Kviz> IscitajSveAnkete(List<Long> lista)
 	{
 		KvizDao k= KvizDao.get();
@@ -264,8 +329,34 @@ public class ManipulacijaAnketama extends JFrame {
 		return lk;
 		
 	}
+	private void ucitajSvaPitanja()
+	{
+		
+		KvizDao k= KvizDao.get();
+		List<Long> l = (List<Long>) k.ispisSvihAnketa();
+		IscitajSveAnkete(l);
+	}
+	
+	private void removeAllRows()
+	{
+		DefaultTableModel dm = (DefaultTableModel) tblAnkete.getModel();
+		int rowCount = dm.getRowCount();
+	
+		for (int i = rowCount - 1; i >= 0; i--) {
+		    dm.removeRow(i);
+		}
+	}
 	
 	
+	
+	public void refresh() {
+		removeAllRows();
+		ucitajSvaPitanja();
+		
+		
+		panel1.revalidate();
+		panel1.repaint();
+	}
 	
 	
 	

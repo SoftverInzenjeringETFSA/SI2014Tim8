@@ -13,13 +13,14 @@ import net.miginfocom.swing.MigLayout;
 
 import org.apache.log4j.Logger;
 
-public class frmDodavanjePitanja_v2 extends JFrame {
+public class DodavanjeManipulacija extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	final static Logger logger = Logger.getLogger(frmDodavanjePitanja_v2.class);
+	final static Logger logger = Logger.getLogger(DodavanjeManipulacija.class);
 
 	private JPanel contentPane;
 	
+	public Long id = null;
 	private JTextField tbxTekst;
 	private JComboBox<String> cbbTip;
 	private JCheckBox ckbObavezno;
@@ -29,12 +30,14 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 	private ArrayList<JLabel> listaLabeleOdgovori;
 	private ArrayList<JLabel> listaLabeleIzbori;
 	
-	private JLabel lblStatus;
-	
+	private JLabel lblStatus;	
+
 	/**
 	 * Create the frame.
 	 */
-	public frmDodavanjePitanja_v2(final JFrame proslaForma) {
+	public DodavanjeManipulacija(final Long id, final JFrame proslaForma) {
+		
+		this.id = id;
 		listaOdgovori = new ArrayList<JTextField>();
 		listaIzbori = new ArrayList<JTextField>();
 		listaLabeleOdgovori = new ArrayList<JLabel>();
@@ -240,8 +243,9 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				// Kreiranje objekata
 				try {
 					KvizDao kdao = KvizDao.get();
-					long idKviza = KreiranjeAnkete.trenutniKvizID;
-					Kviz testniKviz = kdao.read(idKviza);
+//					long idKviza = KreiranjeAnkete.trenutniKvizID;
+					Kviz testniKviz = kdao.read(id);
+					
 					novoPitanje = new Pitanje(0, tbxTekst.getText(), tipNovogPitanja, ckbObavezno.isSelected(), testniKviz);
 					if (tipNovogPitanja == TipPitanja.Abc) {
 						for (int i = 0; i < listaOdgovori.size(); i++) {
@@ -277,10 +281,7 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 				catch (Exception e1) {
 					lblStatus.setText(e1.getMessage());
 					lblStatus.setForeground(Color.red);
-					
 					logger.error("Greska: ", e1);
-					
-					return;
 				}
 				
 				// Upis u bazu
@@ -319,8 +320,10 @@ public class frmDodavanjePitanja_v2 extends JFrame {
 		JButton btnNazad = new JButton("Nazad");
 		btnNazad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				((KreiranjeAnkete) proslaForma).refresh();
-				proslaForma.setVisible(true);
+				
+				//((KreiranjeAnkete) proslaForma).refresh();
+				//proslaForma.setVisible(true);
+				setVisible(false);
 				dispose();
 			}
 		});

@@ -34,6 +34,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -141,13 +144,11 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(label_1);
 
 		textField = new JTextField();
-		textField.setEditable(false);
 		textField.setColumns(10);
 		textField.setBounds(140, 34, 230, 20);
 		panel_2.add(textField);
 
 		textField_1 = new JTextField();
-		textField_1.setEditable(false);
 		textField_1.setColumns(10);
 		textField_1.setBounds(140, 59, 230, 20);
 		panel_2.add(textField_1);
@@ -166,7 +167,6 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(textField_2);
 
 		textField_3 = new JTextField();
-		textField_3.setEditable(false);
 		textField_3.setColumns(10);
 		textField_3.setBounds(140, 137, 230, 20);
 		panel_2.add(textField_3);
@@ -176,12 +176,10 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(label_4);
 
 		final JRadioButton radioButton = new JRadioButton("Mu\u0161ki");
-		radioButton.setEnabled(false);
 		radioButton.setBounds(140, 86, 74, 23);
 		panel_2.add(radioButton);
 
 		final JRadioButton radioButton_1 = new JRadioButton("\u017Denski");
-		radioButton_1.setEnabled(false);
 		radioButton_1.setBounds(220, 86, 74, 23);
 		panel_2.add(radioButton_1);
 
@@ -212,7 +210,6 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(label_7);
 
 		textField_6 = new JTextField();
-		textField_6.setEditable(false);
 		textField_6.setColumns(10);
 		textField_6.setBounds(140, 213, 230, 20);
 		panel_2.add(textField_6);
@@ -279,11 +276,33 @@ public class PromjenaKlijenta extends JFrame {
 							.hasNext();) {
 						trazeniKlijent = (Klijent) iterator.next();
 					}
+					
+					// datum prijave validacija
+					if (textField_6.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Datum prijave mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					} else {
+						String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_6.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Datum prijave mora biti u formatu yyyy-mm-dd(2015-01-01)!");
+							lblStatus.setForeground(Color.red);
+
+						}
+					}		
+					
 
 					// telefon validacija
 					if (textField_5.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Telefon mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
 					} else {
 						String regx = "^[0-9]*$";
 						Pattern pattern = Pattern.compile(regx,
@@ -292,6 +311,8 @@ public class PromjenaKlijenta extends JFrame {
 						if (!matcher.matches()) {
 							dodaj = false;
 							lblStatus.setText("Polje Telefon mora sadržavati samo brojeve!");
+							lblStatus.setForeground(Color.red);
+
 						}
 					}
 
@@ -299,6 +320,8 @@ public class PromjenaKlijenta extends JFrame {
 					if (textField_4.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Email mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
 					} else {
 						String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 						Pattern pattern = Pattern.compile(regx,
@@ -306,28 +329,104 @@ public class PromjenaKlijenta extends JFrame {
 						Matcher matcher = pattern.matcher(textField_4.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
-							lblStatus
-									.setText("Polje Email mora biti u pravilnom formatu!");
+							lblStatus.setText("Polje Email mora biti u pravilnom formatu!");
+							lblStatus.setForeground(Color.red);
+
 						}
 					}
 
+					// datum rodjenja validacija
+					if (textField_3.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Datum rođenja mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					} else {
+						String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_3.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!");
+							lblStatus.setForeground(Color.red);
+
+						}
+					}			
 					// adresa samo ne smije bit prazna
 					if (textField_2.getText().isEmpty()) {
 						dodaj = false;
 						lblStatus.setText("Polje Adresa mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					}
+					// prezime validacija
+					if (textField_1.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Prezime mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					} else {
+						String regx = "[a-zA-Z]+\\.?";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField_1.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Prezime mora sadržavati samo slova!");
+							lblStatus.setForeground(Color.red);
+						}
+					}
+					
+					// ime validacija
+					if (textField.getText().isEmpty()) {
+						dodaj = false;
+						lblStatus.setText("Polje Ime mora biti popunjeno!");
+						lblStatus.setForeground(Color.red);
+
+					} else {
+						String regx = "[a-zA-Z]+\\.?";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textField.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Ime mora sadržavati samo slova!");
+							lblStatus.setForeground(Color.red);
+
+						}
 					}
 
+					DateFormat format_1 = new SimpleDateFormat("yyyy-mm-dd");
+					DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 					if (comboBox.getSelectedIndex() == -1) {
 						dodaj = false;
 						lblStatus.setText("Izaberite klijenta!");
+						lblStatus.setForeground(Color.red);
+
 					}
 
 					if (dodaj == true) {
+						if (radioButton.isSelected()) 
+							trazeniKlijent.set_spol(Spol.muski);
+						else if(radioButton_1.isSelected())
+							trazeniKlijent.set_spol(Spol.zenski);
+						trazeniKlijent.set_ime(textField.getText());
+						trazeniKlijent.set_prezime(textField_1.getText());
+						try {
+							trazeniKlijent.set_datumRodjenja(format.parse(textField_3.getText()));
+							trazeniKlijent.set_datumPrijave(format.parse(textField_6.getText()));
+
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						trazeniKlijent.set_adresa(textField_2.getText());
 						trazeniKlijent.set_eMail(textField_4.getText());
 						trazeniKlijent.set_telefon(textField_5.getText());
 						kdao.update(trazeniKlijent);
 						lblStatus.setText("Uredu");
+						lblStatus.setForeground(Color.blue);
 						JOptionPane.showMessageDialog(null,
 								"Klijent je uspješno promjenjen!",
 								"Promjena klijenta",
@@ -336,6 +435,7 @@ public class PromjenaKlijenta extends JFrame {
 						JFrame noviFrame = noviProzor.get_frmPromjenaKlijenta();
 						noviFrame.setVisible(true);
 						frmPromjenaKlijenta.dispose();
+						
 					}
 				}
 			}

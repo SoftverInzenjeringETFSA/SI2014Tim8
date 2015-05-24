@@ -90,7 +90,9 @@ public class LoginAdmina extends JFrame {
 		btnNazad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				KvizBiz forma = new KvizBiz();
-				forma.setVisible(true);
+				forma.get_frame().repaint();
+				forma.get_frame().revalidate();
+				forma.get_frame().setVisible(true);
 				dispose();
 			}				
 		});

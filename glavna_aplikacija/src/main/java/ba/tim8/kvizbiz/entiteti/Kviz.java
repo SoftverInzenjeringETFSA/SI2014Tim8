@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "kviz")
 public class Kviz implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "idKviz", unique = true, nullable = false)
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -30,10 +31,10 @@ public class Kviz implements java.io.Serializable{
 	private boolean _arhiviran;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_popunjeniKviz")
-	private Set<Klijent> _klijenti = new HashSet<Klijent>();
+	private HashSet<Klijent> _klijenti = new HashSet<Klijent>();
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz")
-	private Set<Pitanje> _pitanja = new HashSet<Pitanje>();
+	private HashSet<Pitanje> _pitanja = new HashSet<Pitanje>();
 	
 	public long get_id() {
 		return _id;
@@ -70,7 +71,7 @@ public class Kviz implements java.io.Serializable{
 	{
 		return _klijenti;
 	}
-	public void set_klijenti(Set<Klijent> _klijenti)
+	public void set_klijenti(HashSet<Klijent> _klijenti)
 	{
 		this._klijenti = _klijenti;
 	}
@@ -79,7 +80,7 @@ public class Kviz implements java.io.Serializable{
 	{
 		return _pitanja;
 	}
-	public void set_pitanja(Set<Pitanje> _pitanja)
+	public void set_pitanja(HashSet<Pitanje> _pitanja)
 	{
 		this._pitanja = _pitanja;
 	}

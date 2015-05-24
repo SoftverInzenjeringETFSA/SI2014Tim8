@@ -33,7 +33,7 @@ public class Odgovor implements java.io.Serializable{
 	private Pitanje _pitanje;
 	
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "_listaOdgovora")
-	private Set<Klijent> _klijenti = new HashSet<Klijent>();
+	private HashSet<Klijent> _klijenti = new HashSet<Klijent>();
 	
 	public long get_id() {
 		return _id;
@@ -64,14 +64,14 @@ public class Odgovor implements java.io.Serializable{
 	{
 		return _klijenti;
 	}
-	public void set_klijenti(Set<Klijent> _klijenti)
+	public void set_klijenti(HashSet<Klijent> _klijenti)
 	{
 		this._klijenti = _klijenti;
 	}
 	
 	public Odgovor() {}
 	
-	public Odgovor(long _id, String _tekstOdgovora, Pitanje _pitanje, Set<Klijent> _klijenti) throws Exception {
+	public Odgovor(long _id, String _tekstOdgovora, Pitanje _pitanje, HashSet<Klijent> _klijenti) throws Exception {
 		super();
 		set_id(_id);
 		set_tekstOdgovora(_tekstOdgovora);

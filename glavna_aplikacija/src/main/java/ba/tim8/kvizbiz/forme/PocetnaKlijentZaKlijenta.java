@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.table.DefaultTableModel;
 
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
@@ -19,22 +18,6 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 	
 	private JPanel contentPane;
 	private JLabel lblStatus;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PocetnaKlijentZaKlijenta frame = new PocetnaKlijentZaKlijenta();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -106,8 +89,9 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 				public void mouseClicked(MouseEvent arg0) {
 					int rezultatDijaloga = JOptionPane.showConfirmDialog(novaPanela, "Jeste li sigurni da zelite odabrati kviz " + labela.getText() + " ?", "Provjera izbora kviza", JOptionPane.YES_NO_OPTION);
 					if (rezultatDijaloga == JOptionPane.YES_OPTION) {
-						//TODO: Odvesti na Muhamedovu formu
-						JOptionPane.showMessageDialog(null, "Id kviza: " + kviz.get_id());
+						odgovaranje forma = new odgovaranje((long)kviz.get_id());
+						forma.getFrmPopunjavanjeAnkete().setVisible(true);
+						dispose();
 					}
 				}
 			});

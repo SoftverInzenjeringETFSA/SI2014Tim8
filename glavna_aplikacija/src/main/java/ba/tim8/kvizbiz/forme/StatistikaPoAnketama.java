@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -31,6 +32,13 @@ import java.awt.CardLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+import ba.tim8.kvizbiz.dao.KlijentDao;
+import ba.tim8.kvizbiz.dao.KvizDao;
+import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.entiteti.Odgovor;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
@@ -45,6 +53,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.DefaultComboBoxModel;
 
 import java.awt.ComponentOrientation;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 public class StatistikaPoAnketama extends JFrame {
 	
@@ -104,17 +117,34 @@ public class StatistikaPoAnketama extends JFrame {
 		lblIzaberiteAdministratora.setBounds(22, 35, 101, 14);
 		panelAnketa.add(lblIzaberiteAdministratora);
 		
-		JComboBox comboBox = new JComboBox();
+		/*JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Klix", "RadioSarajevo"}));
 		comboBox.setBounds(131, 32, 189, 20);
-		panelAnketa.add(comboBox);
+		panelAnketa.add(comboBox);*/
 		
-		JPanel panelStatistika = new JPanel();
+		final KvizDao kdao = KvizDao.get();
+		Collection<Kviz> kvizovi = kdao.readAll();
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(131, 32, 189, 20);
+		panelAnketa.add(comboBox);
+
+		Kviz kviz = new Kviz();
+		for (Iterator<Kviz> iterator = kvizovi.iterator(); iterator
+				.hasNext();) {
+			kviz = (Kviz) iterator.next();
+			comboBox.addItem(kviz);
+		}
+		comboBox.setSelectedIndex(-1);
+
+		
+		
+		final JPanel panelStatistika = new JPanel();
 		panelStatistika.setAutoscrolls(true);
 		panelStatistika.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "O anketi", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelStatistika.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("Ukupno popunjenih anketa: 36");
+		
+		final JLabel lblNewLabel = new JLabel("Ukupno popunjenih anketa: ?");
 		panelStatistika.add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setPreferredSize(new Dimension(247, 14));
@@ -124,7 +154,7 @@ public class StatistikaPoAnketama extends JFrame {
 		panelStatistika.add(panelUkupno);
 		panelUkupno.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panelPitanje1 = new JPanel();
+		/*JPanel panelPitanje1 = new JPanel();
 		panelPitanje1.setPreferredSize(new Dimension(300, 80));
 		panelPitanje1.setBorder(new TitledBorder(null, "Prvo pitanje", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelStatistika.add(panelPitanje1);
@@ -176,7 +206,7 @@ public class StatistikaPoAnketama extends JFrame {
 		
 		JLabel label_6 = new JLabel("2. Ne - 67% (24 od 36)");
 		label_6.setPreferredSize(new Dimension(280, 14));
-		panel_1.add(label_6);
+		panel_1.add(label_6);*/
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -203,5 +233,61 @@ public class StatistikaPoAnketama extends JFrame {
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
 		frmGlavnaForma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		
+		
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				//Implement
+				panelStatistika.removeAll();
+				panelStatistika.revalidate();
+				panelStatistika.repaint();
+				Kviz tmp = (Kviz) comboBox.getSelectedItem();
+				final JLabel lblNewLabel = new JLabel();
+				lblNewLabel.setText("Ukupno popunjenih anketa: "+String.valueOf(tmp.get_klijenti().size()));
+				panelStatistika.add(lblNewLabel);
+				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				lblNewLabel.setPreferredSize(new Dimension(247, 14));
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+				
+				JPanel panelUkupno = new JPanel();
+				panelStatistika.add(panelUkupno);
+				panelUkupno.setLayout(new BorderLayout(0, 0));
+				Set<Pitanje> pitanja = tmp.get_pitanja();
+				for(Pitanje p:pitanja){
+					JPanel panel = new JPanel();
+					panel.setPreferredSize(new Dimension(300, 80));
+					panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), p.get_tekstPitanja(), TitledBorder.LEADING, TitledBorder.TOP, null, Color.blue));
+					panelStatistika.add(panel);
+					panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+					Set<Odgovor> odgovori = p.get_listaOdgovora();
+					int count = 1;
+					for(Odgovor o:odgovori){
+						
+						JLabel label = new JLabel(count+". "+o.get_tekstOdgovora()+" - 33% (12 od "+odgovori.size()+")");
+						label.setPreferredSize(new Dimension(280, 14));
+						panel.add(label);
+						count++;
+					}
+				}
+				/*JScrollPane jp = new JScrollPane(
+						panelStatistika,
+			            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				frmGlavnaForma.add(jp);*/
+				 JScrollPane jp = new JScrollPane(
+						 panelStatistika,
+				            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				 jp.setPreferredSize(new Dimension(350, 408));
+				 frmGlavnaForma.add(jp);
+
+			 			//frmGlavnaForma.pack();
+				        /*Dimension d = frmGlavnaForma.getSize();
+				        int w = (int)d.getWidth();
+				        int h = (int)d.getHeight();
+				        w = (w>350 ? 350 : w);
+				        Dimension shrinkHeight = new Dimension(w,h);
+				        frmGlavnaForma.setSize(shrinkHeight);*/
+			}});
 	}
 }

@@ -3,27 +3,24 @@ package ba.tim8.kvizbiz.forme;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Collection;
-import java.awt.event.ComponentListener;
 
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
-import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.PitanjeDao;
-import ba.tim8.kvizbiz.entiteti.Administrator;
 import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 import net.miginfocom.swing.MigLayout;
 
+import org.apache.log4j.Logger;
+
 public class KreiranjeAnkete extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(KreiranjeAnkete.class);
 	
 	public static long trenutniKvizID = -1;
 	
@@ -36,22 +33,6 @@ public class KreiranjeAnkete extends JFrame {
 	private JButton btnDodaj;
 	private JButton btnObrisi;
 	private JButton btnPromjeni;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					KreiranjeAnkete frame = new KreiranjeAnkete();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -101,6 +82,8 @@ public class KreiranjeAnkete extends JFrame {
 				catch(Exception e1) {
 					lblStatus.setText("Greska: " + e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					
+					logger.error("Greska: ", e1);
 				}
 			}
 		});
@@ -133,12 +116,12 @@ public class KreiranjeAnkete extends JFrame {
 		
 		btnPromjeni = new JButton("Promjeni odabrano pitanje");
 		btnPromjeni.setEnabled(false);
-		btnDodaj.addActionListener(new ActionListener() {
+		btnPromjeni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Component component = (Component) e.getSource();
-				//frmDodavanjePitanja_v2 forma = new frmDodavanjePitanja_v2((JFrame) SwingUtilities.getRoot(component));
-				//forma.setVisible(true);
-				//dispose();
+				Component component = (Component) e.getSource();
+				ModifikacijaPitanja forma = new ModifikacijaPitanja((JFrame) SwingUtilities.getRoot(component), (Integer) cbbID.getSelectedItem());
+				forma.setVisible(true);
+				dispose();
 			}
 		});
 		pnlPitanja.add(btnPromjeni, "cell 0 2");
@@ -159,16 +142,22 @@ public class KreiranjeAnkete extends JFrame {
 				catch (Exception e1) {
 					lblStatus.setText("Greska: " + e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					
+					logger.error("Greska: ", e1);
 				}
 			}
 		});
 		pnlPitanja.add(btnObrisi, "cell 0 3");
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PocetnaKlijent forma = new PocetnaKlijent();
+				forma.setVisible(true);
+				dispose();
+			}
+		});
 		kontejner.add(btnOk, "flowx,cell 2 2,growx");
-		
-		JButton btnOtkazi = new JButton("Otkaži");
-		kontejner.add(btnOtkazi, "cell 1 2,growx");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 145, 580, 127);
@@ -187,6 +176,8 @@ public class KreiranjeAnkete extends JFrame {
 			}
 		)
 		{
+			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false
@@ -208,10 +199,10 @@ public class KreiranjeAnkete extends JFrame {
 	private void ucitajSvaPitanja()
 	{
 		PitanjeDao pdao = PitanjeDao.get();
-		//Collection<Pitanje> pitanja = pdao.DajSveZaKviz(trenutniKvizID);
-		DefaultTableModel model = (DefaultTableModel) tblPitanja.getModel();
+		Collection<Pitanje> pitanja = pdao.DajSveZaKviz(trenutniKvizID);
+		//DefaultTableModel model = (DefaultTableModel) tblPitanja.getModel();
 		
-		//ucitajPitanja(pitanja);
+		ucitajPitanja(pitanja);
 	}	
 	
 	private void ucitajPitanja(Collection<Pitanje> pitanja)

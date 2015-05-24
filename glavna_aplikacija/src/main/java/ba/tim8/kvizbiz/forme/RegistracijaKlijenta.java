@@ -52,6 +52,8 @@ import javax.swing.JRadioButton;
 
 public class RegistracijaKlijenta {
 
+	public static Klijent logiraniKlijent;
+	
 	public JFrame frmRegistracijaKlijenta;
 	private JTextField txtIme;
 	private JTextField txtPrezime;
@@ -147,8 +149,17 @@ public class RegistracijaKlijenta {
 		panelRegistracija.add(txtAdresa);
 		txtAdresa.setColumns(10);
 		
-		JButton btnOtkazi = new JButton("Otka\u017Ei");
+		JButton btnOtkazi = new JButton("Nazad");
 		sl_panelRegistracija.putConstraint(SpringLayout.EAST, btnOtkazi, -101, SpringLayout.EAST, panelRegistracija);
+		btnOtkazi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KvizBiz forma = new KvizBiz();
+				forma.get_frame().repaint();
+				forma.get_frame().revalidate();
+				forma.get_frame().setVisible(true);
+				frmRegistracijaKlijenta.dispose();
+			}				
+		});
 		panelRegistracija.add(btnOtkazi);
 		
 		JButton btnRegistrujSe = new JButton("Registruj se");
@@ -416,6 +427,9 @@ public class RegistracijaKlijenta {
 				}
 				k.set_datumPrijave(dt);
 				kdao.create(k);
+				
+				logiraniKlijent = k;
+				
 				JOptionPane.showMessageDialog(null,
 						"Klijent je uspješno registrovan!",
 						"Registracija klijenta",
