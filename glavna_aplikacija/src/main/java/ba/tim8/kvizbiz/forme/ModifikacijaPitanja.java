@@ -2,7 +2,6 @@ package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import net.miginfocom.swing.MigLayout;
@@ -34,7 +32,12 @@ import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.entiteti.TipPitanja;
 
+import org.apache.log4j.Logger;
+
 public class ModifikacijaPitanja extends JFrame {
+	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(ModifikacijaPitanja.class);
 
 	private JPanel contentPane;
 	
@@ -48,22 +51,6 @@ public class ModifikacijaPitanja extends JFrame {
 	private ArrayList<JLabel> listaLabeleIzbori;
 	
 	private JLabel lblStatus;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ModifikacijaPitanja frame = new ModifikacijaPitanja(null, 3);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -291,6 +278,9 @@ public class ModifikacijaPitanja extends JFrame {
 				catch (Exception e1) {
 					lblStatus.setText(e1.getMessage());
 					lblStatus.setForeground(Color.red);
+					
+					logger.error("Greska: ", e1);
+					
 					return;
 				}
 				
@@ -318,7 +308,7 @@ public class ModifikacijaPitanja extends JFrame {
 					lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
 					lblStatus.setForeground(Color.red);
 					
-					e1.printStackTrace();
+					logger.error("Greska: ", e1);
 					
 					return;
 				}

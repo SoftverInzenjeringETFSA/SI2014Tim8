@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.table.DefaultTableModel;
 
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
