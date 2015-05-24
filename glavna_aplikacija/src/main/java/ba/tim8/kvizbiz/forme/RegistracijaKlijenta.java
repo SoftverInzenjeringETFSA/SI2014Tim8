@@ -423,7 +423,7 @@ public class RegistracijaKlijenta {
 				k.set_datumPrijave(dt);
 				kdao.create(k);
 				
-				logiraniKlijent = k;
+				logiraniKlijent = k; //NOSONAR
 				
 			} catch (Exception e1) {
 				logger.error("Greska: ", e1);
