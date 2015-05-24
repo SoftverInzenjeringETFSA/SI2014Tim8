@@ -14,8 +14,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import ba.tim8.kvizbiz.entiteti.Administrator;
+import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Osoba;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.entiteti.Spol;
+import ba.tim8.kvizbiz.entiteti.TipPitanja;
 import junit.framework.TestCase;
 
 
@@ -59,6 +62,8 @@ public class AdministratorDaoTest {
 		Administrator admin5 = new Administrator(1, "Josip", "Kvesic", Spol.muski,
 				"Titova 10", testDate2, "061-328-900",
 				"jkvesic@yahoo.com", "jkvesic2", "pass");
+		
+		
 		
 		testId1 = adao.create(admin1);
 		testId2 = adao.create(admin2);
