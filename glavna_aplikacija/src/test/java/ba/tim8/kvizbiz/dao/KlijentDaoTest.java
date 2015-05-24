@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -23,8 +25,8 @@ public class KlijentDaoTest {
 	private static long testId2;
 	private static long testId3;
 	
-	@BeforeClass
-	public static void prepare()
+	@Before
+	public void prepare()
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
@@ -109,8 +111,8 @@ public class KlijentDaoTest {
 		
 	}
 	
-	@AfterClass
-	public static void deleteTestDataAfter()
+	@After
+	public void deleteTestDataAfter()
 	{
 		
 		kdao.deleteAll();
