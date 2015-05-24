@@ -39,6 +39,8 @@ import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 import javax.swing.border.MatteBorder;
 
+import org.apache.log4j.Logger;
+
 import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.OdgovorDao;
@@ -50,7 +52,7 @@ import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.entiteti.TipPitanja;
 
 public class odgovaranje {
-
+	final static Logger logger = Logger.getLogger(RegistracijaKlijenta.class);
 	private JFrame frmPopunjavanjeAnkete;
 	public JFrame getFrmPopunjavanjeAnkete() {
 		return frmPopunjavanjeAnkete;
@@ -69,23 +71,7 @@ public class odgovaranje {
 	private JLabel lblStatus;
 	private JTextArea txtAreaOdgovor;
 	//private long idKviz;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					odgovaranje window = new odgovaranje(2);
-					window.frmPopunjavanjeAnkete.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the application.
 	 */
@@ -113,7 +99,7 @@ public class odgovaranje {
 			try {
 				throw new Exception("Sve je isto samo njega nema");
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Greska: ", e);
 			}
 		}
 		KvizDao kdao = KvizDao.get();
@@ -513,7 +499,7 @@ public class odgovaranje {
 				try {
 					odg.set_tekstOdgovora(txtAreaOdgovor.getText());
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 				OdgovorDao.get().create(odg);
 				realOdgovori.add(odg);

@@ -35,22 +35,6 @@ public class OpenTypeQuestion extends JFrame {
 	private final JPanel panelBrojPitanja = new JPanel();
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					OpenTypeQuestion window = new OpenTypeQuestion();
-					window.frmPopunjavanjeAnkete.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public OpenTypeQuestion() {
