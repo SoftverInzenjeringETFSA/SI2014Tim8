@@ -124,8 +124,7 @@ public class StatistikaPoKlijentima extends JFrame {
 		for (Iterator<Klijent> iterator = klijenti.iterator(); iterator
 				.hasNext();) {
 			klijent = (Klijent) iterator.next();
-			//if(klijent.get_listaOdgovora()==null)
-				comboBox.addItem(klijent);
+			comboBox.addItem(klijent);
 		}
 		comboBox.setSelectedIndex(-1);
 
@@ -213,6 +212,7 @@ public class StatistikaPoKlijentima extends JFrame {
 				panelAnketa.repaint();
 				panelAnketa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), anketa.get_naziv(), 
 						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				
 				
 			}});
 	}

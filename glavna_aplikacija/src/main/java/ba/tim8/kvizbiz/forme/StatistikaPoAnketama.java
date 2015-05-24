@@ -106,7 +106,7 @@ public class StatistikaPoAnketama extends JFrame {
 		Menu menu = new Menu();
 		menu.NapraviMenu(frmGlavnaForma);
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		frmGlavnaForma.getContentPane().add(panel, BorderLayout.CENTER);
 		
 		JPanel panelAnketa = new JPanel();
@@ -255,18 +255,18 @@ public class StatistikaPoAnketama extends JFrame {
 				panelUkupno.setLayout(new BorderLayout(0, 0));
 				Set<Pitanje> pitanja = tmp.get_pitanja();
 				for(Pitanje p:pitanja){
-					JPanel panel = new JPanel();
-					panel.setPreferredSize(new Dimension(300, 80));
-					panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), p.get_tekstPitanja(), TitledBorder.LEADING, TitledBorder.TOP, null, Color.blue));
-					panelStatistika.add(panel);
-					panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+					JPanel panelD = new JPanel();
+					panelD.setPreferredSize(new Dimension(300, 80));
+					panelD.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), p.get_tekstPitanja(), TitledBorder.LEADING, TitledBorder.TOP, null, Color.blue));
+					panelStatistika.add(panelD);
+					panelD.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 					Set<Odgovor> odgovori = p.get_listaOdgovora();
 					int count = 1;
 					for(Odgovor o:odgovori){
 						
 						JLabel label = new JLabel(count+". "+o.get_tekstOdgovora()+" - 33% (12 od "+odgovori.size()+")");
 						label.setPreferredSize(new Dimension(280, 14));
-						panel.add(label);
+						panelD.add(label);
 						count++;
 					}
 				}
@@ -275,11 +275,8 @@ public class StatistikaPoAnketama extends JFrame {
 			            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 			            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 				frmGlavnaForma.add(jp);*/
-				 JScrollPane jp = new JScrollPane(
-						 panelStatistika,
-				            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-				 frmGlavnaForma.add(jp);
+				// JScrollPane jp = new JScrollPane(panelStatistika);
+				// panel.add(jp);
 
 			 			//frmGlavnaForma.pack();
 				        /*Dimension d = frmGlavnaForma.getSize();
