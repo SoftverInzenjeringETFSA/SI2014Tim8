@@ -13,11 +13,10 @@ public class AdministratorEntitetTest {
 
 	@Test
 	public void TestKonstruktoraGeteraISetera() {
-		//public Administrator(long _id, String _ime, String _prezime, Spol _spol,
-			//	String _adresa, Date _datumRodjenja, String _brojtelefona,
-				//String _eMail, String _username, String _password) {
 			
-		Administrator admin1 = new Administrator(0, "Faruk", "Ljuca", Spol.muski, "Neka adresa", new Date(),
+		Date datum = new Date();
+		
+		Administrator admin1 = new Administrator(0, "Faruk", "Ljuca", Spol.muski, "Neka adresa", datum,
 				"061111111", "fljuca1@etf.unsa.ba", "admin", "pass");
 		
 		Administrator admin2 = new Administrator();
@@ -26,7 +25,7 @@ public class AdministratorEntitetTest {
 		admin2.set_prezime("Ljuca");
 		admin2.set_spol(Spol.muski);
 		admin2.set_adresa("Neka adresa");
-		admin2.set_datumRodjenja(new Date());
+		admin2.set_datumRodjenja(datum);
 		admin2.set_telefon("061111111");
 		admin2.set_eMail("fljuca1@etf.unsa.ba");
 		admin2.set_username("admin");
