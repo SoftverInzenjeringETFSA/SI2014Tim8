@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import org.apache.log4j.Logger;
 
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
@@ -59,25 +60,13 @@ public class PregledAdministratora extends JFrame {
 	private JLabel lblStatus;
 	private JFrame par;
 	
+	final static Logger logger = Logger.getLogger(PregledAdministratora.class);
+	
 	public JFrame get_frmPregledAdministratora() {
 		return frmPregledAdministratora;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PregledAdministratora window = new PregledAdministratora(null);
-					window.frmPregledAdministratora.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the application.

@@ -31,6 +31,7 @@ public class AdministratorDaoTest {
 	private static long testId5;
 	
 	@Before
+	
 	public void prepare()
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -137,16 +138,44 @@ public class AdministratorDaoTest {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test(expected=Exception.class)
+	public void testdajPoDatumu() throws Exception {
 		
+		ArrayList<Administrator> alist = (ArrayList<Administrator>) adao.dajPoDatumu("pogresan format datuma");
+		
+		
+		
+		
+	}
+	
+	@Test
+	public void testdajPoTelefonu() {
+		
+		ArrayList<Administrator> alist = (ArrayList<Administrator>) adao.dajPoTelefonu("061-688-900");
+		
+		assertEquals(alist.get(0).get_id(), testId1);
+		assertEquals(alist.get(1).get_id(), testId2);
+		assertEquals(alist.get(2).get_id(), testId3);
+		
+		assertEquals(alist.size(), 3);
+		
+		
+	}
+	
+	@Test
+	public void testdajPoMailu() {
+		
+		ArrayList<Administrator> alist = (ArrayList<Administrator>) adao.dajPoMailu("orhanljubuncic@yahoo.com");
+		
+		assertEquals(alist.get(0).get_id(), testId1);
+		assertEquals(alist.get(1).get_id(), testId2);
+		assertEquals(alist.get(2).get_id(), testId3);
+		
+		assertEquals(alist.size(), 3);
+		
+		
+	}
+	
 	@Test
 	public void testCreate() {
 		

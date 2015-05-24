@@ -120,7 +120,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		try{
 			date = sdf.parse(datum);
 		 }
-		catch(Exception e){e.printStackTrace(); throw e;}
+		catch(Exception e){ throw e;}
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
