@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.JProgressBar;
 
@@ -73,7 +74,7 @@ public class OdgovaranjeNaPitanje extends JFrame {
 		frmPopunjavanjeAnkete = new JFrame();
 		frmPopunjavanjeAnkete.setTitle("Popunjavanje ankete");
 		frmPopunjavanjeAnkete.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\MuhamedMujic\\Desktop\\ikonaKviz.png"));
-		frmPopunjavanjeAnkete.setBounds(100, 100, 450, 381);
+		frmPopunjavanjeAnkete.setBounds(100, 100, 450, 408);
 		frmPopunjavanjeAnkete.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelStatus = new JPanel();
@@ -118,10 +119,10 @@ public class OdgovaranjeNaPitanje extends JFrame {
 		panelPitanje.add(lblPitanje);
 		
 		JPanel panelOdgovor = new JPanel();
+		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, panelOdgovor, -78, SpringLayout.SOUTH, panelPitanje);
 		panelOdgovor.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		sl_panelPitanje.putConstraint(SpringLayout.NORTH, panelOdgovor, 6, SpringLayout.SOUTH, lblPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, panelOdgovor, 0, SpringLayout.WEST, lblPitanje);
-		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, panelOdgovor, -57, SpringLayout.SOUTH, panelPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, panelOdgovor, -87, SpringLayout.EAST, panelPitanje);
 		panelPitanje.add(panelOdgovor);
 		panelOdgovor.setLayout(null);
@@ -140,15 +141,33 @@ public class OdgovaranjeNaPitanje extends JFrame {
 		
 		JButton btnNaprijed = new JButton("Naprijed");
 		sl_panelPitanje.putConstraint(SpringLayout.NORTH, btnNaprijed, 6, SpringLayout.SOUTH, panelOdgovor);
-		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNaprijed, 0, SpringLayout.EAST, lblPitanje);
 		panelPitanje.add(btnNaprijed);
 		
 		JButton btnNazad = new JButton("Nazad");
-		btnNazad.setMargin(new Insets(2, 5, 2, 5));
-		sl_panelPitanje.putConstraint(SpringLayout.NORTH, btnNazad, 6, SpringLayout.SOUTH, panelOdgovor);
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNazad, 195, SpringLayout.WEST, panelPitanje);
-		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -6, SpringLayout.WEST, btnNaprijed);
+		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -166, SpringLayout.EAST, panelPitanje);
+		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNaprijed, 6, SpringLayout.EAST, btnNazad);
+		sl_panelPitanje.putConstraint(SpringLayout.NORTH, btnNazad, 6, SpringLayout.SOUTH, panelOdgovor);
+		btnNazad.setMargin(new Insets(2, 5, 2, 5));
 		panelPitanje.add(btnNazad);
+		
+		JLabel lblpitanjeJeObavezno = new JLabel("*Pitanje je obavezno");
+		lblpitanjeJeObavezno.setForeground(new Color(255, 0, 0));
+		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, lblpitanjeJeObavezno, -10, SpringLayout.SOUTH, panelPitanje);
+		sl_panelPitanje.putConstraint(SpringLayout.EAST, lblpitanjeJeObavezno, -157, SpringLayout.EAST, panelPitanje);
+		
+			panelPitanje.add(lblpitanjeJeObavezno);
+		
+		
+		JSeparator separator = new JSeparator();
+		//sl_panelPitanje.putConstraint(SpringLayout.SOUTH, btnNazad, -10, SpringLayout.NORTH, separator);
+		sl_panelPitanje.putConstraint(SpringLayout.NORTH, separator, -8, SpringLayout.NORTH, lblpitanjeJeObavezno);
+		sl_panelPitanje.putConstraint(SpringLayout.WEST, separator, 0, SpringLayout.WEST, lblPitanje);
+		sl_panelPitanje.putConstraint(SpringLayout.EAST, separator, 0, SpringLayout.EAST, lblPitanje);
+		separator.setPreferredSize(new Dimension(300, 2));
+		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, separator, -6, SpringLayout.NORTH, lblpitanjeJeObavezno);
+		panelPitanje.add(separator);
+		
 		panelBrojPitanja.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		frmPopunjavanjeAnkete.getContentPane().add(panelBrojPitanja, BorderLayout.NORTH);
 		GridBagLayout gbl_panelBrojPitanja = new GridBagLayout();

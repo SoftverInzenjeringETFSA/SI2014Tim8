@@ -203,5 +203,6 @@ public class StatistikaPoKlijentima extends JFrame {
 		btnNewButton.setForeground(SystemColor.textHighlight);
 		btnNewButton.setEnabled(false);
 		frmStatistikaPoKlijentimaForma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
+		
 	}
 }

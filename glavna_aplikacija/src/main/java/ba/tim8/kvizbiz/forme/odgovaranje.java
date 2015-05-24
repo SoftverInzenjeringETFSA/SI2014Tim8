@@ -39,6 +39,7 @@ import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 import javax.swing.border.MatteBorder;
 
+import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.OdgovorDao;
 import ba.tim8.kvizbiz.dao.PitanjeDao;
@@ -106,8 +107,8 @@ public class odgovaranje {
 		
 		realOdgovori = new HashSet<Odgovor>();
 		//klijent = new Klijent();
-		klijent = RegistracijaKlijenta.logiraniKlijent;
-		
+		//klijent = RegistracijaKlijenta.logiraniKlijent;
+		klijent=KlijentDao.get().read(72);
 		/*if(RegistracijaKlijenta.logiraniKlijent==null)
 		{
 			try {
@@ -308,7 +309,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Odgovaranje na pitanje "+String.valueOf(broj+1)+"/"+ String.valueOf(ukupnoPitanja));
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -344,11 +345,13 @@ public class odgovaranje {
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JCheckBox tmp = new JCheckBox();
+				boolean empty = true;
 				for(int i=0; i < panelOdgovor.getComponentCount(); i++){
 					tmp = (JCheckBox) panelOdgovor.getComponent(i);
 					if(tmp.isSelected()){
 						//Set<Odgovor> odgs = new HashSet<Odgovor>();
 						//klijent.set_listaOdgovora(odgs);
+						empty = false;
 						Odgovor odg = new Odgovor();
 						odg.set_pitanje(pitanje);
 						try {
@@ -361,6 +364,13 @@ public class odgovaranje {
 								tmp.getText(),
 								"Registracija klijenta",
 								JOptionPane.ERROR_MESSAGE);*/
+					}
+				}
+				if(pitanje.isObavezno() && empty){
+					if(pitanje.isObavezno() && txtAreaOdgovor.getText().equals("")){
+						lblStatus.setText("Odgovor ne smije biti prazan");
+						lblStatus.setForeground(Color.red);
+						return;
 					}
 				}
 				if(broj+1 < ukupnoPitanja){
@@ -431,11 +441,14 @@ public class odgovaranje {
 		
 		panelPitanje.add(btnNazad);
 		
+		
 		JLabel lblpitanjeJeObavezno = new JLabel("*Pitanje je obavezno");
 		lblpitanjeJeObavezno.setForeground(new Color(255, 0, 0));
 		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, lblpitanjeJeObavezno, -10, SpringLayout.SOUTH, panelPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, lblpitanjeJeObavezno, -157, SpringLayout.EAST, panelPitanje);
-		panelPitanje.add(lblpitanjeJeObavezno);
+		if(pitanje.isObavezno()){
+			panelPitanje.add(lblpitanjeJeObavezno);
+		}
 		
 		JSeparator separator = new JSeparator();
 		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, btnNazad, -10, SpringLayout.NORTH, separator);
@@ -484,7 +497,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Odgovaranje na pitanje "+String.valueOf(broj+1)+"/"+ String.valueOf(ukupnoPitanja));;
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -574,6 +587,25 @@ public class odgovaranje {
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNazad, 195, SpringLayout.WEST, panelPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -6, SpringLayout.WEST, btnNaprijed);
 		panelPitanje.add(btnNazad);
+		
+		
+		/*JLabel lblpitanjeJeObavezno = new JLabel("*Pitanje je obavezno");
+		lblpitanjeJeObavezno.setForeground(new Color(255, 0, 0));
+		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, lblpitanjeJeObavezno, -10, SpringLayout.SOUTH, panelPitanje);
+		sl_panelPitanje.putConstraint(SpringLayout.EAST, lblpitanjeJeObavezno, -157, SpringLayout.EAST, panelPitanje);
+		if(p.isObavezno()){
+			panelPitanje.add(lblpitanjeJeObavezno);
+		}
+		
+		JSeparator separator = new JSeparator();
+		//sl_panelPitanje.putConstraint(SpringLayout.SOUTH, btnNazad, -10, SpringLayout.NORTH, separator);
+		sl_panelPitanje.putConstraint(SpringLayout.NORTH, separator, -8, SpringLayout.NORTH, lblpitanjeJeObavezno);
+		sl_panelPitanje.putConstraint(SpringLayout.WEST, separator, 0, SpringLayout.WEST, lblPitanje);
+		sl_panelPitanje.putConstraint(SpringLayout.EAST, separator, 0, SpringLayout.EAST, lblPitanje);
+		separator.setPreferredSize(new Dimension(300, 2));
+		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, separator, -6, SpringLayout.NORTH, lblpitanjeJeObavezno);
+		panelPitanje.add(separator);*/
+		
 		panelBrojPitanja.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		frmPopunjavanjeAnkete.getContentPane().add(panelBrojPitanja, BorderLayout.NORTH);
 		GridBagLayout gbl_panelBrojPitanja = new GridBagLayout();
@@ -615,7 +647,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Odgovaranje na pitanje "+String.valueOf(broj+1)+"/"+ String.valueOf(ukupnoPitanja));;
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -651,13 +683,12 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				if(pitanje.isObavezno() && txtAreaOdgovor.getText().equals("")){
+					lblStatus.setText("Odgovor ne smije biti prazan");
+					lblStatus.setForeground(Color.red);
+					return;
+				}
 				if(broj+1 < ukupnoPitanja){
-					if(pitanje.isObavezno() && txtAreaOdgovor.getText().equals("")){
-						lblStatus.setText("Odgovor ne smije biti prazan");
-						lblStatus.setForeground(Color.red);
-						return;
-					}
 					Odgovor odg = new Odgovor();
 					odg.set_pitanje(pitanje);
 					try {
@@ -787,7 +818,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		JLabel lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Odgovaranje na pitanje "+String.valueOf(broj+1)+"/"+ String.valueOf(ukupnoPitanja));;
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -929,7 +960,7 @@ public class odgovaranje {
 		gbc_progressBar.gridy = 0;
 		panelStatus.add(progressBar, gbc_progressBar);
 		
-		JLabel lblStatus = new JLabel("Status");
+		lblStatus = new JLabel("Odgovaranje na pitanje "+String.valueOf(broj+1)+"/"+ String.valueOf(ukupnoPitanja));;
 		lblStatus.setForeground(new Color(30, 144, 255));
 		GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 		gbc_lblStatus.fill = GridBagConstraints.VERTICAL;
@@ -1004,6 +1035,10 @@ public class odgovaranje {
 				}else{
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(p.get_kviz());
+					/*Kviz kv = p.get_kviz();
+					Set<Klijent> kt = new HashSet<Klijent>();
+					kt.add(klijent);
+					kv.set_klijenti(kt);*/
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
