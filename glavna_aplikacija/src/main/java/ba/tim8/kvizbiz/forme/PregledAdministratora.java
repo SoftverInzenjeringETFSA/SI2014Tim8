@@ -205,6 +205,7 @@ public class PregledAdministratora extends JFrame {
 								"Datum mora biti u formatu dd/mm/yyyy",
 								"Pogrešan format datuma",
 								JOptionPane.ERROR_MESSAGE);
+						logger.error("Greska: ", ex);
 					}
 				}
 				else if(comboBox.getSelectedItem().toString() == "Telefon")
@@ -230,6 +231,8 @@ public class PregledAdministratora extends JFrame {
 				"Username", "Ime", "Prezime", "Spol", "Adresa", "Datum ro\u0111enja", "Email", "Telefon"
 			}
 		){
+			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false
@@ -250,9 +253,6 @@ public class PregledAdministratora extends JFrame {
 		AdministratorDao adao = AdministratorDao.get();
 		Collection<Administrator> admini = adao.readAll();
 		sortirajPoUsernamu(admini);
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		
-		
 		
 		ucitajAdmine(admini);
 		
