@@ -1,23 +1,15 @@
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.SystemColor;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
@@ -26,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.List;
 
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -42,22 +33,6 @@ public class PocetnaKlijent extends JFrame {
 	private JPanel contentPane;
 	private JTable tblAnkete;
 	private JComboBox<Long> cbbID;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PocetnaKlijent frame = new PocetnaKlijent();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	/**
 	 * Create the frame.
@@ -121,80 +96,6 @@ public class PocetnaKlijent extends JFrame {
 		lblStatus.setForeground(Color.lightGray);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		/* Stara forma
-		contentPane.setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Pregled anketa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 29, 574, 377);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		comboBox = new JComboBox();
-		comboBox.setBounds(37, 85, 120, 20);
-		panel.add(comboBox);
-		
-		JLabel lblNewLabel = new JLabel("Odaberi id");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(37, 47, 120, 14);
-		panel.add(lblNewLabel);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(197, 85, 367, 256);
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] { },
-			new String[] {
-				"ID", "Naziv ankete"
-			}
-		));
-		
-		
-		
-		table.setBounds(197, 47, 367, 256);
-		panel.add(scrollPane);
-		scrollPane.setViewportView(table);
-		
-		JButton btnNewButton_2 = new JButton("Pregledaj anketu");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String id= comboBox.getSelectedItem().toString();
-				OdgovaranjeNaPitanje o= new OdgovaranjeNaPitanje(id);
-				
-				o.setVisible(true);
-				
-			}
-		});
-		btnNewButton_2.setBounds(37, 237, 120, 23);
-		panel.add(btnNewButton_2);
-		
-	
-		
-		JLabel lblStatus = new JLabel("Statusna traka");
-		lblStatus.setBounds(10, 401, 574, 50);
-		contentPane.add(lblStatus);
-		lblStatus.setForeground(Color.lightGray);
-		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
-		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		
-				
-		
-	
-		
-		Menu menu = new Menu();
-		menu.NapraviMenu(this);
-	
-	
-		KvizDao kv= KvizDao.get();
-		List<Long> l1 = (List<Long>) kv.ispisSvihAnketa();
-		IscitajSveAktivneTabele(l1);
-
-
-	    */
 	}
 	
 	

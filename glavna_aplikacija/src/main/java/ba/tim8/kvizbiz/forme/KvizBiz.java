@@ -13,14 +13,15 @@ import java.awt.Insets;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class KvizBiz extends JFrame {
+import org.apache.log4j.Logger;
 
+public class KvizBiz extends JFrame {
+	final static Logger logger = Logger.getLogger(KvizBiz.class);
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	
 	public JFrame get_frame () {
@@ -34,7 +35,7 @@ public class KvizBiz extends JFrame {
 					KvizBiz window = new KvizBiz();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("Greska: ", e);
 				}
 			}
 		});

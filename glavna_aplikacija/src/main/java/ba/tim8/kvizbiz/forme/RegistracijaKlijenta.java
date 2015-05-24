@@ -425,10 +425,6 @@ public class RegistracijaKlijenta {
 				
 				logiraniKlijent = k;
 				
-				JOptionPane.showMessageDialog(null,
-						"Klijent je uspješno registrovan!",
-						"Registracija klijenta",
-						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
 				logger.error("Greska: ", e1);
 			}	
