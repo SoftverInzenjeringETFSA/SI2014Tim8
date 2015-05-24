@@ -14,6 +14,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
+
 import ba.tim8.kvizbiz.dao.AdministratorDao;
 import ba.tim8.kvizbiz.dao.KlijentDao;
 import ba.tim8.kvizbiz.entiteti.Administrator;
@@ -30,34 +32,25 @@ public class PregledKlijenatav1 extends JFrame {
 	private JTable table;
 	private JButton btnNazad;
 	private JButton btnPretrai;
+	private JFrame par;
+	
+	final static Logger logger = Logger.getLogger(PregledKlijenatav1.class);
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PregledKlijenatav1 frame = new PregledKlijenatav1();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public PregledKlijenatav1() {
+	public PregledKlijenatav1(JFrame parent) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setTitle("Pregled klijenata");
 		setContentPane(contentPane);
+		
+		par = parent;
 		
 		// Kreiranje menija
 		Menu menu = new Menu();
@@ -77,8 +70,7 @@ public class PregledKlijenatav1 extends JFrame {
 			{
 				// biranje kategorije
 				
-				 //if(e.getStateChange() == ItemEvent.SELECTED)
-				//JOptionPane.showMessageDialog(null, e.getItem());
+				
 				
 				
 				
@@ -182,6 +174,13 @@ public class PregledKlijenatav1 extends JFrame {
 		table.getColumnModel().getColumn(5).setMinWidth(85);
 		
 		btnNazad = new JButton("Nazad");
+		btnNazad.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				par.setVisible(true);
+				dispose();
+			}
+		});
 		mainContent.add(btnNazad, "cell 5 4 1 2,alignx right");
 		
 		

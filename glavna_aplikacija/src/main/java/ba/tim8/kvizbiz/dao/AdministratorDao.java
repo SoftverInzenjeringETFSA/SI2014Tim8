@@ -49,8 +49,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 	public boolean pretraziAdmina(String username,char [] password) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session
-				.createQuery("from Administrator a where a._username = :nesto and a._password=md5(:nestodrugo)");
+		Query q = session.createQuery("from Administrator a where a._username = :nesto and a._password=md5(:nestodrugo)"); //NOSONAR
 		q.setParameter("nesto", username);
 		q.setParameter("nestodrugo", password);
 		Collection<Administrator> alist = (Collection<Administrator>) q.list();
@@ -122,7 +121,11 @@ public class AdministratorDao extends BaseDao<Administrator> {
 		try{
 			date = sdf.parse(datum);
 		 }
+
+		
+
 		catch(Exception e){logger.error("Greska: ", e); throw e;}
+
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();

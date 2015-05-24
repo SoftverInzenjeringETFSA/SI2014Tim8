@@ -28,7 +28,7 @@ public class Klijent extends Osoba implements  java.io.Serializable {
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idKviz", nullable = false)
+	@JoinColumn(name = "idKviz", nullable = true)
 	private Kviz _popunjeniKviz;
 	
 	

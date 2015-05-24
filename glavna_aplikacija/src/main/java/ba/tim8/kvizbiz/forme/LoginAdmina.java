@@ -56,7 +56,7 @@ public class LoginAdmina extends JFrame {
 					AdministratorDao a= AdministratorDao.get();					
 									
 					if(a.pretraziAdmina(username,password)){					
-						usernameLogiranogAdmina = username;
+						usernameLogiranogAdmina = username; //NOSONAR
 						PocetnaKlijent forma = new PocetnaKlijent();
 						forma.setVisible(true);
 						dispose();
