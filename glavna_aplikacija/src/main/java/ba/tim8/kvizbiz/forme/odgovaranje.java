@@ -90,7 +90,6 @@ public class odgovaranje {
 	 * Create the application.
 	 */
 	public odgovaranje(long kvizID) {
-		//idKviz = kvizID;
 		initialize(kvizID);
 	}
 
@@ -108,105 +107,19 @@ public class odgovaranje {
 		realOdgovori = new HashSet<Odgovor>();
 		//klijent = new Klijent();
 		klijent = RegistracijaKlijenta.logiraniKlijent;
-		//klijent=KlijentDao.get().read(77);
+		//klijent=KlijentDao.get().read(76);
 		if(klijent==null)
 		{
 			try {
-				throw new Exception("nema ga");
+				throw new Exception("Sve je isto samo njega nema");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		//lblStatus.setText("Status");
 		KvizDao kdao = KvizDao.get();
 		Kviz kviz = kdao.read(kvizID);
 		Collection<Pitanje> pitanja = kviz.get_pitanja();
-		//long ID = Long.valueOf(kvizID).longValue();
-		//PitanjeDao pdao = PitanjeDao.get();
-		//Collection<Pitanje> pitanja = pdao.dajPitanja(ID);
-
-		/*Collection<Pitanje> pitanja = new HashSet<Pitanje>();
-		Pitanje p = new Pitanje();
-		p.set_id(1);
-		try {
-			p.set_tekstPitanja("Tvoje misljenje");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p.set_tipPitanja(TipPitanja.OtvoreniOdgovor);
-		pitanja.add(p);
-		Pitanje p2 = new Pitanje();
-		p2.set_id(2);
-		try {
-			p2.set_tekstPitanja("Zasto je to tako");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p2.set_tipPitanja(TipPitanja.OtvoreniOdgovor);
-		pitanja.add(p2);
-		
-		Pitanje p3 = new Pitanje();
-		p3.set_id(3);
-		try {
-			p3.set_tekstPitanja("Nije to za tebe jer");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p3.set_tipPitanja(TipPitanja.OtvoreniOdgovor);
-		pitanja.add(p3);
-		
-		Pitanje p4 = new Pitanje();
-		p4.set_id(4);
-		try {
-			p4.set_tekstPitanja("Evo naprimjer ja");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p4.set_tipPitanja(TipPitanja.OtvoreniOdgovor);
-		pitanja.add(p4);
-		
-		Pitanje p5 = new Pitanje();
-		p5.set_id(5);
-		try {
-			p5.set_tekstPitanja("Da li je");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p5.set_tipPitanja(TipPitanja.DaNE);
-		pitanja.add(p5);
-		
-		Pitanje p6 = new Pitanje();
-		p6.set_id(6);
-		try {
-			p6.set_tekstPitanja("Tacno ili netacno");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p6.set_tipPitanja(TipPitanja.TacnoNetacno);
-		pitanja.add(p6);
-		
-		Pitanje p7 = new Pitanje();
-		p7.set_id(7);
-		try {
-			p7.set_tekstPitanja("Odaberite višestruki izbor");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p7.set_tipPitanja(TipPitanja.VisestrukiIzbor);
-		pitanja.add(p7);
-		
-		Pitanje p8 = new Pitanje();
-		p8.set_id(8);
-		try {
-			p8.set_tekstPitanja("Odaberite jedan od ponudjenih odgovora abc");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		p8.set_tipPitanja(TipPitanja.Abc);
-		pitanja.add(p8);*/
-		
-		ukupnoPitanja = pitanja.size();
+				ukupnoPitanja = pitanja.size();
 		
 		lista = new ArrayList(pitanja);
 		Collections.sort(lista, new Comparator() {
@@ -241,53 +154,8 @@ public class odgovaranje {
 	}
 
 	private void ucitajVisestrukiIzbor(final Pitanje pitanje, final int broj) {
-		//Odgovor odg = new Odgovor();
-		//OdgovorDao odao = OdgovorDao.get();
-		//List odgovori = odao.dajOdgovore((int) pitanje.get_id());
-		
-		//List odgovori = new ArrayList();
 		Collection<Odgovor> odgs = pitanje.get_listaOdgovora();
 		List odgovori = new ArrayList(odgs);
-		
-		/*Odgovor odg = new Odgovor();
-		odg.set_id(1);
-		odg.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg.set_tekstOdgovora("Odgovor a");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg);
-		
-		Odgovor odg2 = new Odgovor();
-		odg2.set_id(2);
-		odg2.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg2.set_tekstOdgovora("Odgovor b");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg2);
-		
-		Odgovor odg3 = new Odgovor();
-		odg3.set_id(3);
-		odg3.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg3.set_tekstOdgovora("Odgovor c");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg3);
-		
-		Odgovor odg4 = new Odgovor();
-		odg4.set_id(4);
-		odg4.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg4.set_tekstOdgovora("Odgovor d");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg4);*/
 		
 		JPanel panelStatus = new JPanel();
 		panelStatus.setBorder(null);
@@ -346,24 +214,14 @@ public class odgovaranje {
 			public void actionPerformed(ActionEvent arg0) {
 				JCheckBox tmp = new JCheckBox();
 				boolean empty = true;
-				for(int i=0; i < panelOdgovor.getComponentCount(); i++){
-					tmp = (JCheckBox) panelOdgovor.getComponent(i);
-					if(tmp.isSelected()){
-						//Set<Odgovor> odgs = new HashSet<Odgovor>();
-						//klijent.set_listaOdgovora(odgs);
-						empty = false;
-						Odgovor odg = new Odgovor();
-						odg.set_pitanje(pitanje);
-						try {
-							odg.set_tekstOdgovora(tmp.getText());
-						} catch (Exception e) {
-							e.printStackTrace();
+				Set<Odgovor> predef = pitanje.get_listaOdgovora();
+				for(Odgovor o:predef){
+					for(int i=0; i < panelOdgovor.getComponentCount(); i++){
+						tmp = (JCheckBox) panelOdgovor.getComponent(i);
+						if(tmp.isSelected() && tmp.getText().equals(o.get_tekstOdgovora())){
+							empty = false;
+							realOdgovori.add(o);
 						}
-						realOdgovori.add(odg);
-						/*JOptionPane.showMessageDialog(null,
-								tmp.getText(),
-								"Registracija klijenta",
-								JOptionPane.ERROR_MESSAGE);*/
 					}
 				}
 				if(pitanje.isObavezno() && empty){
@@ -384,6 +242,7 @@ public class odgovaranje {
 				}else{
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(pitanje.get_kviz());
+					KlijentDao.get().update(klijent);
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -400,44 +259,20 @@ public class odgovaranje {
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNaprijed, 6, SpringLayout.EAST, btnNazad);
 		btnNazad.setMargin(new Insets(2, 5, 2, 5));
 		
-		/*JCheckBox chckbxDeterdent = new JCheckBox("Deterd\u017Eent");
-		chckbxDeterdent.setSelected(true);
-		chckbxDeterdent.setBounds(6, 7, 97, 23);
-		panelOdgovor.add(chckbxDeterdent);
-		
-		JCheckBox chckbxTjestenina = new JCheckBox("Tjestenina");
-		chckbxTjestenina.setBounds(6, 33, 97, 23);
-		panelOdgovor.add(chckbxTjestenina);
-		
-		JCheckBox chckbxMlijeko = new JCheckBox("Mlijeko");
-		chckbxMlijeko.setBounds(6, 59, 97, 23);
-		panelOdgovor.add(chckbxMlijeko);
-		
-		JCheckBox chckbxKozmetika = new JCheckBox("Kozmetika");
-		chckbxKozmetika.setBounds(6, 85, 97, 23);
-		panelOdgovor.add(chckbxKozmetika);
-		
-		JCheckBox chckbxHljeb = new JCheckBox("Hljeb");
-		chckbxHljeb.setBounds(6, 111, 97, 23);
-		panelOdgovor.add(chckbxHljeb);*/
-		
 		int dim = 0;
 		int visina = 390;
-		//JScrollPane jsp = new JScrollPane();
 		Odgovor tmp = new Odgovor();
 		for(int i=0; i < odgovori.size(); i++){
 			tmp = (Odgovor) odgovori.get(i);
 			JCheckBox checkBox = new JCheckBox(tmp.get_tekstOdgovora());
 			checkBox.setBounds(6, dim, 97, 23);
 			panelOdgovor.add(checkBox);
-			//jsp.add(checkBox);
 			dim += 25;
 			if(i > 3){
 				frmPopunjavanjeAnkete.setSize(450, visina);
 				visina+=20;
 			}
 		}
-		//panelOdgovor.add(jsp);
 		
 		panelPitanje.add(btnNazad);
 		
@@ -545,22 +380,24 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Odgovor odg = new Odgovor();
-				odg.set_pitanje(p);
 				if(radioBtnTacno.isSelected()){
-					try {
-						odg.set_tekstOdgovora(radioBtnTacno.getText());
-					} catch (Exception e) {
-						e.printStackTrace();
+					Set<Odgovor> odgs = p.get_listaOdgovora();
+					for(Odgovor o:odgs){
+						if(o.get_tekstOdgovora().equals(radioBtnTacno.getText())){
+							realOdgovori.add(o);
+							break;
+						}
 					}
 				}else{
-					try {
-						odg.set_tekstOdgovora(radioBtnNetacno.getText());
-					} catch (Exception e) {
-						e.printStackTrace();
+					Set<Odgovor> odgs = p.get_listaOdgovora();
+					for(Odgovor o:odgs){
+						if(o.get_tekstOdgovora().equals(radioBtnNetacno.getText())){
+							realOdgovori.add(o);
+							break;
+						}
 					}
 				}
-				realOdgovori.add(odg);
+				
 				if(broj+1 < ukupnoPitanja){
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();
@@ -572,6 +409,7 @@ public class odgovaranje {
 				}else{
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(p.get_kviz());
+					KlijentDao.get().update(klijent);
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -587,24 +425,6 @@ public class odgovaranje {
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNazad, 195, SpringLayout.WEST, panelPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -6, SpringLayout.WEST, btnNaprijed);
 		panelPitanje.add(btnNazad);
-		
-		
-		/*JLabel lblpitanjeJeObavezno = new JLabel("*Pitanje je obavezno");
-		lblpitanjeJeObavezno.setForeground(new Color(255, 0, 0));
-		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, lblpitanjeJeObavezno, -10, SpringLayout.SOUTH, panelPitanje);
-		sl_panelPitanje.putConstraint(SpringLayout.EAST, lblpitanjeJeObavezno, -157, SpringLayout.EAST, panelPitanje);
-		if(p.isObavezno()){
-			panelPitanje.add(lblpitanjeJeObavezno);
-		}
-		
-		JSeparator separator = new JSeparator();
-		//sl_panelPitanje.putConstraint(SpringLayout.SOUTH, btnNazad, -10, SpringLayout.NORTH, separator);
-		sl_panelPitanje.putConstraint(SpringLayout.NORTH, separator, -8, SpringLayout.NORTH, lblpitanjeJeObavezno);
-		sl_panelPitanje.putConstraint(SpringLayout.WEST, separator, 0, SpringLayout.WEST, lblPitanje);
-		sl_panelPitanje.putConstraint(SpringLayout.EAST, separator, 0, SpringLayout.EAST, lblPitanje);
-		separator.setPreferredSize(new Dimension(300, 2));
-		sl_panelPitanje.putConstraint(SpringLayout.SOUTH, separator, -6, SpringLayout.NORTH, lblpitanjeJeObavezno);
-		panelPitanje.add(separator);*/
 		
 		panelBrojPitanja.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		frmPopunjavanjeAnkete.getContentPane().add(panelBrojPitanja, BorderLayout.NORTH);
@@ -688,15 +508,17 @@ public class odgovaranje {
 					lblStatus.setForeground(Color.red);
 					return;
 				}
+				Odgovor odg = new Odgovor();
+				odg.set_pitanje(pitanje);
+				try {
+					odg.set_tekstOdgovora(txtAreaOdgovor.getText());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				OdgovorDao.get().create(odg);
+				realOdgovori.add(odg);
 				if(broj+1 < ukupnoPitanja){
-					Odgovor odg = new Odgovor();
-					odg.set_pitanje(pitanje);
-					try {
-						odg.set_tekstOdgovora(txtAreaOdgovor.getText());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					realOdgovori.add(odg);
+					
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();
 					postaviPitanje((Pitanje) lista.get(broj+1), broj+1);
@@ -707,6 +529,7 @@ public class odgovaranje {
 				}else{
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(pitanje.get_kviz());
+					KlijentDao.get().update(klijent);
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -752,51 +575,8 @@ public class odgovaranje {
 	}
 
 	private void ucitajAbc(final Pitanje p, final int broj){
-		//OdgovorDao odao = OdgovorDao.get();
-		//List odgovori = odao.dajOdgovore((int) pitanje.get_id());
-		
 		Collection<Odgovor> odgs = p.get_listaOdgovora();
 		List odgovori = new ArrayList(odgs);
-		
-		/*Odgovor odg = new Odgovor();
-		odg.set_id(1);
-		odg.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg.set_tekstOdgovora("Odgovor a");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg);
-		
-		Odgovor odg2 = new Odgovor();
-		odg2.set_id(2);
-		odg2.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg2.set_tekstOdgovora("Odgovor b");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg2);
-		
-		Odgovor odg3 = new Odgovor();
-		odg3.set_id(3);
-		odg3.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg3.set_tekstOdgovora("Odgovor c");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg3);
-		
-		Odgovor odg4 = new Odgovor();
-		odg4.set_id(4);
-		odg4.set_pitanje((Pitanje) lista.get(6));
-		try {
-			odg4.set_tekstOdgovora("Odgovor d");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		odgovori.add(odg4);*/
 		
 		JPanel panelStatus = new JPanel();
 		panelStatus.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -848,18 +628,6 @@ public class odgovaranje {
 		panelPitanje.add(panelOdgovor);
 		panelOdgovor.setLayout(null);
 		
-		/*JRadioButton rdbtnRijetko = new JRadioButton("Rijetko");
-		rdbtnRijetko.setBounds(6, 7, 200, 41);
-		panelOdgovor.add(rdbtnRijetko);
-		
-		JRadioButton rdbtnUobiajeno = new JRadioButton("Uobi\u010Dajeno");
-		rdbtnUobiajeno.setBounds(6, 51, 200, 41);
-		panelOdgovor.add(rdbtnUobiajeno);
-		
-		JRadioButton rdbtnesto = new JRadioButton("\u010Cesto");
-		rdbtnesto.setBounds(6, 95, 200, 41);
-		panelOdgovor.add(rdbtnesto);*/
-		
 		int dim = 0;
 		Odgovor tmp = new Odgovor();
 		final ButtonGroup btnGrOdg = new ButtonGroup();
@@ -881,21 +649,19 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				Odgovor o = new Odgovor();
-				o.set_pitanje(p);
 				for(Enumeration<AbstractButton> buttons = btnGrOdg.getElements(); buttons.hasMoreElements();) {
 		            AbstractButton button = buttons.nextElement();
 		            if (button.isSelected()) {
-		                try {
-							o.set_tekstOdgovora(button.getText());
-						} catch (Exception e) {
-							e.printStackTrace();
+		            	Set<Odgovor> odgs = p.get_listaOdgovora();
+						for(Odgovor o:odgs){
+							if(o.get_tekstOdgovora().equals(button.getText())){
+								realOdgovori.add(o);
+								break;
+							}
 						}
-		                break;
+						break;
 		            }
 		        }
-				realOdgovori.add(o);
 				if(broj+1 < ukupnoPitanja){
 					frmPopunjavanjeAnkete.getContentPane().removeAll();
 					panelBrojPitanja.removeAll();
@@ -907,6 +673,7 @@ public class odgovaranje {
 				}else{
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(p.get_kviz());
+					KlijentDao.get().update(klijent);
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
@@ -1008,27 +775,21 @@ public class odgovaranje {
 		panelPitanje.add(btnNaprijed);
 		btnNaprijed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*Odgovor odg = new Odgovor();
-				odg.set_pitanje(p);
 				if(radioBtnDa.isSelected()){
-					try {
-						odg.set_tekstOdgovora(radioBtnDa.getText());
-					} catch (Exception e) {
-						e.printStackTrace();
+					Set<Odgovor> odgs = p.get_listaOdgovora();
+					for(Odgovor o:odgs){
+						if(o.get_tekstOdgovora().equals(radioBtnDa.getText())){
+							realOdgovori.add(o);
+							break;
+						}
 					}
 				}else{
-					try {
-						odg.set_tekstOdgovora(radioBtnNe.getText());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}*/
-				Set<Odgovor> odgs = p.get_listaOdgovora();
-				for(Odgovor o:odgs){
-					if(o.get_tekstOdgovora().equals(radioBtnDa.getText()))
-					{
-						realOdgovori.add(o);
-						break;
+					Set<Odgovor> odgs = p.get_listaOdgovora();
+					for(Odgovor o:odgs){
+						if(o.get_tekstOdgovora().equals(radioBtnNe.getText())){
+							realOdgovori.add(o);
+							break;
+						}
 					}
 				}
 				
@@ -1043,10 +804,7 @@ public class odgovaranje {
 				}else{
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(p.get_kviz());
-					/*Kviz kv = p.get_kviz();
-					Set<Klijent> kt = new HashSet<Klijent>();
-					kt.add(klijent);
-					kv.set_klijenti(kt);*/
+					KlijentDao.get().update(klijent);
 					JOptionPane.showMessageDialog(null,
 							"Kviz uspješno popunjen.",
 							"Registracija klijenta",
