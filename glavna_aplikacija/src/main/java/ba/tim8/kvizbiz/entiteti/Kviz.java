@@ -31,10 +31,10 @@ public class Kviz implements java.io.Serializable{
 	private boolean _arhiviran;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_popunjeniKviz")
-	private Set<Klijent> _klijenti = new HashSet<Klijent>();
+	private Set<Klijent> _klijenti = new HashSet<Klijent>(); //NOSONAR
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz")
-	private Set<Pitanje> _pitanja = new HashSet<Pitanje>();
+	private Set<Pitanje> _pitanja = new HashSet<Pitanje>(); //NOSONAR
 	
 	public long get_id() {
 		return _id;

@@ -37,7 +37,7 @@ public class Klijent extends Osoba implements  java.io.Serializable {
 			@JoinColumn(name = "idKlijent", referencedColumnName="idKlijent", nullable = true, updatable = true) }, 
 			inverseJoinColumns = { @JoinColumn(name = "idOdgovor", 
 					nullable = true, referencedColumnName="idOdgovor", updatable = true) })
-	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>(0);
+	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>(0); //NOSONAR
 	
 	public Date get_datumPrijave() {
 		return _datumPrijave;
