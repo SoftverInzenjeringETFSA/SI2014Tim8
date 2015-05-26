@@ -26,6 +26,9 @@ import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,7 +38,8 @@ import org.apache.log4j.Logger;
 
 public class DodavanjeAdministratora extends JFrame {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = Logger.getLogger(DodavanjeAdministratora.class);
+	final static Logger logger = Logger
+			.getLogger(DodavanjeAdministratora.class);
 	private JFrame frmDodavanjeAdministratora;
 	private JTextField textField_5;
 	private JTextField textField;
@@ -243,10 +247,28 @@ public class DodavanjeAdministratora extends JFrame {
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField_3.getText());
+
 					if (!matcher.matches()) {
 						dodaj = false;
 						lblStatus
-								.setText("Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!");
+								.setText("Polje Datum rođenja mora biti ispravno i u formatu yyyy-mm-dd(2015-01-01)!");
+					} else {
+						ZonedDateTime danasnji = ZonedDateTime.now();
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-mm-dd");
+						try {
+							Date uneseni = sdf.parse(textField_3.getText());
+							Date sadasnji = sdf.parse(danasnji.toString());
+
+							if (uneseni.after(sadasnji)) {
+
+								dodaj = false;
+								lblStatus
+										.setText("Polje Datum rođenja ne smije biti veće od današnjeg dana!");
+							}
+						} catch (ParseException e1) {
+							logger.error("Greska: ", e1);
+						}
 					}
 				}
 
@@ -302,8 +324,7 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus.setText("Polje Username mora biti jedinstveno!");
 				}
-				
-				
+
 				if (dodaj == true) {
 					JOptionPane.showMessageDialog(null,
 							"Administrator je uspješno dodan!",
@@ -321,8 +342,7 @@ public class DodavanjeAdministratora extends JFrame {
 									passwordField.getText());
 							adao.create(a);
 							adao.updatePass(a);
-							
-							
+
 						} catch (ParseException e1) {
 							logger.error("Greska: ", e1);
 						}
