@@ -28,6 +28,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.TimeZone;
 
 import javax.swing.JPasswordField;
 
@@ -244,9 +247,24 @@ public class DodavanjeAdministratora extends JFrame {
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField_3.getText());
 					if (!matcher.matches()) {
-						dodaj = false;
-						lblStatus
-								.setText("Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!");
+						lblStatus.setText("Polje Datum rođenja mora biti ispravno i u formatu yyyy-mm-dd(2015-01-01)!");
+					} else {
+						ZonedDateTime danasnji = ZonedDateTime.now();
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-mm-dd");
+						try {
+							Date uneseni = sdf.parse(textField_3.getText());
+							Date sadasnji = sdf.parse(danasnji.toString());
+
+							if (uneseni.after(sadasnji)) {
+
+								dodaj = false;
+								lblStatus
+										.setText("Polje Datum rođenja ne smije biti veće od današnjeg dana!");
+							}
+						} catch (ParseException e1) {
+							logger.error("Greska: ", e1);
+						}
 					}
 				}
 
