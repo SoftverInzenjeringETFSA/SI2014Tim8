@@ -364,6 +364,7 @@ public class PromjenaKlijenta extends JFrame {
 									dodaj = false;
 									lblStatus
 											.setText("Polje Datum rođenja ne smije biti veće od današnjeg dana!");
+									lblStatus.setForeground(Color.red);
 								}
 							} catch (ParseException e1) {
 								logger.error("Greska: ", e1);
@@ -400,8 +401,8 @@ public class PromjenaKlijenta extends JFrame {
 					// ime validacija
 					if (textIme.getText().isEmpty()) {
 						dodaj = false;
-						lblStatus.setText("Polje Ime mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
+						lblStatus.setText("Polje Ime mora biti popunjeno!");
 
 					} else {
 						String regx = "[a-zA-Z]+\\.?";
