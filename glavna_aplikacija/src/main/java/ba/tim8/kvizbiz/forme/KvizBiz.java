@@ -24,10 +24,10 @@ import org.apache.log4j.Logger;
 public class KvizBiz extends JFrame {
 	final static Logger logger = Logger.getLogger(KvizBiz.class);
 	private static final long serialVersionUID = 1L;
-	private JFrame frame;
+	private JFrame frmKvizbiz;
 	
 	public JFrame get_frame () {
-		return frame;
+		return frmKvizbiz;
 	}
 	
 	public static void main(String[] args) {
@@ -35,7 +35,7 @@ public class KvizBiz extends JFrame {
 			public void run() {
 				try {
 					KvizBiz window = new KvizBiz();
-					window.frame.setVisible(true);
+					window.frmKvizbiz.setVisible(true);
 				} catch (Exception e) {
 					logger.error("Greska: ", e);
 				}
@@ -54,30 +54,31 @@ public class KvizBiz extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 300, 200);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[grow][fill][grow]", "[grow][fill][fill][grow]"));
+		frmKvizbiz = new JFrame();
+		frmKvizbiz.setTitle("KVIZBIZ");
+		frmKvizbiz.setBounds(100, 100, 300, 200);
+		frmKvizbiz.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmKvizbiz.getContentPane().setLayout(new MigLayout("", "[grow][fill][grow]", "[grow][fill][fill][grow]"));
 		
 		JButton btnRegistrujSeKao = new JButton("Registruj se kao korisnik");
 		btnRegistrujSeKao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RegistracijaKlijenta noviFrame = new RegistracijaKlijenta();
 				noviFrame.frmRegistracijaKlijenta.setVisible(true);
-				frame.dispose();
+				frmKvizbiz.dispose();
 			}
 		});
-		frame.getContentPane().add(btnRegistrujSeKao, "cell 1 1");
+		frmKvizbiz.getContentPane().add(btnRegistrujSeKao, "cell 1 1");
 		
 		JButton btnRegistrujSeKao_1 = new JButton("Registruj se kao administrator");
 		btnRegistrujSeKao_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginAdmina noviFrame = new LoginAdmina();
 				noviFrame.setVisible(true);			
-				frame.dispose();
+				frmKvizbiz.dispose();
 			}
 		});
-		frame.getContentPane().add(btnRegistrujSeKao_1, "cell 1 2");
+		frmKvizbiz.getContentPane().add(btnRegistrujSeKao_1, "cell 1 2");
 		
 		/* Staro
 		frame = new JFrame();
