@@ -229,10 +229,8 @@ public class BrisanjeAdministratora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					if (comboBox.getSelectedIndex() == -1) {
-						JOptionPane.showMessageDialog(null,
-								"Izaberite administratora!",
-								"Brisanje administratora",
-								JOptionPane.WARNING_MESSAGE);
+						lblStatus.setText("Izaberite administratora!");
+						lblStatus.setForeground(Color.RED);
 					} else {
 						AdministratorDao admindao = AdministratorDao.get();
 						Collection<Administrator> admin = admindao
@@ -245,19 +243,14 @@ public class BrisanjeAdministratora extends JFrame {
 						}
 
 						if (adao.readAll().size() == 1) {
-							lblStatus.setText("Greska");
-							JOptionPane
-									.showMessageDialog(
-											null,
-											"Administrator ne može biti obrisan! U sistemu mora postojati barem jedan administrator!",
-											"Brisanje administratora",
-											JOptionPane.WARNING_MESSAGE);
+							lblStatus.setForeground(Color.RED);
+							lblStatus.setText("U sistemu mora postojati barem jedan administrator!");
 						} else {
 							adao.delete(trazeniAdmin.get_id());
 							JOptionPane.showMessageDialog(null,
 									"Administrator je uspješno obrisan!",
 									"Brisanje administratora",
-									JOptionPane.INFORMATION_MESSAGE);
+									JOptionPane.INFORMATION_MESSAGE);						
 							BrisanjeAdministratora noviProzor = new BrisanjeAdministratora();
 							JFrame noviFrame = noviProzor
 									.get_frmBrisanjeAdministratora();

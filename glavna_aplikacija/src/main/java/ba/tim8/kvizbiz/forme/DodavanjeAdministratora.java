@@ -276,12 +276,14 @@ public class DodavanjeAdministratora extends JFrame {
 				if (textField_2.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Adresa mora biti popunjeno!");
+					lblStatus.setForeground(Color.RED);
 				}
 
 				// prezime validacija
 				if (textField_1.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Prezime mora biti popunjeno!");
+					lblStatus.setForeground(Color.RED);
 				} else {
 					String regx = "[a-zA-Z]+\\.?";
 					Pattern pattern = Pattern.compile(regx,
@@ -291,6 +293,7 @@ public class DodavanjeAdministratora extends JFrame {
 						dodaj = false;
 						lblStatus
 								.setText("Polje Prezime mora sadržavati samo slova!");
+						lblStatus.setForeground(Color.RED);
 					}
 				}
 
@@ -298,6 +301,7 @@ public class DodavanjeAdministratora extends JFrame {
 				if (textField.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Ime mora biti popunjeno!");
+					lblStatus.setForeground(Color.RED);
 				} else {
 					String regx = "[a-zA-Z]+\\.?";
 					Pattern pattern = Pattern.compile(regx,
@@ -307,6 +311,7 @@ public class DodavanjeAdministratora extends JFrame {
 						dodaj = false;
 						lblStatus
 								.setText("Polje Ime mora sadržavati samo slova!");
+						lblStatus.setForeground(Color.RED);
 					}
 				}
 
@@ -314,6 +319,7 @@ public class DodavanjeAdministratora extends JFrame {
 				if (passwordField.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Password mora biti popunjeno!");
+					lblStatus.setForeground(Color.RED);
 				}
 
 				// username validacija
@@ -323,6 +329,7 @@ public class DodavanjeAdministratora extends JFrame {
 				} else if (adao.pretraziPoUsernamu(textField_5.getText())) {
 					dodaj = false;
 					lblStatus.setText("Polje Username mora biti jedinstveno!");
+					lblStatus.setForeground(Color.RED);
 				}
 
 				if (dodaj == true) {

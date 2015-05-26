@@ -86,8 +86,8 @@ public class LoginAdmina extends JFrame {
 		});
 		glavniDio.add(btnNazad, "cell 2 3,growx");
 		
-		lblStatus = new JLabel("Statusna traka");
-		lblStatus.setForeground(Color.lightGray);
+		lblStatus = new JLabel("Uredu");
+		lblStatus.setForeground(Color.BLUE);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblStatus, BorderLayout.SOUTH);

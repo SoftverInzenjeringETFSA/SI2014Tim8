@@ -242,10 +242,8 @@ public class BrisanjeKlijenta extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					if (comboBox.getSelectedIndex() == -1) {
-						JOptionPane.showMessageDialog(null,
-								"Izaberite klijenta!",
-								"Brisanje klijenta",
-								JOptionPane.WARNING_MESSAGE);
+						lblStatus.setText("Izaberite klijenta!");
+						lblStatus.setForeground(Color.RED);
 					} else {
 						KlijentDao klijentdao = KlijentDao.get();
 						Collection<Klijent> klijent = klijentdao
