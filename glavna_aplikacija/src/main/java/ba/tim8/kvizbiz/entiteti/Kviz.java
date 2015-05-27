@@ -3,6 +3,7 @@ package ba.tim8.kvizbiz.entiteti;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,10 +31,10 @@ public class Kviz implements java.io.Serializable{
 	@Column(name = "arhiviran",nullable = false)
 	private boolean _arhiviran;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_popunjeniKviz")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "_popunjeniKviz",cascade = CascadeType.ALL)
 	private Set<Klijent> _klijenti = new HashSet<Klijent>(); //NOSONAR
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz",cascade = CascadeType.ALL)
 	private Set<Pitanje> _pitanja = new HashSet<Pitanje>(); //NOSONAR
 	
 	public long get_id() {

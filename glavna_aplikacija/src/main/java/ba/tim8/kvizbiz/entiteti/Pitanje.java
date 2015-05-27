@@ -43,7 +43,7 @@ public class Pitanje implements java.io.Serializable{
 	@JoinColumn(name = "idKviz", nullable = true, updatable=true)
 	private Kviz _kviz;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "_pitanje", cascade= CascadeType.ALL)
 	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>(); //NOSONAR
 	
 	public long get_id() {

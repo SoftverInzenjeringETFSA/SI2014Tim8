@@ -35,6 +35,7 @@ import java.util.TimeZone;
 import javax.swing.JPasswordField;
 
 import org.apache.log4j.Logger;
+import javax.swing.JFormattedTextField;
 
 public class DodavanjeAdministratora extends JFrame {
 	private static final long serialVersionUID = 1L;

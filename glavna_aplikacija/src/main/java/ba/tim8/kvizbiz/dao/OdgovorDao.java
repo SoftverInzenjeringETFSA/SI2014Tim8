@@ -19,23 +19,15 @@ public class OdgovorDao extends BaseDao<Odgovor> {
 	public static OdgovorDao get() {
 		return (odao == null) ? odao = new OdgovorDao() : odao;
 	}
-	
-	private OdgovorDao(){}
-	
-	public void izbrisiSveOdgovoreKlijenta(Klijent k)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("delete from Odgovor o join o._klijenti k where k._id = :nesto");
-		q.setLong("nesto", k.get_id()).executeUpdate();
-		t.commit();
-		session.close();		
+
+	private OdgovorDao() {
 	}
-	
-	public List dajOdgovore(int pitanjeID){
+
+	public List dajOdgovore(int pitanjeID) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select _id, _pitanje, _tekstOdgovora from Odgovor o where o._pitanje = :qId");
+		Query q = session
+				.createQuery("select _id, _pitanje, _tekstOdgovora from Odgovor o where o._pitanje = :qId");
 		q.setLong("qId", pitanjeID).executeUpdate();
 		List c = q.list();
 		t.commit();
@@ -46,31 +38,31 @@ public class OdgovorDao extends BaseDao<Odgovor> {
 	public void IzbrisiSveOdgovorePitanja(int pitanjeZaModicikaciju) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("delete from Odgovor where _pitanje = :nesto");
+		Query q = session
+				.createQuery("delete from Odgovor where _pitanje = :nesto");
 		q.setLong("nesto", pitanjeZaModicikaciju).executeUpdate();
 		t.commit();
-		session.close();		
+		session.close();
 	}
-	
+
 	public Collection<Odgovor> DajSveZaPitanje(long pitanje) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select _id from Odgovor where _pitanje._id = :parametar");
+		Query q = session
+				.createQuery("select _id from Odgovor where _pitanje._id = :parametar");
 		q.setParameter("parametar", pitanje);
 		Collection<Long> plist = (Collection<Long>) q.list();
 		t.commit();
 		session.close();
 		return napraviObjekte(plist);
 	}
-	
-	private Collection<Odgovor> napraviObjekte(Collection<Long> idAnkete)
-	{
+
+	private Collection<Odgovor> napraviObjekte(Collection<Long> idAnkete) {
 		Collection<Odgovor> rezultat = new ArrayList<Odgovor>();
-		for(int i=0;i<idAnkete.size();i++)
-		{
-			rezultat.add(read(((ArrayList<Long>)idAnkete).get(i)));
+		for (int i = 0; i < idAnkete.size(); i++) {
+			rezultat.add(read(((ArrayList<Long>) idAnkete).get(i)));
 		}
-		
+
 		return rezultat;
 	}
 }

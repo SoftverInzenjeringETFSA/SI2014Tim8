@@ -255,11 +255,7 @@ public class BrisanjeKlijenta extends JFrame {
 						for (Iterator<Klijent> iterator = klijent.iterator(); iterator
 								.hasNext();) {
 							trazeniKlijent = (Klijent) iterator.next();
-						}
-						OdgovorDao odao = OdgovorDao.get();
-						odao.izbrisiSveOdgovoreKlijenta(trazeniKlijent);
-						KvizDao kvizdao = KvizDao.get();
-						kvizdao.izbrisiKlijenta(trazeniKlijent);
+						}						
 						kdao.delete(trazeniKlijent.get_id());
 						JOptionPane.showMessageDialog(null,
 								"Klijent je uspješno obrisan!",
