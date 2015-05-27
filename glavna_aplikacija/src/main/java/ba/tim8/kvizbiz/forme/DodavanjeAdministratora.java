@@ -269,7 +269,7 @@ public class DodavanjeAdministratora extends JFrame {
 					} else {
 						ZonedDateTime danasnji = ZonedDateTime.now();
 						SimpleDateFormat sdf = new SimpleDateFormat(
-								"yyyy-mm-dd");
+								"yyyy-MM-dd");
 						try {
 							Date uneseni = sdf.parse(textField_3.getText());
 							Date sadasnji = sdf.parse(danasnji.toString());
@@ -351,7 +351,7 @@ public class DodavanjeAdministratora extends JFrame {
 							"Administrator je uspješno dodan!",
 							"Dodavanje administratora",
 							JOptionPane.INFORMATION_MESSAGE);
-					DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+					DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					if (radioButton.isSelected()) {
 						try {
 							Administrator a = new Administrator((long) 2,

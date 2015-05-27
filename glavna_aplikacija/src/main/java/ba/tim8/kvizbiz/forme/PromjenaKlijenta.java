@@ -322,7 +322,7 @@ public class PromjenaKlijenta extends JFrame {
 						} else {
 							ZonedDateTime danasnji = ZonedDateTime.now();
 							SimpleDateFormat sdf = new SimpleDateFormat(
-									"yyyy-mm-dd");
+									"yyyy-MM-dd");
 							try {
 								Date uneseni = sdf.parse(textDatumRodjena
 										.getText());
@@ -387,8 +387,8 @@ public class PromjenaKlijenta extends JFrame {
 						}
 					}
 
-					DateFormat format_1 = new SimpleDateFormat("yyyy-mm-dd");
-					DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+					DateFormat format_1 = new SimpleDateFormat("yyyy-MM-dd");
+					DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					if (comboBox.getSelectedIndex() == -1) {
 						dodaj = false;
 						lblStatus.setText("Izaberite klijenta!");
@@ -427,9 +427,7 @@ public class PromjenaKlijenta extends JFrame {
 							lblStatus
 									.setText("Došlo je do greško prilikom upisa u bazu");
 							lblStatus.setForeground(Color.red);
-
 							logger.error("Greska: ", e1);
-
 							return;
 						}
 						lblStatus.setText("Uredu");
@@ -442,7 +440,6 @@ public class PromjenaKlijenta extends JFrame {
 						JFrame noviFrame = noviProzor.get_frmPromjenaKlijenta();
 						noviFrame.setVisible(true);
 						frmPromjenaKlijenta.dispose();
-
 					}
 				}
 			}
