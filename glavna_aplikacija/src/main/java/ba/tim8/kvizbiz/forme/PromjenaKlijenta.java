@@ -193,6 +193,7 @@ public class PromjenaKlijenta extends JFrame {
 		textDatumPrijave = new JTextField();
 		textDatumPrijave.setColumns(10);
 		textDatumPrijave.setBounds(140, 213, 230, 20);
+		textDatumPrijave.setEnabled(false);
 		panel_2.add(textDatumPrijave);
 
 		// LOGIKA
@@ -256,45 +257,6 @@ public class PromjenaKlijenta extends JFrame {
 						trazeniKlijent = (Klijent) iterator.next();
 					}
 
-					// datum prijave validacija
-					if (textDatumPrijave.getText().isEmpty()) {
-						dodaj = false;
-						lblStatus
-								.setText("Polje Datum prijave mora biti popunjeno!");
-						lblStatus.setForeground(Color.red);
-
-					} else {
-						String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
-						Pattern pattern = Pattern.compile(regx,
-								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textDatumPrijave
-								.getText());
-						if (!matcher.matches()) {
-							dodaj = false;
-							lblStatus
-									.setText("Polje Datum rođenja mora biti ispravno i u formatu yyyy-mm-dd(2015-01-01)!");
-							lblStatus.setForeground(Color.red);
-						} else {
-							ZonedDateTime danasnji = ZonedDateTime.now();
-							SimpleDateFormat sdf = new SimpleDateFormat(
-									"yyyy-mm-dd");
-							try {
-								Date uneseni = sdf.parse(textDatumRodjena
-										.getText());
-								Date sadasnji = sdf.parse(danasnji.toString());
-
-								if (uneseni.after(sadasnji)) {
-
-									dodaj = false;
-									lblStatus
-											.setText("Polje Datum rođenja ne smije biti veće od današnjeg dana!");
-								}
-							} catch (ParseException e1) {
-								logger.error("Greska: ", e1);
-							}
-
-						}
-					}
 
 					// telefon validacija
 					if (textTelefon.getText().isEmpty()) {
@@ -302,7 +264,7 @@ public class PromjenaKlijenta extends JFrame {
 						lblStatus.setText("Polje Telefon mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
 
-					} else {
+					} else{
 						String regx = "^[0-9]*$";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
@@ -313,6 +275,13 @@ public class PromjenaKlijenta extends JFrame {
 									.setText("Polje Telefon mora sadržavati samo brojeve!");
 							lblStatus.setForeground(Color.red);
 
+						}
+						else if(textTelefon.getText().length()<6 || textTelefon.getText().length()>13)
+						{
+							dodaj = false;
+							lblStatus
+									.setText("Polje Telefon mora sadržavati između 6 i 13 cifara!");
+							lblStatus.setForeground(Color.red);
 						}
 					}
 
@@ -377,8 +346,8 @@ public class PromjenaKlijenta extends JFrame {
 						dodaj = false;
 						lblStatus.setText("Polje Adresa mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
-
 					}
+					
 					// prezime validacija
 					if (textPrezime.getText().isEmpty()) {
 						dodaj = false;
@@ -386,7 +355,7 @@ public class PromjenaKlijenta extends JFrame {
 						lblStatus.setForeground(Color.red);
 
 					} else {
-						String regx = "[a-zA-Z]+\\.?";
+						String regx = "[a-žA-Ž]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
 						Matcher matcher = pattern.matcher(textPrezime.getText());
@@ -405,7 +374,7 @@ public class PromjenaKlijenta extends JFrame {
 						lblStatus.setText("Polje Ime mora biti popunjeno!");
 
 					} else {
-						String regx = "[a-zA-Z]+\\.?";
+						String regx = "[a-žA-Ž]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
 						Matcher matcher = pattern.matcher(textIme.getText());
