@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
+import java.awt.Window.Type;
 
 public class BrisanjeAdministratora extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -58,8 +59,10 @@ public class BrisanjeAdministratora extends JFrame {
 	 */
 	private void initialize() {
 		frmBrisanjeAdministratora = new JFrame();
+		frmBrisanjeAdministratora.setResizable(false);
 		frmBrisanjeAdministratora.setTitle("Brisanje administratora");
 		frmBrisanjeAdministratora.setBounds(100, 100, 470, 480);
+		frmBrisanjeAdministratora.setLocationRelativeTo(null);
 		frmBrisanjeAdministratora
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBrisanjeAdministratora.getContentPane().setLayout(

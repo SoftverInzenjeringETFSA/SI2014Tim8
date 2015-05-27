@@ -73,8 +73,10 @@ public class PromjenaKlijenta extends JFrame {
 		frmPromjenaKlijenta = new JFrame();
 		frmPromjenaKlijenta.setTitle("Promjena klijenta");
 		frmPromjenaKlijenta.setBounds(100, 100, 470, 520);
+		frmPromjenaKlijenta.setLocationRelativeTo(null);
 		frmPromjenaKlijenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaKlijenta.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmPromjenaKlijenta.setResizable(false);
 
 		// Kreiranje menija
 		Menu menu = new Menu();

@@ -63,7 +63,9 @@ public class BrisanjeKlijenta extends JFrame {
 	private void initialize() {
 		frmBrisanjeKlijenta = new JFrame();
 		frmBrisanjeKlijenta.setTitle("Brisanje klijenta");
+		frmBrisanjeKlijenta.setResizable(false);
 		frmBrisanjeKlijenta.setBounds(100, 100, 470, 520);
+		frmBrisanjeKlijenta.setLocationRelativeTo(null);
 		frmBrisanjeKlijenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBrisanjeKlijenta.getContentPane().setLayout(new BorderLayout(0, 0));
 

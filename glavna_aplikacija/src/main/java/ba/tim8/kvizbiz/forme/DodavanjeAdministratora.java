@@ -69,6 +69,8 @@ public class DodavanjeAdministratora extends JFrame {
 		frmDodavanjeAdministratora = new JFrame();
 		frmDodavanjeAdministratora.setTitle("Dodavanje administratora");
 		frmDodavanjeAdministratora.setBounds(100, 100, 470, 510);
+		frmDodavanjeAdministratora.setResizable(false);
+		frmDodavanjeAdministratora.setLocationRelativeTo(null);
 		frmDodavanjeAdministratora
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDodavanjeAdministratora.getContentPane().setLayout(
