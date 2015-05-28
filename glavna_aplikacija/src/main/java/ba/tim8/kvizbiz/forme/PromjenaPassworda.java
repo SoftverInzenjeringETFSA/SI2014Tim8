@@ -63,6 +63,7 @@ public class PromjenaPassworda extends JFrame {
 	private void initialize() {
 		frmPromjenaPassworda = new JFrame();
 		frmPromjenaPassworda.setTitle("Promjena passworda");
+		frmPromjenaPassworda.setLocationRelativeTo(null);
 		frmPromjenaPassworda.setBounds(100, 100, 600, 500);
 		frmPromjenaPassworda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaPassworda.getContentPane().setLayout(new BorderLayout(0, 0));

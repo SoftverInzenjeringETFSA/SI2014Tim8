@@ -181,7 +181,7 @@ public class AdministratorDao extends BaseDao<Administrator> {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			Transaction t = session.beginTransaction();
 			String text = a.get_password();
-			MessageDigest m = MessageDigest.getInstance("MD5");
+			MessageDigest m = MessageDigest.getInstance("md5");
 			m.reset();
 			m.update(text.getBytes());
 			byte[] digest = m.digest();

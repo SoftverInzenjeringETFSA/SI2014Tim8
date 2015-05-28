@@ -24,13 +24,17 @@ import ba.tim8.kvizbiz.entiteti.Spol;
 import net.miginfocom.swing.MigLayout;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import org.apache.log4j.Logger;
 
 
@@ -78,6 +82,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 	private void initialize() {
 		frmPromjenaLicnihPodataka = new JFrame();
 		frmPromjenaLicnihPodataka.setTitle("Promjena li\u010Dnih podataka");
+		frmPromjenaLicnihPodataka.setLocationRelativeTo(null);
 		frmPromjenaLicnihPodataka.setBounds(100, 100, 600, 500);
 		frmPromjenaLicnihPodataka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaLicnihPodataka.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -234,6 +239,12 @@ public class PromjenaLicnihPodataka extends JFrame {
 							lblStatus.setForeground(Color.red);
 						
 						}
+						else if(textTelefon.getText().length()<6 || textTelefon.getText().length()>13)
+						{
+							dodaj = false;
+							lblStatus.setText("Polje Telefon mora sadržavati između 6 i 13 cifara!");
+							lblStatus.setForeground(Color.red);
+						}
 					}
 
 					// email validacija
@@ -260,21 +271,39 @@ public class PromjenaLicnihPodataka extends JFrame {
 					// datum rodjenja validacija
 					if (textDatumRodjena.getText().isEmpty()) {
 						dodaj = false;
-						lblStatus.setText("Polje Datum rođenja mora biti popunjeno!");
-						lblStatus.setForeground(Color.red);
-
+						lblStatus
+								.setText("Polje Datum rođenja mora biti popunjeno!");
 					} else {
 						String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textDatumRodjena.getText());
+						Matcher matcher = pattern.matcher(textDatumRodjena
+								.getText());
 						if (!matcher.matches()) {
 							dodaj = false;
-							lblStatus.setText("Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!");
-							lblStatus.setForeground(Color.red);
+							lblStatus
+									.setText("Polje Datum rođenja mora biti ispravno i u formatu yyyy-mm-dd(2015-01-01)!");
+						} else {
+							ZonedDateTime danasnji = ZonedDateTime.now();
+							SimpleDateFormat sdf = new SimpleDateFormat(
+									"yyyy-MM-dd");
+							try {
+								Date uneseni = sdf.parse(textDatumRodjena
+										.getText());
+								Date sadasnji = sdf.parse(danasnji.toString());
 
+								if (uneseni.after(sadasnji)) {
+
+									dodaj = false;
+									lblStatus.setText("Polje Datum rođenja ne smije biti veće od današnjeg dana!");
+									lblStatus.setForeground(Color.red);
+								}
+							} catch (ParseException e1) {
+								logger.error("Greska: ", e1);
+							}
 						}
-					}			
+					}
+		
 				    // adresa samo ne smije bit prazna
 					if (textAdresa.getText().isEmpty()) {
 						dodaj = false;
@@ -290,7 +319,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setForeground(Color.red);
 
 					} else {
-						String regx = "[a-zA-Z]+\\.?";
+						String regx = "[a-žA-Ž]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
 						Matcher matcher = pattern.matcher(textPrezime.getText());
@@ -308,7 +337,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setForeground(Color.red);
 
 					} else {
-						String regx = "[a-zA-Z]+\\.?";
+						String regx = "[a-žA-Ž]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
 						Matcher matcher = pattern.matcher(textIme.getText());
@@ -320,7 +349,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						}
 					}
 
-					DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+					DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					if (dodaj == true) {
 						if (radioButton.isSelected()) 
 							trazeniAdministrator.set_spol(Spol.muski);
