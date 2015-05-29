@@ -34,5 +34,15 @@ public class OdgovorTest {
 		odgovor1.set_tekstOdgovora("tekst odgovora");
 		assertEquals("tekst odgovora", odgovor1.get_tekstOdgovora());
 	}
+	
+	@Test
+	public void test_klijetni() throws Exception {
+		odgovor1.set_klijenti(kli);
+		assertEquals(kli, odgovor1.get_klijenti());
+	}
 
+	@Test (expected = Exception.class)
+	public void test_izuzetak() throws Exception {
+		odgovor1.set_tekstOdgovora("<//*$&()&%$#");
+	}
 }
