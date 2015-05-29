@@ -143,7 +143,7 @@ public class PromjenaPassworda extends JFrame {
 		         
 					if(!potvrdiPassword.getText().equals(noviPassword.getText())){
 						dodaj = false;
-						lblStatus.setText("Polja Novi password i Potvrdi password se ne poklapaju !");
+						lblStatus.setText("Polja Novi password i Ponovite novi password se ne poklapaju !");
 						lblStatus.setForeground(Color.red);
 					}
 		         
@@ -151,10 +151,25 @@ public class PromjenaPassworda extends JFrame {
 			 // potvrda password validacija
 				if (noviPassword.getText().isEmpty()) {
 					dodaj = false;
-					lblStatus.setText("Polje Potvrdi password mora biti popunjeno!");
+					lblStatus.setText("Polje Ponovite novi password mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
 
-				} 			    
+				}
+				else{
+					String pom=noviPassword.getText();
+					char[] niz=noviPassword.getText().toCharArray();					
+					for(int i=0;i<pom.length();i++){
+						if(niz [i]=='ć' || niz [i]=='č' || niz [i]=='ž' || niz [i]=='š' || niz [i]=='đ' ||niz [i]=='Ć' || niz [i]=='Č' || niz [i]=='Ž' || niz [i]=='Š' || niz [i]=='Đ'){
+							dodaj = false;
+							lblStatus.setText("Polje Ponovite novi password ne može sadržavati afrikate(čćšđž)!");
+							lblStatus.setForeground(Color.red);
+
+						}
+							
+						
+					}
+				}
+				
 				
 				     // novi password validacija
 
@@ -164,6 +179,21 @@ public class PromjenaPassworda extends JFrame {
 						lblStatus.setForeground(Color.red);
 
 					}
+					 else{
+							String pom=potvrdiPassword.getText();
+							char[] niz=potvrdiPassword.getText().toCharArray();					
+							for(int i=0;i<pom.length();i++){
+								if(niz [i]=='ć' || niz [i]=='č' || niz [i]=='ž' || niz [i]=='š' || niz [i]=='đ' ||niz [i]=='Ć' || niz [i]=='Č' || niz [i]=='Ž' || niz [i]=='Š' || niz [i]=='Đ'){
+									dodaj = false;
+									lblStatus.setText("Polje Novi password ne može sadržavati afrikate(čćšđž)!");
+									lblStatus.setForeground(Color.red);
+
+								}
+									
+								
+							}
+						}
+						
 					 // trenutni password validacija
 					char[] c=trenutniPassword.getPassword();
 					

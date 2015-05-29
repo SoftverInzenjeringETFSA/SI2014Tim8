@@ -311,6 +311,19 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setForeground(Color.red);
 						
 					}
+					else{
+						String regx = "[a-žA-Ž0-9]+\\.?";
+						Pattern pattern = Pattern.compile(regx,
+								Pattern.CASE_INSENSITIVE);
+						Matcher matcher = pattern.matcher(textAdresa.getText());
+						if (!matcher.matches()) {
+							dodaj = false;
+							lblStatus.setText("Polje Adresa može sadržavati samo slova i brojebe!");
+							lblStatus.setForeground(Color.red);
+
+						}
+						
+					}
 					
 					// prezime validacija
 					if (textPrezime.getText().isEmpty()) {
