@@ -15,7 +15,6 @@ public class KvizDaoTest {
 	private static KvizDao kdao = KvizDao.get();
 	private static long testId1;
 	private static long testId2;
-	private static Long i;
 	
 	@BeforeClass
 	public static void prepare() throws Exception
@@ -47,12 +46,11 @@ public class KvizDaoTest {
 	@Test
 	public void testUpdate() throws Exception {
 		kdao.update(new Kviz(2, "Kviz_update", 25, true, true));
-		
-		Kviz k = kdao.read(testId1);
+		Kviz k = kdao.read(testId2);
 		
 		assertEquals("Kviz_update", k.get_naziv());
 		
-		assertEquals(false, k.is_aktivan());
+		assertEquals(2, k.get_id());
 	}
 @Test
 	
