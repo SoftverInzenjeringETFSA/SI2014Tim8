@@ -1,3 +1,5 @@
+
+
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
@@ -127,11 +129,13 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(label_1);
 
 		textIme = new JTextField();
+		textIme.setEditable(false);
 		textIme.setColumns(10);
 		textIme.setBounds(140, 34, 230, 20);
 		panel_2.add(textIme);
 
 		textPrezime = new JTextField();
+		textPrezime.setEditable(false);
 		textPrezime.setColumns(10);
 		textPrezime.setBounds(140, 59, 230, 20);
 		panel_2.add(textPrezime);
@@ -150,6 +154,7 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(textAdresa);
 
 		textDatumRodjena = new JTextField();
+		textDatumRodjena.setEditable(false);
 		textDatumRodjena.setColumns(10);
 		textDatumRodjena.setBounds(140, 137, 230, 20);
 		panel_2.add(textDatumRodjena);
@@ -159,10 +164,12 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(label_4);
 
 		final JRadioButton radioButton = new JRadioButton("Mu\u0161ki");
+		radioButton.setEnabled(false);
 		radioButton.setBounds(140, 86, 74, 23);
 		panel_2.add(radioButton);
 
 		final JRadioButton radioButton_1 = new JRadioButton("\u017Denski");
+		radioButton_1.setEnabled(false);
 		radioButton_1.setBounds(220, 86, 74, 23);
 		panel_2.add(radioButton_1);
 
@@ -193,9 +200,9 @@ public class PromjenaKlijenta extends JFrame {
 		panel_2.add(label_7);
 
 		textDatumPrijave = new JTextField();
+		textDatumPrijave.setEditable(false);
 		textDatumPrijave.setColumns(10);
 		textDatumPrijave.setBounds(140, 213, 230, 20);
-		textDatumPrijave.setEnabled(false);
 		panel_2.add(textDatumPrijave);
 
 		// LOGIKA
