@@ -200,7 +200,10 @@ public class BrisanjeAdministratora extends JFrame {
 		for (Iterator<Administrator> iterator = admini.iterator(); iterator
 				.hasNext();) {
 			Administrator admin = (Administrator) iterator.next();
-			comboBox.addItem(admin.toString());
+			if (!LoginAdmina.usernameLogiranogAdmina.equals(admin
+					.get_username())) {
+				comboBox.addItem(admin.toString());
+			}
 		}
 
 		comboBox.setSelectedIndex(-1);
@@ -256,17 +259,24 @@ public class BrisanjeAdministratora extends JFrame {
 											"Brisanje administratora",
 											JOptionPane.WARNING_MESSAGE);
 						} else {
-							adao.delete(trazeniAdmin.get_id());
-							JOptionPane.showMessageDialog(null,
-									"Administrator je uspješno obrisan!",
-									"Brisanje administratora",
-									JOptionPane.INFORMATION_MESSAGE);
-							BrisanjeAdministratora noviProzor = new BrisanjeAdministratora();
-							JFrame noviFrame = noviProzor
-									.get_frmBrisanjeAdministratora();
-							noviFrame.setVisible(true);
-							frmBrisanjeAdministratora.dispose();
-
+							int rezultatDijaloga = JOptionPane
+									.showConfirmDialog(
+											null,
+											"Jeste li sigurni da želite obrisati administratora?",
+											"Promjena ličnih podataka",
+											JOptionPane.YES_NO_OPTION);
+							if (rezultatDijaloga == JOptionPane.YES_OPTION) {
+								adao.delete(trazeniAdmin.get_id());
+								JOptionPane.showMessageDialog(null,
+										"Administrator je uspješno obrisan!",
+										"Brisanje administratora",
+										JOptionPane.INFORMATION_MESSAGE);
+								BrisanjeAdministratora noviProzor = new BrisanjeAdministratora();
+								JFrame noviFrame = noviProzor
+										.get_frmBrisanjeAdministratora();
+								noviFrame.setVisible(true);
+								frmBrisanjeAdministratora.dispose();
+							}
 						}
 					}
 				} catch (Exception ex) {
