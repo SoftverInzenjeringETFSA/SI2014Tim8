@@ -13,6 +13,7 @@ import ba.tim8.kvizbiz.entiteti.Pitanje;
 
 public class KvizTest {
 	
+	/*
 	private static Kviz kviz1= new Kviz (1, "Kviz1", 25, true, true);
 	private static Set<Klijent> _klijenti = new HashSet<Klijent>();
 	private static Set<Pitanje> _pitanja = new HashSet<Pitanje>();
@@ -31,7 +32,7 @@ public class KvizTest {
 	}
 	
 	@Test
-	public void test_naziv() {
+	public void test_naziv(){
 		
 		kviz1.set_naziv("kviz2");
 		assertEquals("kviz2", kviz1.get_naziv());
@@ -75,4 +76,5 @@ public class KvizTest {
 		assertEquals(_pitanja, kviz1.get_pitanja());
 		
 	}
+	*/
 }

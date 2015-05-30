@@ -198,10 +198,10 @@ public class ModifikacijaAnkete extends JFrame {
 		btnOk.setBounds(477, 423, 100, 23);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				kviz.set_naziv(tbxNaslov.getText());
-				kviz.set_vremenskoOgranicenje((Integer)spiVrijeme.getValue());
-				KvizDao kdao = KvizDao.get();
 				try {
+					kviz.set_naziv(tbxNaslov.getText());
+					kviz.set_vremenskoOgranicenje((Integer)spiVrijeme.getValue());
+					KvizDao kdao = KvizDao.get();
 					kdao.update(kviz);
 					lblStatus.setText("Uspjesan unos početnih podataka");
 					lblStatus.setForeground(Color.green);
