@@ -386,22 +386,22 @@ public class PromjenaLicnihPodataka extends JFrame {
 						trazeniAdministrator.set_adresa(textAdresa.getText());
 						trazeniAdministrator.set_eMail(textEmail.getText());
 						trazeniAdministrator.set_telefon(textTelefon.getText());
-						try {
-						adao.update(trazeniAdministrator);
-						}
-						catch (Exception e1) {
-							lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
-							lblStatus.setForeground(Color.red);
-							
-							logger.error("Greska: ", e1);
-							
-							return;
-						}
-						
+												
 						lblStatus.setText("Uredu");
 						lblStatus.setForeground(Color.blue);
 						int rezultatDijaloga = JOptionPane.showConfirmDialog(null, "Jeste li sigurni da želite promijeniti podatke " , "Promjena ličnih podataka", JOptionPane.YES_NO_OPTION);
 						if (rezultatDijaloga == JOptionPane.YES_OPTION) {
+							try {
+								adao.update(trazeniAdministrator);
+								}
+								catch (Exception e1) {
+									lblStatus.setText("Došlo je do greško prilikom upisa u bazu");
+									lblStatus.setForeground(Color.red);
+									
+									logger.error("Greska: ", e1);
+									
+									return;
+								}
 						JOptionPane.showMessageDialog(null,
 								"Podaci su uspješno promijenjeni!",
 								"Promjena licnih podataka",
