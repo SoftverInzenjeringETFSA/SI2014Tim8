@@ -311,19 +311,7 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setForeground(Color.red);
 						
 					}
-					else{
-						String regx = "[a-žA-Ž0-9]+\\.?";
-						Pattern pattern = Pattern.compile(regx,
-								Pattern.CASE_INSENSITIVE);
-						Matcher matcher = pattern.matcher(textAdresa.getText());
-						if (!matcher.matches()) {
-							dodaj = false;
-							lblStatus.setText("Polje Adresa može sadržavati samo slova i brojebe!");
-							lblStatus.setForeground(Color.red);
-
-						}
-						
-					}
+					
 					
 					// prezime validacija
 					if (textPrezime.getText().isEmpty()) {
@@ -331,7 +319,14 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setText("Polje Prezime mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
 
-					} else {
+					}
+					else if(textPrezime.getText().length()<3){
+						dodaj=false;
+						lblStatus.setText("Polje Prezime mora sadržavati barem 3 slova!");
+						lblStatus.setForeground(Color.red);
+						
+					}
+					else {
 						String regx = "[a-žA-Ž]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
@@ -349,7 +344,15 @@ public class PromjenaLicnihPodataka extends JFrame {
 						lblStatus.setText("Polje Ime mora biti popunjeno!");
 						lblStatus.setForeground(Color.red);
 
-					} else {
+					} 
+					else if(textIme.getText().length()<2){
+						dodaj=false;
+						lblStatus.setText("Polje Ime mora sadržavati barem 2 slova!");
+						lblStatus.setForeground(Color.red);
+						
+					}
+					
+					else {
 						String regx = "[a-žA-Ž]+\\.?";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
