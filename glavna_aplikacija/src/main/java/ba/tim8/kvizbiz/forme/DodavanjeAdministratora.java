@@ -302,7 +302,14 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus.setText("Polje Prezime mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
-				} else {
+				} 
+				else if(textField_1.getText().length()<3){
+					dodaj=false;
+					lblStatus.setText("Polje Prezime mora sadržavati barem 3 slova!");
+					lblStatus.setForeground(Color.red);
+					
+				}
+				else {
 					String regx = "[a-žA-Ž]+\\.?";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
@@ -320,7 +327,14 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus.setText("Polje Ime mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
-				} else {
+				} 
+				else if(textField.getText().length()<2){
+					dodaj=false;
+					lblStatus.setText("Polje Ime mora sadržavati barem 2 slova!");
+					lblStatus.setForeground(Color.red);
+					
+				}
+				else {
 					String regx = "[a-žA-Ž]+\\.?";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);

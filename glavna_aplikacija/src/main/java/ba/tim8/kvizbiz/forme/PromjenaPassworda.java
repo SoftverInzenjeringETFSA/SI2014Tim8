@@ -157,17 +157,12 @@ public class PromjenaPassworda extends JFrame {
 				}
 				else{
 					String pom=noviPassword.getText();
-					char[] niz=noviPassword.getText().toCharArray();					
-					for(int i=0;i<pom.length();i++){
-						if(niz [i]=='ć' || niz [i]=='č' || niz [i]=='ž' || niz [i]=='š' || niz [i]=='đ' ||niz [i]=='Ć' || niz [i]=='Č' || niz [i]=='Ž' || niz [i]=='Š' || niz [i]=='Đ'){
-							dodaj = false;
-							lblStatus.setText("Polje Ponovite novi password ne može sadržavati afrikate(čćšđž)!");
-							lblStatus.setForeground(Color.red);
-
-						}
-							
-						
+					if(pom.length()<4){
+						dodaj = false;
+						lblStatus.setText("Password mora sadržavati najmanje 4 znaka!");
+						lblStatus.setForeground(Color.red);	
 					}
+					
 				}
 				
 				
@@ -181,17 +176,12 @@ public class PromjenaPassworda extends JFrame {
 					}
 					 else{
 							String pom=potvrdiPassword.getText();
-							char[] niz=potvrdiPassword.getText().toCharArray();					
-							for(int i=0;i<pom.length();i++){
-								if(niz [i]=='ć' || niz [i]=='č' || niz [i]=='ž' || niz [i]=='š' || niz [i]=='đ' ||niz [i]=='Ć' || niz [i]=='Č' || niz [i]=='Ž' || niz [i]=='Š' || niz [i]=='Đ'){
-									dodaj = false;
-									lblStatus.setText("Polje Novi password ne može sadržavati afrikate(čćšđž)!");
-									lblStatus.setForeground(Color.red);
-
-								}
-									
-								
+							if(pom.length()<4){
+								dodaj = false;
+								lblStatus.setText("Password mora sadržavati najmanje 4 znaka!");
+								lblStatus.setForeground(Color.red);	
 							}
+							
 						}
 						
 					 // trenutni password validacija
