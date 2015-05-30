@@ -45,4 +45,22 @@ public class KvizDao extends BaseDao<Kviz> {
 		session.close();
 		return c;
 	}
+	
+	public Boolean imaSaIstimNazivom(String naziv) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction t = session.beginTransaction();
+		Query q = session.createQuery("from Kviz k where k._naziv = :naziv");
+		q.setParameter("naziv", naziv);
+		try {
+			Long broj = (Long)q.uniqueResult();
+		}
+		catch (Exception e1) {
+			throw new Exception("Anketa s tim imenom već postoji!");
+		}
+		
+		t.commit();
+		
+		session.close();
+		return false;
+	}
 }

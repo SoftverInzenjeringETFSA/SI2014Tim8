@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ba.tim8.kvizbiz.dao.KvizDao;
+
 
 @Entity
 @Table(name = "kviz")
@@ -49,6 +51,10 @@ public class Kviz implements java.io.Serializable{
 		return _naziv;
 	}
 	public void set_naziv(String _naziv) throws Exception {
+		KvizDao kdao = KvizDao.get();
+		// Ovo ce baciti exception ako ima isti naziv !!!!!!!
+		Boolean postoji = kdao.imaSaIstimNazivom(_naziv);
+		
 		if (_naziv.trim().length() == 0) {
 			throw new Exception("Naziv ankete ne smije ostati prazan!");
 		}
