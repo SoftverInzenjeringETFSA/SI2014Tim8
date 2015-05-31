@@ -851,7 +851,7 @@ public class odgovaranje {
 				JOptionPane.showMessageDialog(null,
 				"Kviz uspješno popunjen.",
 				"Odgovaranje na pitanja",
-				JOptionPane.ERROR_MESSAGE);
+				JOptionPane.INFORMATION_MESSAGE);
 				PocetnaKlijentZaKlijenta noviProzor = new PocetnaKlijentZaKlijenta();
 				noviProzor.setVisible(true);
 				frmPopunjavanjeAnkete.dispose();
@@ -880,7 +880,7 @@ public class odgovaranje {
 					Set<Odgovor> odgs = klijent.get_listaOdgovora();
 					tekst += "\n  "+count+". "+p.get_tekstPitanja()+"\n";
 					for(Odgovor o:odgs){
-						if(o.get_pitanje().equals(p)){
+						if(o.get_pitanje().get_id()==p.get_id()){
 							tekst += "        "+o.get_tekstOdgovora()+"\n";
 						}
 					}
