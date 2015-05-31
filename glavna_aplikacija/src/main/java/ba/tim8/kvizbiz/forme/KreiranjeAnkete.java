@@ -55,7 +55,7 @@ public class KreiranjeAnkete extends JFrame {
 		pnlPodaci.setBorder(new TitledBorder("Unesite osnovne podatke o anketi:"));
 		kontejner.add(pnlPodaci, "cell 0 0 3 1,growx");
 		
-		pnlPodaci.add(new JLabel("Nalov ankete: "), "cell 1 0,alignx right");
+		pnlPodaci.add(new JLabel("Naslov ankete: "), "cell 1 0,alignx right");
 		pnlPodaci.add(new JLabel("Vremensko ograničenje: "), "cell 1 1,alignx right");
 		
 		tbxNaslov = new JTextField();

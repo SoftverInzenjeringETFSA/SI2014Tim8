@@ -59,7 +59,7 @@ public class PocetnaKlijent extends JFrame {
 		JPanel pnlPregled = new JPanel(new MigLayout("", "[grow][fill][grow]", "[fill][fill]"));
 		pnlGlavna.add(pnlPregled, "cell 0 0,growx");
 		
-		pnlPregled.add(new JLabel("Odabeire ID: "), "cell 1 0,alignx left");
+		pnlPregled.add(new JLabel("Odaberi ID: "), "cell 1 0,alignx left");
 		
 		cbbID = new JComboBox<Long>();
 		pnlPregled.add(cbbID, "cell 1 0,growx");
