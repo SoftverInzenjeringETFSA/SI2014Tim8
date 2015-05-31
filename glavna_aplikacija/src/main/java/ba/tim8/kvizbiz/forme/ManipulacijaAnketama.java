@@ -167,12 +167,12 @@ private JFrame frame;
 				
 				Component component = (Component) arg0.getSource();
 				ModifikacijaAnkete forma = new ModifikacijaAnkete(kviz,(JFrame) SwingUtilities.getRoot(component));
-				
+				frmManipulacijaAnketama.dispose();	
 				forma.setVisible(true);
+				
 					
 					
-					
-				dispose();		
+						
 				
 				}else{
 					JOptionPane.showMessageDialog(null, "Mozete modifikovati samo otvorenu anketu!");
