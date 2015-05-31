@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ba.tim8.kvizbiz.entiteti.Klijent;
+import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 
@@ -18,13 +19,14 @@ public class OdgovorDaoTest {
 	private static OdgovorDao odao = OdgovorDao.get();
 	private static long testId1;
 	private static long testId2;
+	private static Kviz k = new Kviz();
 	private static Pitanje p= new Pitanje();
 	private static Set<Klijent> kli= new HashSet<Klijent>();
 	
 	@BeforeClass
 	public static void prepare() throws Exception
 	{
-		Odgovor odgovor1= new Odgovor (1, "Tekst odgovora", p, kli);
+		Odgovor odgovor1= new Odgovor (1, "Tekst_odgovora", p, kli);
 		Odgovor odgovor2= new Odgovor (5, "Text odgovora5", p , kli);
 		testId1 = odao.create(odgovor1);
 		testId2 = odao.create(odgovor2);
@@ -33,14 +35,14 @@ public class OdgovorDaoTest {
 	@Test
 	public void testCreate() throws Exception {
 		
-		Odgovor odgovor1= new Odgovor (2, "Tekst odgovora2", p, kli);
+		Odgovor odgovor1= new Odgovor (2, "Tekst_odgovora2", p, kli);
 		
 		assertNotNull(odao.create(odgovor1));
 		
 	}
 	@Test
 	public void testUpdate() throws Exception {
-		odao.update(new Odgovor(4, "Tekst odgovora4", p, kli));
+		odao.update(new Odgovor(4, "Tekst_odgovora4", p, kli));
 		
 		Odgovor o= odao.read(testId1);
 		
@@ -52,7 +54,7 @@ public class OdgovorDaoTest {
 	public void testRead()
 	{
 		Odgovor o = odao.read(testId1);
-		assertEquals("Tekst odgovora",o.get_tekstOdgovora());
+		assertEquals("Tekst_odgovora",o.get_tekstOdgovora());
 		assertEquals(1, o.get_id());
 	}
 	

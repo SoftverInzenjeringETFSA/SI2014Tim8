@@ -165,10 +165,7 @@ public class RegistracijaKlijenta {
 		btnRegistrujSe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!spremiKlijenta()){
-					JOptionPane.showMessageDialog(null,
-							"Greška prilikom registracije klijenta!",
-							"Registracija klijenta",
-							JOptionPane.ERROR_MESSAGE);
+					return;
 				}else{
 				PocetnaKlijentZaKlijenta noviFrame = new PocetnaKlijentZaKlijenta();
 				noviFrame.setVisible(true);
