@@ -196,6 +196,7 @@ public class Menu {
 			JMenuItem mntmOdjava = new JMenuItem("Odjava");
 			mntmOdjava.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					LoginAdmina.usernameLogiranogAdmina = "";
 					KvizBiz noviProzor = new KvizBiz();
 					JFrame noviFrame = noviProzor.get_frame();
 					noviFrame.setVisible(true);

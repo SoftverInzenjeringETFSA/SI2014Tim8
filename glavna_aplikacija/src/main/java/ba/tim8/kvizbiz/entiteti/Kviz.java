@@ -2,7 +2,10 @@ package ba.tim8.kvizbiz.entiteti;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import ba.tim8.kvizbiz.dao.KvizDao;
 
 
 @Entity
@@ -30,10 +35,10 @@ public class Kviz implements java.io.Serializable{
 	@Column(name = "arhiviran",nullable = false)
 	private boolean _arhiviran;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_popunjeniKviz")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "_popunjeniKviz",cascade = CascadeType.ALL)
 	private Set<Klijent> _klijenti = new HashSet<Klijent>(); //NOSONAR
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz",cascade = CascadeType.ALL)
 	private Set<Pitanje> _pitanja = new HashSet<Pitanje>(); //NOSONAR
 	
 	public long get_id() {
@@ -45,7 +50,15 @@ public class Kviz implements java.io.Serializable{
 	public String get_naziv() {
 		return _naziv;
 	}
-	public void set_naziv(String _naziv) {
+	public void set_naziv(String _naziv) throws Exception {
+		KvizDao kdao = KvizDao.get();
+		// Ovo ce baciti exception ako ima isti naziv !!!!!!!
+		Boolean postoji = kdao.imaSaIstimNazivom(_naziv);
+		
+		if (_naziv.trim().length() == 0) {
+			throw new Exception("Naziv ankete ne smije ostati prazan!");
+		}
+		
 		this._naziv = _naziv;
 	}
 	public int get_vremenskoOgranicenje() {
@@ -88,7 +101,7 @@ public class Kviz implements java.io.Serializable{
 	public Kviz(){}
 	
 	public Kviz(long _id, String _naziv, int _vremenskoOgranicenje,
-			boolean _aktivan, boolean _arhiviran) {
+			boolean _aktivan, boolean _arhiviran) throws Exception {
 		super();
 		set_id(_id);
 		set_naziv(_naziv);

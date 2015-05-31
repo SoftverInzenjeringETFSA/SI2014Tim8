@@ -107,7 +107,7 @@ public class ModifikacijaAnkete extends JFrame {
 		kontejner.add(pnlPitanja);
 		
 		JButton btnDodaj = new JButton("Dodaj novo pitanje");
-		btnDodaj.setBounds(13, 23, 159, 23);
+		btnDodaj.setBounds(13, 23, 180, 23);
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -158,7 +158,7 @@ public class ModifikacijaAnkete extends JFrame {
 		});
 			
 		JButton btnObrisi = new JButton("Obriši odabrano pitanje");
-		btnObrisi.setBounds(13, 129, 159, 23);
+		btnObrisi.setBounds(13, 129, 180, 23);
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pitanje selected = new Pitanje();
@@ -198,10 +198,10 @@ public class ModifikacijaAnkete extends JFrame {
 		btnOk.setBounds(477, 423, 100, 23);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				kviz.set_naziv(tbxNaslov.getText());
-				kviz.set_vremenskoOgranicenje((Integer)spiVrijeme.getValue());
-				KvizDao kdao = KvizDao.get();
 				try {
+					kviz.set_naziv(tbxNaslov.getText());
+					kviz.set_vremenskoOgranicenje((Integer)spiVrijeme.getValue());
+					KvizDao kdao = KvizDao.get();
 					kdao.update(kviz);
 					lblStatus.setText("Uspjesan unos početnih podataka");
 					lblStatus.setForeground(Color.green);
@@ -233,7 +233,7 @@ public class ModifikacijaAnkete extends JFrame {
 		kontejner.add(btnOtkazi);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(176, 23, 381, 283);
+		scrollPane.setBounds(248, 20, 356, 283);
 		pnlPitanja.add(scrollPane);
 			
 		tblPitanja = new JTable();
@@ -281,7 +281,7 @@ public class ModifikacijaAnkete extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(13, 174, 159, 23);
+		btnNewButton.setBounds(13, 174, 180, 23);
 		pnlPitanja.add(btnNewButton);
 		
 		JButton btnNazad = new JButton("Nazad");

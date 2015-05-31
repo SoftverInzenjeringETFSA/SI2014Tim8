@@ -56,10 +56,8 @@ public class Pitanje implements java.io.Serializable{
 		return _tekstPitanja;
 	}
 	public void set_tekstPitanja(String _tekstPitanja) throws Exception {
-		Pattern p = Pattern.compile("^[0-9a-zA-Z čČćĆžŽšŠđĐ]*$");
-		Matcher m = p.matcher(_tekstPitanja);
-		if (false == m.matches()) {
-			throw new Exception("Tekst pitanja smije sadržavati samo slova i brojeve!");
+		if (_tekstPitanja.trim().length() == 0) {
+			throw new Exception("Tekst pitanja ne smije ostati prazan!");
 		}
 		
 		this._tekstPitanja = _tekstPitanja;

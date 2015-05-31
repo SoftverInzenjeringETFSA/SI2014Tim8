@@ -69,7 +69,7 @@ public class KvizBiz extends JFrame {
 		});
 		frame.getContentPane().add(btnRegistrujSeKao, "cell 1 1");
 		
-		JButton btnRegistrujSeKao_1 = new JButton("Registruj se kao administrator");
+		JButton btnRegistrujSeKao_1 = new JButton("Prijavi se kao administrator");
 		btnRegistrujSeKao_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LoginAdmina noviFrame = new LoginAdmina();

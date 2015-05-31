@@ -28,10 +28,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.TimeZone;
 
 import javax.swing.JPasswordField;
 
 import org.apache.log4j.Logger;
+import javax.swing.JFormattedTextField;
 
 public class DodavanjeAdministratora extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -65,6 +69,8 @@ public class DodavanjeAdministratora extends JFrame {
 		frmDodavanjeAdministratora = new JFrame();
 		frmDodavanjeAdministratora.setTitle("Dodavanje administratora");
 		frmDodavanjeAdministratora.setBounds(100, 100, 470, 510);
+		frmDodavanjeAdministratora.setResizable(false);
+		frmDodavanjeAdministratora.setLocationRelativeTo(null);
 		frmDodavanjeAdministratora
 				.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDodavanjeAdministratora.getContentPane().setLayout(
@@ -205,7 +211,9 @@ public class DodavanjeAdministratora extends JFrame {
 				if (textField_7.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Telefon mora biti popunjeno!");
-				} else {
+					lblStatus.setForeground(Color.red);
+
+				} else{
 					String regx = "^[0-9]*$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
@@ -214,13 +222,25 @@ public class DodavanjeAdministratora extends JFrame {
 						dodaj = false;
 						lblStatus
 								.setText("Polje Telefon mora sadržavati samo brojeve!");
+						lblStatus.setForeground(Color.red);
+
+					}
+					else if(textField_7.getText().length()<6 || textField_7.getText().length()>13)
+					{
+						dodaj = false;
+						lblStatus
+								.setText("Polje Telefon mora sadržavati između 6 i 13 cifara!");
+						lblStatus.setForeground(Color.red);
 					}
 				}
+				
+				
 
 				// email validacija
 				if (textField_4.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Email mora biti popunjeno!");
+					lblStatus.setForeground(Color.red);
 				} else {
 					String regx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 					Pattern pattern = Pattern.compile(regx,
@@ -230,6 +250,7 @@ public class DodavanjeAdministratora extends JFrame {
 						dodaj = false;
 						lblStatus
 								.setText("Polje Email mora biti u pravilnom formatu!");
+						lblStatus.setForeground(Color.red);
 					}
 				}
 
@@ -238,6 +259,7 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus
 							.setText("Polje Datum rođenja mora biti popunjeno!");
+					lblStatus.setForeground(Color.red);
 				} else {
 					String regx = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$";
 					Pattern pattern = Pattern.compile(regx,
@@ -245,8 +267,26 @@ public class DodavanjeAdministratora extends JFrame {
 					Matcher matcher = pattern.matcher(textField_3.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						lblStatus
-								.setText("Polje Datum rođenja mora biti u formatu yyyy-mm-dd(2015-01-01)!");
+						lblStatus.setText("Polje Datum rođenja mora biti ispravno i u formatu yyyy-mm-dd(2015-01-01)!");
+						lblStatus.setForeground(Color.red);
+					} else {
+						ZonedDateTime danasnji = ZonedDateTime.now();
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-MM-dd");
+						try {
+							Date uneseni = sdf.parse(textField_3.getText());
+							Date sadasnji = sdf.parse(danasnji.toString());
+
+							if (uneseni.after(sadasnji)) {
+
+								dodaj = false;
+								lblStatus
+										.setText("Polje Datum rođenja ne smije biti veće od današnjeg dana!");
+								lblStatus.setForeground(Color.red);
+							}
+						} catch (ParseException e1) {
+							logger.error("Greska: ", e1);
+						}
 					}
 				}
 
@@ -254,14 +294,23 @@ public class DodavanjeAdministratora extends JFrame {
 				if (textField_2.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Adresa mora biti popunjeno!");
+					lblStatus.setForeground(Color.red);
 				}
 
 				// prezime validacija
 				if (textField_1.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Prezime mora biti popunjeno!");
-				} else {
-					String regx = "[a-zA-Z]+\\.?";
+					lblStatus.setForeground(Color.red);
+				} 
+				else if(textField_1.getText().length()<3){
+					dodaj=false;
+					lblStatus.setText("Polje Prezime mora sadržavati barem 3 slova!");
+					lblStatus.setForeground(Color.red);
+					
+				}
+				else {
+					String regx = "[a-žA-Ž]+\\.?";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField_1.getText());
@@ -269,6 +318,7 @@ public class DodavanjeAdministratora extends JFrame {
 						dodaj = false;
 						lblStatus
 								.setText("Polje Prezime mora sadržavati samo slova!");
+						lblStatus.setForeground(Color.red);
 					}
 				}
 
@@ -276,8 +326,16 @@ public class DodavanjeAdministratora extends JFrame {
 				if (textField.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Ime mora biti popunjeno!");
-				} else {
-					String regx = "[a-zA-Z]+\\.?";
+					lblStatus.setForeground(Color.red);
+				} 
+				else if(textField.getText().length()<2){
+					dodaj=false;
+					lblStatus.setText("Polje Ime mora sadržavati barem 2 slova!");
+					lblStatus.setForeground(Color.red);
+					
+				}
+				else {
+					String regx = "[a-žA-Ž]+\\.?";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField.getText());
@@ -285,6 +343,7 @@ public class DodavanjeAdministratora extends JFrame {
 						dodaj = false;
 						lblStatus
 								.setText("Polje Ime mora sadržavati samo slova!");
+						lblStatus.setForeground(Color.red);
 					}
 				}
 
@@ -309,7 +368,7 @@ public class DodavanjeAdministratora extends JFrame {
 							"Administrator je uspješno dodan!",
 							"Dodavanje administratora",
 							JOptionPane.INFORMATION_MESSAGE);
-					DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+					DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					if (radioButton.isSelected()) {
 						try {
 							Administrator a = new Administrator((long) 2,
@@ -320,9 +379,7 @@ public class DodavanjeAdministratora extends JFrame {
 											.getText(), textField_5.getText(),
 									passwordField.getText());
 							adao.create(a);
-							adao.updatePass(a);
-							
-							
+							adao.updatePass(a);						
 						} catch (ParseException e1) {
 							logger.error("Greska: ", e1);
 						}

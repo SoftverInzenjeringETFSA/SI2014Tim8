@@ -63,6 +63,7 @@ public class PromjenaPassworda extends JFrame {
 	private void initialize() {
 		frmPromjenaPassworda = new JFrame();
 		frmPromjenaPassworda.setTitle("Promjena passworda");
+		frmPromjenaPassworda.setLocationRelativeTo(null);
 		frmPromjenaPassworda.setBounds(100, 100, 600, 500);
 		frmPromjenaPassworda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPromjenaPassworda.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -142,7 +143,7 @@ public class PromjenaPassworda extends JFrame {
 		         
 					if(!potvrdiPassword.getText().equals(noviPassword.getText())){
 						dodaj = false;
-						lblStatus.setText("Polja Novi password i Potvrdi password se ne poklapaju !");
+						lblStatus.setText("Polja Novi password i Ponovite novi password se ne poklapaju !");
 						lblStatus.setForeground(Color.red);
 					}
 		         
@@ -150,10 +151,20 @@ public class PromjenaPassworda extends JFrame {
 			 // potvrda password validacija
 				if (noviPassword.getText().isEmpty()) {
 					dodaj = false;
-					lblStatus.setText("Polje Potvrdi password mora biti popunjeno!");
+					lblStatus.setText("Polje Ponovite novi password mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
 
-				} 			    
+				}
+				else{
+					String pom=noviPassword.getText();
+					if(pom.length()<4){
+						dodaj = false;
+						lblStatus.setText("Password mora sadržavati najmanje 4 znaka!");
+						lblStatus.setForeground(Color.red);	
+					}
+					
+				}
+				
 				
 				     // novi password validacija
 
@@ -163,6 +174,16 @@ public class PromjenaPassworda extends JFrame {
 						lblStatus.setForeground(Color.red);
 
 					}
+					 else{
+							String pom=potvrdiPassword.getText();
+							if(pom.length()<4){
+								dodaj = false;
+								lblStatus.setText("Password mora sadržavati najmanje 4 znaka!");
+								lblStatus.setForeground(Color.red);	
+							}
+							
+						}
+						
 					 // trenutni password validacija
 					char[] c=trenutniPassword.getPassword();
 					

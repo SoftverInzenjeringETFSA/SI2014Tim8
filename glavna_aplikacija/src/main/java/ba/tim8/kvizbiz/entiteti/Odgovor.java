@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,10 +46,8 @@ public class Odgovor implements java.io.Serializable{
 		return _tekstOdgovora;
 	}
 	public void set_tekstOdgovora(String _tekstOdgovora) throws Exception {
-		Pattern p = Pattern.compile("^[0-9a-zA-Z čČćĆžŽšŠđĐ]*$");
-		Matcher m = p.matcher(_tekstOdgovora);
-		if (false == m.matches()) {
-			throw new Exception("Tekst odgovora smije sadržavati samo slova i brojeve!");
+		if (_tekstOdgovora.trim().length() == 0) {
+			throw new Exception("Tekst odgovora smije ostati prazan!");
 		}
 		
 		this._tekstOdgovora = _tekstOdgovora;

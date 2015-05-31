@@ -63,7 +63,9 @@ public class BrisanjeKlijenta extends JFrame {
 	private void initialize() {
 		frmBrisanjeKlijenta = new JFrame();
 		frmBrisanjeKlijenta.setTitle("Brisanje klijenta");
+		frmBrisanjeKlijenta.setResizable(false);
 		frmBrisanjeKlijenta.setBounds(100, 100, 470, 520);
+		frmBrisanjeKlijenta.setLocationRelativeTo(null);
 		frmBrisanjeKlijenta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBrisanjeKlijenta.getContentPane().setLayout(new BorderLayout(0, 0));
 
@@ -243,32 +245,36 @@ public class BrisanjeKlijenta extends JFrame {
 				try {
 					if (comboBox.getSelectedIndex() == -1) {
 						JOptionPane.showMessageDialog(null,
-								"Izaberite klijenta!",
-								"Brisanje klijenta",
+								"Izaberite klijenta!", "Brisanje klijenta",
 								JOptionPane.WARNING_MESSAGE);
 					} else {
-						KlijentDao klijentdao = KlijentDao.get();
-						Collection<Klijent> klijent = klijentdao
-								.dajKlijenta(comboBox.getSelectedItem()
-										.toString());
-						Klijent trazeniKlijent = new Klijent();
-						for (Iterator<Klijent> iterator = klijent.iterator(); iterator
-								.hasNext();) {
-							trazeniKlijent = (Klijent) iterator.next();
+						int rezultatDijaloga = JOptionPane
+								.showConfirmDialog(
+										null,
+										"Jeste li sigurni da želite obrisati klijenta?",
+										"Promjena ličnih podataka",
+										JOptionPane.YES_NO_OPTION);
+						if (rezultatDijaloga == JOptionPane.YES_OPTION) {
+							KlijentDao klijentdao = KlijentDao.get();
+							Collection<Klijent> klijent = klijentdao
+									.dajKlijenta(comboBox.getSelectedItem()
+											.toString());
+							Klijent trazeniKlijent = new Klijent();
+							for (Iterator<Klijent> iterator = klijent
+									.iterator(); iterator.hasNext();) {
+								trazeniKlijent = (Klijent) iterator.next();
+							}
+							kdao.delete(trazeniKlijent.get_id());
+							JOptionPane.showMessageDialog(null,
+									"Klijent je uspješno obrisan!",
+									"Brisanje klijenta",
+									JOptionPane.INFORMATION_MESSAGE);
+							BrisanjeKlijenta noviProzor = new BrisanjeKlijenta();
+							JFrame noviFrame = noviProzor
+									.get_frmBrisanjeKlijenta();
+							noviFrame.setVisible(true);
+							frmBrisanjeKlijenta.dispose();
 						}
-						OdgovorDao odao = OdgovorDao.get();
-						odao.izbrisiSveOdgovoreKlijenta(trazeniKlijent);
-						KvizDao kvizdao = KvizDao.get();
-						kvizdao.izbrisiKlijenta(trazeniKlijent);
-						kdao.delete(trazeniKlijent.get_id());
-						JOptionPane.showMessageDialog(null,
-								"Klijent je uspješno obrisan!",
-								"Brisanje klijenta",
-								JOptionPane.INFORMATION_MESSAGE);
-						BrisanjeKlijenta noviProzor = new BrisanjeKlijenta();
-						JFrame noviFrame = noviProzor.get_frmBrisanjeKlijenta();
-						noviFrame.setVisible(true);
-						frmBrisanjeKlijenta.dispose();
 					}
 				} catch (Exception ex) {
 					logger.error("Greska: ", ex);

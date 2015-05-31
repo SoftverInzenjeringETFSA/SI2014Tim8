@@ -21,9 +21,7 @@ public class Administrator extends Osoba implements java.io.Serializable
 	private String _username;
 	@Column(name = "password", nullable = false)
 	private String _password;
-	
-	
-	
+		
 	public String get_username() {
 		return _username;
 	}

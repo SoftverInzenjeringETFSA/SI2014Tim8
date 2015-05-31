@@ -8,6 +8,9 @@
   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tim8</property>
   <property name="hibernate.connection.username">EtfSI2014</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.connection.CharSet">utf8</property>
+        <property name="hibernate.connection.characterEncoding">utf8</property>
+        <property name="hibernate.connection.useUnicode">true</property>
   <mapping class="ba.tim8.kvizbiz.entiteti.Administrator"/>
   <mapping class="ba.tim8.kvizbiz.entiteti.Klijent"/>
   <mapping class="ba.tim8.kvizbiz.entiteti.Odgovor"/>

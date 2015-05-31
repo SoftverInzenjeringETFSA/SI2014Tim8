@@ -18,49 +18,50 @@ public class PitanjeDao extends BaseDao<Pitanje> {
 		return (pdao == null) ? pdao = new PitanjeDao() : pdao;
 	}
 
-	private PitanjeDao(){}
-	public Collection<Pitanje> dajPitanja(long kvizID)
-	{
+	private PitanjeDao() {
+	}
+
+	public Collection<Pitanje> dajPitanja(long kvizID) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select _id, _tipPitanja, _kviz, _tekstPitanja, obavezno from Pitanje p where p._kviz=:id");
+		Query q = session
+				.createQuery("select _id, _tipPitanja, _kviz, _tekstPitanja, obavezno from Pitanje p where p._kviz=:id");
 		q.setLong("id", kvizID).executeUpdate();
 		t.commit();
 		Collection<Pitanje> c = q.list();
 		session.close();
 		return c;
 	}
-	
+
 	public Collection<Long> DajSveIdZaKviz(long kviz) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select _id from Pitanje where _kviz.id = :parametar");
+		Query q = session
+				.createQuery("select _id from Pitanje where _kviz.id = :parametar");
 		q.setParameter("parametar", kviz);
 		Collection<Long> plist = (Collection<Long>) q.list();
 		t.commit();
 		session.close();
 		return plist;
 	}
-	
+
 	public Collection<Pitanje> DajSveZaKviz(long kviz) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		Query q = session.createQuery("select _id from Pitanje where _kviz.id = :parametar");
+		Query q = session
+				.createQuery("select _id from Pitanje where _kviz.id = :parametar");
 		q.setParameter("parametar", kviz);
 		Collection<Long> plist = (Collection<Long>) q.list();
 		t.commit();
 		session.close();
 		return napraviObjekte(plist);
 	}
-	
-	private Collection<Pitanje> napraviObjekte(Collection<Long> idAnkete)
-	{
+
+	private Collection<Pitanje> napraviObjekte(Collection<Long> idAnkete) {
 		Collection<Pitanje> rezultat = new ArrayList<Pitanje>();
-		for(int i=0;i<idAnkete.size();i++)
-		{
-			rezultat.add(read(((ArrayList<Long>)idAnkete).get(i)));
+		for (int i = 0; i < idAnkete.size(); i++) {
+			rezultat.add(read(((ArrayList<Long>) idAnkete).get(i)));
 		}
-		
 		return rezultat;
 	}
 }
