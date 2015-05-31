@@ -845,7 +845,7 @@ public class odgovaranje {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(null,
 				"Kviz uspješno popunjen.",
-				"Registracija klijenta",
+				"Odgovaranje na pitanja",
 				JOptionPane.ERROR_MESSAGE);
 				PocetnaKlijentZaKlijenta noviProzor = new PocetnaKlijentZaKlijenta();
 				noviProzor.setVisible(true);
