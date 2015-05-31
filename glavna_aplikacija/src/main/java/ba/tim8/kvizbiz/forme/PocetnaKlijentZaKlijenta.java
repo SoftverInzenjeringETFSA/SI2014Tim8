@@ -33,7 +33,7 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 		menu.NapraviMenu(this);
 		
 		JPanel pnlKvizovi = new JPanel(new FlowLayout());
-		pnlKvizovi.setBorder(new TitledBorder("Odaberite kviz na koji želite odgovarati:"));
+		pnlKvizovi.setBorder(new TitledBorder("Odaberite anketu na koji želite popuniti:"));
 		contentPane.add(pnlKvizovi, BorderLayout.CENTER);
 		
 		/*

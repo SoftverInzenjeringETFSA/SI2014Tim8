@@ -195,7 +195,7 @@ public class ModifikacijaAnkete extends JFrame {
 		pnlPitanja.add(btnObrisi);
 		
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(477, 423, 100, 23);
+		btnOk.setBounds(502, 412, 100, 23);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -229,11 +229,11 @@ public class ModifikacijaAnkete extends JFrame {
 				dispose();
 			}
 		});
-		btnOtkazi.setBounds(373, 423, 100, 23);
+		btnOtkazi.setBounds(381, 412, 100, 23);
 		kontejner.add(btnOtkazi);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(248, 20, 356, 283);
+		scrollPane.setBounds(249, 11, 356, 283);
 		pnlPitanja.add(scrollPane);
 			
 		tblPitanja = new JTable();
@@ -265,7 +265,8 @@ public class ModifikacijaAnkete extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				kviz.set_aktivan(true);
-				kviz.set_arhiviran(false);					
+				kviz.set_arhiviran(false);	
+			tbxStatus.setText("aktivna");
 					KvizDao kdao = KvizDao.get();
 					try {
 						kdao.update(kviz);
@@ -298,7 +299,7 @@ public class ModifikacijaAnkete extends JFrame {
 				
 			}
 		});
-		btnNazad.setBounds(274, 423, 89, 23);
+		btnNazad.setBounds(272, 412, 89, 23);
 		kontejner.add(btnNazad);
 		
 		lblStatus = new JLabel("Statusna traka");
