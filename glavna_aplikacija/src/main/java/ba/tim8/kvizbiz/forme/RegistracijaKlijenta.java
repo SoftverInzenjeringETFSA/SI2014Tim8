@@ -263,6 +263,14 @@ public class RegistracijaKlijenta {
 		sl_panelRegistracija.putConstraint(SpringLayout.EAST, label_5, 0, SpringLayout.EAST, lblIme);
 		panelRegistracija.add(label_5);
 		
+		JLabel label_6 = new JLabel("*");
+		sl_panelRegistracija.putConstraint(SpringLayout.WEST, label_6, 91, SpringLayout.WEST, panelRegistracija);
+		sl_panelRegistracija.putConstraint(SpringLayout.SOUTH, label_6, -118, SpringLayout.SOUTH, panelRegistracija);
+		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_6.setForeground(Color.RED);
+		label_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		panelRegistracija.add(label_6);
+		
 		lblStatus = new JLabel("Statusna traka");
 		lblStatus.setForeground(Color.lightGray);
 		lblStatus.setBorder(BorderFactory.createLineBorder(Color.lightGray));
@@ -284,7 +292,7 @@ public class RegistracijaKlijenta {
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else {
-			String regx = "[a-zA-Z]+\\.?";
+			String regx = "[a-zA-ZćčđšžĆČĐŠŽ]+\\.?";
 			Pattern pattern = Pattern.compile(regx,
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(txtIme.getText());
@@ -311,7 +319,7 @@ public class RegistracijaKlijenta {
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else {
-			String regx = "[a-zA-Z]+\\.?";
+			String regx = "[a-zA-ZćčđšžĆČĐŠŽ]+\\.?";
 			Pattern pattern = Pattern.compile(regx,
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(txtPrezime.getText());
@@ -395,8 +403,17 @@ public class RegistracijaKlijenta {
 		}
 
 		//Adresa validacija
-		if (!txtAdresa.getText().isEmpty()) {
-			String regx = "^[\\s0-9a-zA-zčćđšž]*$";
+		if (txtAdresa.getText().isEmpty()) {
+			dodaj = false;
+			//lblStatus.setText("Greska");
+			JOptionPane.showMessageDialog(null,
+					"Polje Adresa mora biti popunjeno!",
+					"Registracija klijenta",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		else {
+			String regx = "^[\\s0-9a-zA-zćčđšžĆČĐŠŽ]*$";
 			Pattern pattern = Pattern.compile(regx,
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(txtAdresa.getText());
