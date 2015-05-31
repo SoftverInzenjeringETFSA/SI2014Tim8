@@ -35,7 +35,7 @@ public class Kviz implements java.io.Serializable{
 	@Column(name = "arhiviran",nullable = false)
 	private boolean _arhiviran;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "_popunjeniKviz",cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_popunjeniKviz",cascade = CascadeType.ALL)
 	private Set<Klijent> _klijenti = new HashSet<Klijent>(); //NOSONAR
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_kviz",cascade = CascadeType.ALL)
