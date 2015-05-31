@@ -15,7 +15,10 @@ import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -25,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.dao.PitanjeDao;
+import ba.tim8.kvizbiz.entiteti.Klijent;
 import ba.tim8.kvizbiz.entiteti.Kviz;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 
@@ -103,16 +107,23 @@ public class PocetnaKlijent extends JFrame {
 	{
 		KvizDao k= KvizDao.get();
 		
+	
 		for(Long id:lista)
 		{
 			DefaultTableModel model = (DefaultTableModel) tblAnkete.getModel();
+			
 			Kviz kviz = k.read(id);
+			
 			
 			model.addRow(new Object[]{kviz.get_id(), kviz.get_naziv(), kviz.get_pitanja().size(), kviz.get_vremenskoOgranicenje(), (kviz.is_aktivan() == true) ? "Aktivan" : "Neaktivan", (kviz.is_arhiviran() == true) ? "Arhiviran" : "Nearhiviran"});
 			cbbID.addItem(id);
 		}
 		
 	}
+	
+	
+	
+
 }
 
 
