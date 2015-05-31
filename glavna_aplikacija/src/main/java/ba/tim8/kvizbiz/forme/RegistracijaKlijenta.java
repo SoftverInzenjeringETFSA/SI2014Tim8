@@ -413,7 +413,7 @@ public class RegistracijaKlijenta {
 			return false;
 		}
 		else {
-			String regx = "^[\\s0-9a-zA-zćčđšžĆČĐŠŽ]*$";
+			String regx = "^[\\a-žA-Ž .'-]+$";
 			Pattern pattern = Pattern.compile(regx,
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(txtAdresa.getText());
@@ -443,13 +443,12 @@ public class RegistracijaKlijenta {
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			if(txtBrojTelefona.getText().length() < 3){
+			else if(txtBrojTelefona.getText().length()<6 || txtBrojTelefona.getText().length()>13)
+			{
 				dodaj = false;
-				//lblStatus.setText("Greska");
-				JOptionPane.showMessageDialog(null,
-						"Polje Broj telefona mora sadržavati najmanje 3 broja!",
-						"Registracija klijenta",
-						JOptionPane.ERROR_MESSAGE);
+				lblStatus
+						.setText("Polje Telefon mora sadržavati između 6 i 13 cifara!");
+				lblStatus.setForeground(Color.red);
 				return false;
 			}
 		}
