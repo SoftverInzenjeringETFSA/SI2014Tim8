@@ -114,6 +114,16 @@ public class odgovaranje {
 				ukupnoPitanja = pitanja.size();
 		
 		lista = new ArrayList(pitanja);
+		if(lista.size()==0){
+			JOptionPane.showMessageDialog(null,
+					"Kviz ne sadrži pitanja za odgovaranje.",
+					"Odgovaranje na pitanja",
+					JOptionPane.ERROR_MESSAGE);
+			//PocetnaKlijentZaKlijenta pk = new PocetnaKlijentZaKlijenta();
+			//pk.setVisible(true);
+			frmPopunjavanjeAnkete.dispose();
+			return;
+		}
 		Collections.sort(lista, new Comparator() {
 			public int compare(Object synchronizedListOne, Object synchronizedListTwo) {
 			//use instanceof to verify the references are indeed of the type in question
