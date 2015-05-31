@@ -284,7 +284,7 @@ public class RegistracijaKlijenta {
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else {
-			String regx = "[a-zA-Z]+\\.?";
+			String regx = "^[\\a-žA-Ž .'-]+$";
 			Pattern pattern = Pattern.compile(regx,
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(txtIme.getText());
@@ -311,7 +311,7 @@ public class RegistracijaKlijenta {
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else {
-			String regx = "[a-zA-Z]+\\.?";
+			String regx = "^[\\a-žA-Ž .'-]+$";
 			Pattern pattern = Pattern.compile(regx,
 					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(txtPrezime.getText());
