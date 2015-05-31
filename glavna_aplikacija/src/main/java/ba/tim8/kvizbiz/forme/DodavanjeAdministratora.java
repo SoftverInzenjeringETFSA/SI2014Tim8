@@ -310,7 +310,7 @@ public class DodavanjeAdministratora extends JFrame {
 					
 				}
 				else {
-					String regx = "[a-žA-Ž]+\\.?";
+					String regx = "^[\\a-žA-Ž .'-]+$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField_1.getText());
@@ -335,7 +335,7 @@ public class DodavanjeAdministratora extends JFrame {
 					
 				}
 				else {
-					String regx = "[a-žA-Ž]+\\.?";
+					String regx = "^[\\a-žA-Ž .'-]+$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField.getText());

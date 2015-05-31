@@ -1,5 +1,4 @@
 
-
 package ba.tim8.kvizbiz.forme;
 
 import java.awt.BorderLayout;
@@ -371,7 +370,7 @@ public class PromjenaKlijenta extends JFrame {
 						
 					}
 					else {
-						String regx = "[a-žA-Ž]+\\.?";
+						String regx = "^[\\a-žA-Ž .'-]+$";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
 						Matcher matcher = pattern.matcher(textPrezime.getText());
@@ -397,7 +396,7 @@ public class PromjenaKlijenta extends JFrame {
 						
 					}
 					else {
-						String regx = "[a-žA-Ž]+\\.?";
+						String regx = "^[\\a-žA-Ž .'-]+$";
 						Pattern pattern = Pattern.compile(regx,
 								Pattern.CASE_INSENSITIVE);
 						Matcher matcher = pattern.matcher(textIme.getText());

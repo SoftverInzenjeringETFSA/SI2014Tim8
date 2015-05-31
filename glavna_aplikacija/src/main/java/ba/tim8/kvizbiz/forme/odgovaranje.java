@@ -111,7 +111,7 @@ public class odgovaranje {
 		KvizDao kdao = KvizDao.get();
 		Kviz kviz = kdao.read(kvizID);
 		Collection<Pitanje> pitanja = kviz.get_pitanja();
-				ukupnoPitanja = pitanja.size();
+		ukupnoPitanja = pitanja.size();
 		
 		lista = new ArrayList(pitanja);
 		if(lista.size()==0){
@@ -122,7 +122,7 @@ public class odgovaranje {
 			PocetnaKlijentZaKlijenta pk = new PocetnaKlijentZaKlijenta();
 			pk.setVisible(true);
 			frmPopunjavanjeAnkete.dispose();
-			return;
+			//return;
 		}
 		Collections.sort(lista, new Comparator() {
 			public int compare(Object synchronizedListOne, Object synchronizedListTwo) {
@@ -273,7 +273,7 @@ public class odgovaranje {
 			}
 		}
 		
-		panelPitanje.add(btnNazad);
+		//panelPitanje.add(btnNazad);
 		
 		
 		JLabel lblpitanjeJeObavezno = new JLabel("*Pitanje je obavezno");
@@ -420,7 +420,7 @@ public class odgovaranje {
 		sl_panelPitanje.putConstraint(SpringLayout.NORTH, btnNazad, 6, SpringLayout.SOUTH, panelOdgovor);
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNazad, 195, SpringLayout.WEST, panelPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -6, SpringLayout.WEST, btnNaprijed);
-		panelPitanje.add(btnNazad);
+		//panelPitanje.add(btnNazad);
 		
 		panelBrojPitanja.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		frmPopunjavanjeAnkete.getContentPane().add(panelBrojPitanja, BorderLayout.NORTH);
@@ -543,7 +543,7 @@ public class odgovaranje {
 		txtAreaOdgovor = new JTextArea();
 		txtAreaOdgovor.setBounds(0, 0, 244, 143);
 		panelOdgovor.add(txtAreaOdgovor);
-		panelPitanje.add(btnNazad);
+		//panelPitanje.add(btnNazad);
 		
 		JSeparator separator = new JSeparator();
 		sl_panelPitanje.putConstraint(SpringLayout.NORTH, separator, 6, SpringLayout.SOUTH, panelOdgovor);
@@ -625,6 +625,7 @@ public class odgovaranje {
 		panelOdgovor.setLayout(null);
 		
 		int dim = 0;
+		int visina = 400;
 		Odgovor tmp = new Odgovor();
 		final ButtonGroup btnGrOdg = new ButtonGroup();
 		for(int i=0; i < odgovori.size(); i++){
@@ -636,6 +637,10 @@ public class odgovaranje {
 			dim += 30;
 			if(i == 0){
 				radioButton.setSelected(true);
+			}
+			if(i > 3){
+				frmPopunjavanjeAnkete.setSize(450, visina);
+				visina+=20;
 			}
 		}
 		
@@ -680,7 +685,7 @@ public class odgovaranje {
 		sl_panelPitanje.putConstraint(SpringLayout.NORTH, btnNazad, 6, SpringLayout.SOUTH, panelOdgovor);
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNazad, 195, SpringLayout.WEST, panelPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -6, SpringLayout.WEST, btnNaprijed);
-		panelPitanje.add(btnNazad);
+		//panelPitanje.add(btnNazad);
 		panelBrojPitanja.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		frmPopunjavanjeAnkete.getContentPane().add(panelBrojPitanja, BorderLayout.NORTH);
 		GridBagLayout gbl_panelBrojPitanja = new GridBagLayout();
@@ -809,7 +814,7 @@ public class odgovaranje {
 		sl_panelPitanje.putConstraint(SpringLayout.NORTH, btnNazad, 6, SpringLayout.SOUTH, panelOdgovor);
 		sl_panelPitanje.putConstraint(SpringLayout.WEST, btnNazad, 195, SpringLayout.WEST, panelPitanje);
 		sl_panelPitanje.putConstraint(SpringLayout.EAST, btnNazad, -6, SpringLayout.WEST, btnNaprijed);
-		panelPitanje.add(btnNazad);
+		//panelPitanje.add(btnNazad);
 		panelBrojPitanja.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		frmPopunjavanjeAnkete.getContentPane().add(panelBrojPitanja, BorderLayout.NORTH);
 		GridBagLayout gbl_panelBrojPitanja = new GridBagLayout();
@@ -846,7 +851,7 @@ public class odgovaranje {
 				JOptionPane.showMessageDialog(null,
 				"Kviz uspješno popunjen.",
 				"Odgovaranje na pitanja",
-				JOptionPane.ERROR_MESSAGE);
+				JOptionPane.INFORMATION_MESSAGE);
 				PocetnaKlijentZaKlijenta noviProzor = new PocetnaKlijentZaKlijenta();
 				noviProzor.setVisible(true);
 				frmPopunjavanjeAnkete.dispose();
@@ -875,7 +880,7 @@ public class odgovaranje {
 					Set<Odgovor> odgs = klijent.get_listaOdgovora();
 					tekst += "\n  "+count+". "+p.get_tekstPitanja()+"\n";
 					for(Odgovor o:odgs){
-						if(o.get_pitanje().equals(p)){
+						if(o.get_pitanje().get_id()==p.get_id()){
 							tekst += "        "+o.get_tekstOdgovora()+"\n";
 						}
 					}

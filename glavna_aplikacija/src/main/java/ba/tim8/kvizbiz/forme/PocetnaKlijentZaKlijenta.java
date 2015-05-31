@@ -8,9 +8,11 @@ import javax.swing.border.*;
 
 import ba.tim8.kvizbiz.dao.KvizDao;
 import ba.tim8.kvizbiz.entiteti.Kviz;
+import ba.tim8.kvizbiz.entiteti.Pitanje;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Collection;
 import java.util.List;
 
 public class PocetnaKlijentZaKlijenta extends JFrame {
@@ -36,33 +38,6 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 		pnlKvizovi.setBorder(new TitledBorder("Odaberite anketu na koji želite popuniti:"));
 		contentPane.add(pnlKvizovi, BorderLayout.CENTER);
 		
-		/*
-		for (int i = 0; i < 8; i++) {
-			final JPanel pnlTest1 = new JPanel(new BorderLayout(0, 0));
-			pnlTest1.setSize(120, 160);
-			pnlTest1.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(5 ,5 ,5 ,5), BorderFactory.createRaisedBevelBorder()));
-			
-			final JLabel labela = new JLabel("Naslov kviza " + i);
-			labela.setHorizontalAlignment(SwingConstants.CENTER);
-			pnlTest1.add(labela, BorderLayout.SOUTH);
-			
-			ImageIcon slika = new ImageIcon("slike/slika1.jpg");
-			BufferedImage bi = new BufferedImage(120, 120, BufferedImage.TYPE_INT_RGB);
-	        Graphics2D g2d = (Graphics2D) bi.createGraphics();
-	        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY));
-	        g2d.drawImage(slika.getImage(), 0, 0, 120, 120, null);
-			pnlTest1.add(new JLabel(new ImageIcon(bi)), BorderLayout.CENTER);
-			
-			pnlTest1.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					JOptionPane.showConfirmDialog(pnlTest1, "Jeste li sigurni da zelite odabrati kviz " + labela.getText() + " ?");
-				}
-			});
-			
-			pnlKvizovi.add(pnlTest1);
-		}
-		*/
 		KvizDao kdao = KvizDao.get();
 		List<Long> listaAnketa = (List<Long>) kdao.ispisAktivnihAnketa();
 		
@@ -87,6 +62,14 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 			novaPanela.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
+					KvizDao kdao = KvizDao.get();
+					Kviz kviz1 = kdao.read((long)kviz.get_id());
+					Collection<Pitanje> pitanja = kviz1.get_pitanja();
+					if(pitanja.size()==0){
+						lblStatus.setText("Anketa koju ste odabrali jos nema pitanja!");
+						lblStatus.setForeground(Color.red);
+						return;
+					}
 					int rezultatDijaloga = JOptionPane.showConfirmDialog(novaPanela, "Jeste li sigurni da zelite odabrati kviz " + labela.getText() + " ?", "Provjera izbora kviza", JOptionPane.YES_NO_OPTION);
 					if (rezultatDijaloga == JOptionPane.YES_OPTION) {
 						odgovaranje forma = new odgovaranje((long)kviz.get_id());
