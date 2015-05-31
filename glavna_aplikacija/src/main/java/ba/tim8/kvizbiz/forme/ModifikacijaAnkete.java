@@ -293,6 +293,7 @@ public class ModifikacijaAnkete extends JFrame {
 //				m.setVisible(true);
 //				((ManipulacijaAnketama) proslaForma).refresh();
 //				proslaForma.setVisible(true);
+				
 				setVisible(false);
 				dispose();
 				dispose();

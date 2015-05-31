@@ -235,7 +235,7 @@ private JFrame frame;
 			public void actionPerformed(ActionEvent e) {
 				PocetnaKlijent p= new PocetnaKlijent();
 				p.setVisible(true);
-				dispose();
+				frmManipulacijaAnketama.dispose();
 			}
 		});
 		btnOk.setBounds(500, 304, 89, 23);
