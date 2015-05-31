@@ -245,10 +245,7 @@ public class odgovaranje {
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(pitanje.get_kviz());
 					KlijentDao.get().update(klijent);
-					JOptionPane.showMessageDialog(null,
-							"Kviz uspješno popunjen.",
-							"Registracija klijenta",
-							JOptionPane.ERROR_MESSAGE);
+					prikaziKviz(frmPopunjavanjeAnkete);
 				}
 			}
 		});
@@ -412,10 +409,7 @@ public class odgovaranje {
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(p.get_kviz());
 					KlijentDao.get().update(klijent);
-					JOptionPane.showMessageDialog(null,
-							"Kviz uspješno popunjen.",
-							"Registracija klijenta",
-							JOptionPane.ERROR_MESSAGE);
+					prikaziKviz(frmPopunjavanjeAnkete);
 				}
 			}
 		});
@@ -513,7 +507,10 @@ public class odgovaranje {
 				Odgovor odg = new Odgovor();
 				odg.set_pitanje(pitanje);
 				try {
-					odg.set_tekstOdgovora(txtAreaOdgovor.getText());
+					if(txtAreaOdgovor.getText().equals(""))
+						odg.set_tekstOdgovora("Nije odgovoreno");
+					else
+						odg.set_tekstOdgovora(txtAreaOdgovor.getText());
 				} catch (Exception e) {
 					logger.error("Greska: ", e);
 				}
@@ -532,10 +529,7 @@ public class odgovaranje {
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(pitanje.get_kviz());
 					KlijentDao.get().update(klijent);
-					JOptionPane.showMessageDialog(null,
-							"Kviz uspješno popunjen.",
-							"Registracija klijenta",
-							JOptionPane.ERROR_MESSAGE);
+					prikaziKviz(frmPopunjavanjeAnkete);
 				}
 			}
 		});
@@ -676,10 +670,7 @@ public class odgovaranje {
 					klijent.set_listaOdgovora(realOdgovori);
 					klijent.set_popunjeniKviz(p.get_kviz());
 					KlijentDao.get().update(klijent);
-					JOptionPane.showMessageDialog(null,
-							"Kviz uspješno popunjen.",
-							"Registracija klijenta",
-							JOptionPane.ERROR_MESSAGE);
+					prikaziKviz(frmPopunjavanjeAnkete);
 				}
 			}
 		});
@@ -835,9 +826,9 @@ public class odgovaranje {
 		gbc_lblPitanjeBroj.gridy = 0;
 		panelBrojPitanja.add(lblPitanjeBroj, gbc_lblPitanjeBroj);
 	}
-	public void prikaziKviz(JFrame forma){
-		forma.dispose();
-		forma = new JFrame();
+	public void prikaziKviz(final JFrame form){
+		form.dispose();
+		final JFrame forma = new JFrame();
 		forma.setVisible(true);
 		forma.setTitle("Statistika po klijentima");
 		forma.setBounds(100, 100, 430, 518);
@@ -847,7 +838,7 @@ public class odgovaranje {
 		
 		
 		final JButton btnNewButton = new JButton("Potvrdi");
-		btnNewButton.setHorizontalAlignment(SwingConstants.LEFT);
+		btnNewButton.setHorizontalAlignment(SwingConstants.CENTER);
 		forma.getContentPane().add(btnNewButton, BorderLayout.SOUTH);
 		
 		btnNewButton.addActionListener(new ActionListener() {
@@ -859,6 +850,8 @@ public class odgovaranje {
 				PocetnaKlijentZaKlijenta noviProzor = new PocetnaKlijentZaKlijenta();
 				noviProzor.setVisible(true);
 				frmPopunjavanjeAnkete.dispose();
+				frmPopunjavanjeAnkete.hide();
+				forma.dispose();
 			}});
 		
 		final JScrollPane scrollPane = new JScrollPane();
