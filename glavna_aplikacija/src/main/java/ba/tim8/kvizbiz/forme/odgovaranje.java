@@ -119,8 +119,8 @@ public class odgovaranje {
 					"Kviz ne sadrži pitanja za odgovaranje.",
 					"Odgovaranje na pitanja",
 					JOptionPane.ERROR_MESSAGE);
-			//PocetnaKlijentZaKlijenta pk = new PocetnaKlijentZaKlijenta();
-			//pk.setVisible(true);
+			PocetnaKlijentZaKlijenta pk = new PocetnaKlijentZaKlijenta();
+			pk.setVisible(true);
 			frmPopunjavanjeAnkete.dispose();
 			return;
 		}

@@ -35,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -351,6 +352,21 @@ public class RegistracijaKlijenta {
 								JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
+			int year = Calendar.getInstance().get(Calendar.YEAR);
+			String string = txtDatumRodjenja.getText();
+			String[] parts = string.split("-");
+			String god = parts[0];
+			int godina = Integer.parseInt(god);
+			if(year <= godina){
+				dodaj = false;
+				JOptionPane
+				.showMessageDialog(
+						null,
+						"Godina rođenja mora biti prije tekuće godine!",
+						"Dodavanje administratora",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
 		}
 		
 		// email validacija
@@ -378,6 +394,23 @@ public class RegistracijaKlijenta {
 			}
 		}
 
+		//Adresa validacija
+		if (!txtAdresa.getText().isEmpty()) {
+			String regx = "^[\\s0-9a-zA-zčćđšž]*$";
+			Pattern pattern = Pattern.compile(regx,
+					Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(txtAdresa.getText());
+			if (!matcher.matches()) {
+				dodaj = false;
+				JOptionPane.showMessageDialog(null,
+						"Polje adresa može sadržavati samo brojeve i slova!",
+						"Registracija klijenta",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		
+		
 		// telefon validacija
 		if (!txtBrojTelefona.getText().isEmpty()) {
 			String regx = "^[0-9]*$";
@@ -389,6 +422,15 @@ public class RegistracijaKlijenta {
 				//lblStatus.setText("Greska");
 				JOptionPane.showMessageDialog(null,
 						"Polje Broj telefona mora sadržavati samo brojeve!",
+						"Registracija klijenta",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			if(txtBrojTelefona.getText().length() < 3){
+				dodaj = false;
+				//lblStatus.setText("Greska");
+				JOptionPane.showMessageDialog(null,
+						"Polje Broj telefona mora sadržavati najmanje 3 broja!",
 						"Registracija klijenta",
 						JOptionPane.ERROR_MESSAGE);
 				return false;
