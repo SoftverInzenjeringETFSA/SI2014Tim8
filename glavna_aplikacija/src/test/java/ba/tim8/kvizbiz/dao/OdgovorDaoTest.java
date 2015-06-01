@@ -15,7 +15,7 @@ import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 
 public class OdgovorDaoTest {
-/*
+
 	private static OdgovorDao odao = OdgovorDao.get();
 	private static long testId1;
 	private static long testId2;
@@ -77,5 +77,5 @@ public class OdgovorDaoTest {
 	
 		odao.deleteAll();
 	}
-*/
+
 }

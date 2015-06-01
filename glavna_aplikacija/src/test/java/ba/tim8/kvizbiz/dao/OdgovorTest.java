@@ -12,7 +12,7 @@ import ba.tim8.kvizbiz.entiteti.Odgovor;
 import ba.tim8.kvizbiz.entiteti.Pitanje;
 
 public class OdgovorTest {
-/*
+
 	private static Pitanje p= new Pitanje();
 	private static Set<Klijent> kli= new HashSet<Klijent>();
 	Odgovor odgovor1= new Odgovor ();
@@ -44,5 +44,5 @@ public class OdgovorTest {
 	@Test (expected = Exception.class)
 	public void test_izuzetak() throws Exception {
 		odgovor1.set_tekstOdgovora("<//*$&()&%$#");
-	}*/
+	}
 }
