@@ -629,6 +629,7 @@ public class odgovaranje {
 		int visina = 410;
 		Odgovor tmp = new Odgovor();
 		final ButtonGroup btnGrOdg = new ButtonGroup();
+		//Dinamičko dodavanje radiobuttona
 		for(int i=0; i < odgovori.size(); i++){
 			tmp = (Odgovor) odgovori.get(i);
 			JRadioButton radioButton = new JRadioButton(tmp.get_tekstOdgovora());
