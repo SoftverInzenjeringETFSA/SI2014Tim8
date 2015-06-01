@@ -70,7 +70,7 @@ public class PocetnaKlijentZaKlijenta extends JFrame {
 						lblStatus.setForeground(Color.red);
 						return;
 					}
-					int rezultatDijaloga = JOptionPane.showConfirmDialog(novaPanela, "Jeste li sigurni da zelite odabrati kviz " + labela.getText() + " ?", "Provjera izbora kviza", JOptionPane.YES_NO_OPTION);
+					int rezultatDijaloga = JOptionPane.showConfirmDialog(novaPanela, "Jeste li sigurni da zelite odabrati anketu " + labela.getText() + " ?", "Provjera izbora kviza", JOptionPane.YES_NO_OPTION);
 					if (rezultatDijaloga == JOptionPane.YES_OPTION) {
 						odgovaranje forma = new odgovaranje((long)kviz.get_id());
 						forma.getFrmPopunjavanjeAnkete().setVisible(true);
