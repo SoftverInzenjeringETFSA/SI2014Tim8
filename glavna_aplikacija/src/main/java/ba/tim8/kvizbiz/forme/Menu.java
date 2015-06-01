@@ -3,6 +3,10 @@ package ba.tim8.kvizbiz.forme;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,6 +23,12 @@ public class Menu {
 	// Metoda prima JFrame na koji "zakači" meni
 
 	public void NapraviMenu (final JFrame frame) {
+		
+String iconURL = "slike/ikonaKviz.png";
+		
+		ImageIcon icon = new ImageIcon(iconURL);
+		frame.setIconImage(icon.getImage());
+		
 		
 		if (LoginAdmina.usernameLogiranogAdmina != "") 
 		{		

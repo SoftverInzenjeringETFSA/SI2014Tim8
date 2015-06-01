@@ -12,7 +12,7 @@ import ba.tim8.kvizbiz.entiteti.TipPitanja;
 
 public class PitanjeDaoTest {
 
-	
+	/*
 	private static PitanjeDao pdao = PitanjeDao.get();
 	private static KvizDao ldao = KvizDao.get();
 	private static long testId1;
@@ -79,5 +79,5 @@ public class PitanjeDaoTest {
 	{
 	
 		pdao.deleteAll();
-	}
+	}*/
 }

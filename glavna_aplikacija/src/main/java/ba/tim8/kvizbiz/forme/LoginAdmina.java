@@ -3,6 +3,7 @@ package ba.tim8.kvizbiz.forme;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -33,6 +34,11 @@ public class LoginAdmina extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+String iconURL = "slike/ikonaKviz.png";
+		
+		ImageIcon icon = new ImageIcon(iconURL);
+		setIconImage(icon.getImage());
 		
 		JPanel glavniDio = new JPanel(new MigLayout("", "[fill][grow][90px][90px]", "[fill][fill][grow][fill]"));
 		glavniDio.setBorder(new TitledBorder("Unesite podatke za logiranje:"));

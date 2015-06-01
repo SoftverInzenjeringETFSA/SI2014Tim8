@@ -11,7 +11,7 @@ import ba.tim8.kvizbiz.entiteti.Pitanje;
 import ba.tim8.kvizbiz.entiteti.TipPitanja;
 
 public class KvizDaoTest {
-
+/*
 	private static KvizDao kdao = KvizDao.get();
 	private static long testId1;
 	private static long testId2;
@@ -75,5 +75,5 @@ public class KvizDaoTest {
 	
 		kdao.deleteAll();
 	}
-
+*/
 }

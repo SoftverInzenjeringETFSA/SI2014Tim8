@@ -11,11 +11,13 @@ import javax.swing.JButton;
 
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.net.URL;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -58,7 +60,10 @@ public class KvizBiz extends JFrame {
 		frame.setBounds(100, 100, 300, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[grow][fill][grow]", "[grow][fill][fill][grow]"));
+		String iconURL = "slike/ikonaKviz.png";
 		
+		ImageIcon icon = new ImageIcon(iconURL);
+		frame.setIconImage(icon.getImage());
 		JButton btnRegistrujSeKao = new JButton("Registruj se kao korisnik");
 		btnRegistrujSeKao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

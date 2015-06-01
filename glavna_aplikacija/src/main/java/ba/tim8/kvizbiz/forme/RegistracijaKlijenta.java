@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -33,6 +34,7 @@ import ba.tim8.kvizbiz.entiteti.Spol;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -78,6 +80,12 @@ public class RegistracijaKlijenta {
 		frmRegistracijaKlijenta.setBounds(100, 100, 450, 428);
 		frmRegistracijaKlijenta.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmRegistracijaKlijenta.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+String iconURL = "slike/ikonaKviz.png";
+		
+		ImageIcon icon = new ImageIcon(iconURL);
+		
+		frmRegistracijaKlijenta.setIconImage(icon.getImage());
 		
 		JPanel panelRegistracija = new JPanel();
 		panelRegistracija.setBorder(new TitledBorder(null, "Registracija", TitledBorder.LEADING, TitledBorder.TOP, null, null));
