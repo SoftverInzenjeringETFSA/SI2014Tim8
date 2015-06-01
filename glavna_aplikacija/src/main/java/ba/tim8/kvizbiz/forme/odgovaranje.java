@@ -259,17 +259,18 @@ public class odgovaranje {
 		btnNazad.setMargin(new Insets(2, 5, 2, 5));
 		
 		int dim = 0;
-		int visina = 390;
+		int visina = 410;
 		Odgovor tmp = new Odgovor();
 		for(int i=0; i < odgovori.size(); i++){
 			tmp = (Odgovor) odgovori.get(i);
 			JCheckBox checkBox = new JCheckBox(tmp.get_tekstOdgovora());
 			checkBox.setBounds(6, dim, 97, 23);
+			checkBox.setSize(200, 15);
 			panelOdgovor.add(checkBox);
 			dim += 25;
 			if(i > 3){
 				frmPopunjavanjeAnkete.setSize(450, visina);
-				visina+=20;
+				visina+=25;
 			}
 		}
 		
@@ -625,13 +626,15 @@ public class odgovaranje {
 		panelOdgovor.setLayout(null);
 		
 		int dim = 0;
-		int visina = 400;
+		int visina = 410;
 		Odgovor tmp = new Odgovor();
 		final ButtonGroup btnGrOdg = new ButtonGroup();
+		//Dinamičko dodavanje radiobuttona
 		for(int i=0; i < odgovori.size(); i++){
 			tmp = (Odgovor) odgovori.get(i);
 			JRadioButton radioButton = new JRadioButton(tmp.get_tekstOdgovora());
 			radioButton.setBounds(6, dim, 97, 23);
+			radioButton.setSize(200, 15);
 			panelOdgovor.add(radioButton);
 			btnGrOdg.add(radioButton);
 			dim += 30;
@@ -640,7 +643,7 @@ public class odgovaranje {
 			}
 			if(i > 3){
 				frmPopunjavanjeAnkete.setSize(450, visina);
-				visina+=20;
+				visina+=25;
 			}
 		}
 		
@@ -852,11 +855,12 @@ public class odgovaranje {
 				"Kviz uspješno popunjen.",
 				"Odgovaranje na pitanja",
 				JOptionPane.INFORMATION_MESSAGE);
-				PocetnaKlijentZaKlijenta noviProzor = new PocetnaKlijentZaKlijenta();
-				noviProzor.setVisible(true);
+				KvizBiz noviProzor = new KvizBiz();
+				noviProzor.get_frame().setVisible(true);
 				frmPopunjavanjeAnkete.dispose();
 				frmPopunjavanjeAnkete.hide();
 				forma.dispose();
+				
 			}});
 		
 		final JScrollPane scrollPane = new JScrollPane();

@@ -28,12 +28,12 @@ public class Klijent extends Osoba implements  java.io.Serializable {
 	private Date _datumPrijave;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "idKviz", nullable = true)
 	private Kviz _popunjeniKviz;
 	
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name="klijent_odgovor", joinColumns = { 
 			@JoinColumn(name = "idKlijent", referencedColumnName="idKlijent", nullable = true, updatable = true) }, 
 			inverseJoinColumns = { @JoinColumn(name = "idOdgovor", 

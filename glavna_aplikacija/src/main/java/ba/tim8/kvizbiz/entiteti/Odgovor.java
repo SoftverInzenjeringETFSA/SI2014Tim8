@@ -29,11 +29,11 @@ public class Odgovor implements java.io.Serializable{
 	@Column(name = "tekstOdgovora", nullable = false)
 	private String _tekstOdgovora;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER,cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "idPitanje", nullable = true, updatable = true)
 	private Pitanje _pitanje;
 	
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "_listaOdgovora")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "_listaOdgovora",cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Klijent> _klijenti = new HashSet<Klijent>(); //NOSONAR
 	
 	public long get_id() {
