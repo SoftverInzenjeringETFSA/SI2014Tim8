@@ -36,11 +36,11 @@ public class Pitanje implements java.io.Serializable{
 	private boolean obavezno;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER,cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "idKviz", nullable = true, updatable=true)
 	private Kviz _kviz;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "_pitanje", cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Odgovor> _listaOdgovora = new HashSet<Odgovor>(); //NOSONAR
 	
 	public long get_id() {
