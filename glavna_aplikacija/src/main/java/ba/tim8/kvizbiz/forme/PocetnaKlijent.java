@@ -88,6 +88,7 @@ public class PocetnaKlijent extends JFrame {
 				}
 			));
 		KvizDao kv= KvizDao.get();
+		
 		List<Long> l1 = (List<Long>) kv.ispisSvihAnketa();
 		IscitajSveAktivneTabele(l1);
 		
@@ -102,6 +103,18 @@ public class PocetnaKlijent extends JFrame {
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	
+	
+	private void sortirajPoNazivu(Collection<Kviz> kviz)
+	{
+		Comparator<Kviz> comparator = new Comparator<Kviz>() {
+		    public int compare(Kviz f1, Kviz f2) {
+		        return f1.get_naziv().compareTo(f2.get_naziv());
+		    }
+		};
+
+		Collections.sort((ArrayList<Kviz>) kviz, comparator);
+		
+	}
 	
 	private void IscitajSveAktivneTabele(List<Long> lista)
 	{

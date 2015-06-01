@@ -859,6 +859,7 @@ public class odgovaranje {
 				frmPopunjavanjeAnkete.dispose();
 				frmPopunjavanjeAnkete.hide();
 				forma.dispose();
+				
 			}});
 		
 		final JScrollPane scrollPane = new JScrollPane();

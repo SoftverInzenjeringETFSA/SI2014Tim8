@@ -35,11 +35,13 @@ import java.util.TimeZone;
 import javax.swing.JPasswordField;
 
 import org.apache.log4j.Logger;
+
 import javax.swing.JFormattedTextField;
 
 public class DodavanjeAdministratora extends JFrame {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = Logger.getLogger(DodavanjeAdministratora.class);
+	final static Logger logger = Logger
+			.getLogger(DodavanjeAdministratora.class);
 	private JFrame frmDodavanjeAdministratora;
 	private JTextField textField_5;
 	private JTextField textField;
@@ -213,7 +215,7 @@ public class DodavanjeAdministratora extends JFrame {
 					lblStatus.setText("Polje Telefon mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
 
-				} else{
+				} else {
 					String regx = "^[0-9]*$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
@@ -224,17 +226,14 @@ public class DodavanjeAdministratora extends JFrame {
 								.setText("Polje Telefon mora sadržavati samo brojeve!");
 						lblStatus.setForeground(Color.red);
 
-					}
-					else if(textField_7.getText().length()<6 || textField_7.getText().length()>13)
-					{
+					} else if (textField_7.getText().length() < 6
+							|| textField_7.getText().length() > 13) {
 						dodaj = false;
 						lblStatus
 								.setText("Polje Telefon mora sadržavati između 6 i 13 cifara!");
 						lblStatus.setForeground(Color.red);
 					}
 				}
-				
-				
 
 				// email validacija
 				if (textField_4.getText().isEmpty()) {
@@ -267,7 +266,8 @@ public class DodavanjeAdministratora extends JFrame {
 					Matcher matcher = pattern.matcher(textField_3.getText());
 					if (!matcher.matches()) {
 						dodaj = false;
-						lblStatus.setText("Polje Datum rođenja mora biti ispravno i u formatu yyyy-mm-dd(2015-01-01)!");
+						lblStatus
+								.setText("Polje Datum rođenja mora biti ispravno i u formatu yyyy-mm-dd(2015-01-01)!");
 						lblStatus.setForeground(Color.red);
 					} else {
 						ZonedDateTime danasnji = ZonedDateTime.now();
@@ -295,22 +295,21 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus.setText("Polje Adresa mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
-				}
+				} 
 
 				// prezime validacija
 				if (textField_1.getText().isEmpty()) {
 					dodaj = false;
 					lblStatus.setText("Polje Prezime mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
-				} 
-				else if(textField_1.getText().length()<3){
-					dodaj=false;
-					lblStatus.setText("Polje Prezime mora sadržavati barem 3 slova!");
+				} else if (textField_1.getText().length() < 3) {
+					dodaj = false;
+					lblStatus
+							.setText("Polje Prezime mora sadržavati barem 3 slova!");
 					lblStatus.setForeground(Color.red);
-					
-				}
-				else {
-					String regx = "^[\\a-žA-Ž .'-]+$";
+
+				} else {
+					String regx = "^[a-zA-Z \\.ćĆčČšŠđŠžŽ]*$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField_1.getText());
@@ -327,15 +326,14 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus.setText("Polje Ime mora biti popunjeno!");
 					lblStatus.setForeground(Color.red);
-				} 
-				else if(textField.getText().length()<2){
-					dodaj=false;
-					lblStatus.setText("Polje Ime mora sadržavati barem 2 slova!");
+				} else if (textField.getText().length() < 2) {
+					dodaj = false;
+					lblStatus
+							.setText("Polje Ime mora sadržavati barem 2 slova!");
 					lblStatus.setForeground(Color.red);
-					
-				}
-				else {
-					String regx = "^[\\a-žA-Ž .'-]+$";
+
+				} else {
+					String regx = "^[a-zA-Z \\.ćĆčČšŠđŠžŽ]*$";
 					Pattern pattern = Pattern.compile(regx,
 							Pattern.CASE_INSENSITIVE);
 					Matcher matcher = pattern.matcher(textField.getText());
@@ -361,8 +359,7 @@ public class DodavanjeAdministratora extends JFrame {
 					dodaj = false;
 					lblStatus.setText("Polje Username mora biti jedinstveno!");
 				}
-				
-				
+
 				if (dodaj == true) {
 					JOptionPane.showMessageDialog(null,
 							"Administrator je uspješno dodan!",
@@ -379,7 +376,7 @@ public class DodavanjeAdministratora extends JFrame {
 											.getText(), textField_5.getText(),
 									passwordField.getText());
 							adao.create(a);
-							adao.updatePass(a);						
+							adao.updatePass(a);
 						} catch (ParseException e1) {
 							logger.error("Greska: ", e1);
 						}

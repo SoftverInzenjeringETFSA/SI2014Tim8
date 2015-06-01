@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -397,65 +398,65 @@ public class ModifikacijaAnkete extends JFrame {
 		btnObrisi.setBounds(13, 129, 180, 23);
 		btnObrisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Pitanje selected = new Pitanje();
-				int selectedRow = tblPitanja.getSelectedRow();
-				
-				selected = lk.get(tblPitanja.convertRowIndexToModel(selectedRow));
-				
-				long id = selected.get_id();
-				int odabraniId = (int) id;
-				PitanjeDao pdao = PitanjeDao.get();
-				try {
-					pdao.delete((long) odabraniId);
-					lblStatus.setText("Pitanje je uspješno obrisano.");
-					lblStatus.setForeground(Color.green);
-					
-					removeAllRows();
-					ucitajSvaPitanja();
-					
-//					cbbID.removeAllItems();
-//					for(long id : pdao.DajSveIdZaKviz(1))
-//						cbbID.addItem((int)id);
-					
-					contentPane.revalidate();
-					contentPane.repaint();
-				}
-				catch (Exception e1) {
-					lblStatus.setText("Greska: " + e1.getMessage());
-					lblStatus.setForeground(Color.red);
-					
-					logger.error("Greska: ", e1);
-				}
-			}
-		});
-		pnlPitanja.add(btnObrisi);
-		
-		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(502, 412, 100, 23);
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					kviz.set_naziv(tbxNaslov.getText());
-					kviz.set_vremenskoOgranicenje((Integer)spiVrijeme.getValue());
-					KvizDao kdao = KvizDao.get();
-					kdao.update(kviz);
-					lblStatus.setText("Uspjesan unos početnih podataka");
-					lblStatus.setForeground(Color.green);
-				}
-				catch(Exception e1) {
-					lblStatus.setText("Greska: " + e1.getMessage());
-					lblStatus.setForeground(Color.red);
-					
-					logger.error("Greska: ", e1);
-				}
-			
 				
 				
+					Pitanje selected = new Pitanje();
+					int selectedRow = tblPitanja.getSelectedRow();
+					
+					selected = lk.get(tblPitanja.convertRowIndexToModel(selectedRow));
+					
+					long id = selected.get_id();
+					int odabraniId = (int) id;
+					PitanjeDao pdao = PitanjeDao.get();
+					
+						pdao.delete((long) odabraniId);
+						lblStatus.setText("Pitanje je uspješno obrisano.");
+						lblStatus.setForeground(Color.green);
+						
+						removeAllRows();
+						ucitajSvaPitanja();
+						
+//						cbbID.removeAllItems();
+//						for(long id : pdao.DajSveIdZaKviz(1))
+//							cbbID.addItem((int)id);
+						
+						contentPane.revalidate();
+						contentPane.repaint();
+				
+					
+				}
+			});
+			pnlPitanja.add(btnObrisi);
 			
-			}
+			JButton btnOk = new JButton("OK");
+			btnOk.setBounds(502, 412, 100, 23);
+			btnOk.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						kviz.set_naziv(tbxNaslov.getText());
+						kviz.set_vremenskoOgranicenje((Integer)spiVrijeme.getValue());
+						KvizDao kdao = KvizDao.get();
+						kdao.update(kviz);
+						lblStatus.setText("Uspjesan unos početnih podataka");
+						lblStatus.setForeground(Color.green);
+					}
+					catch(Exception e1) {
+						lblStatus.setText("Greska: " + e1.getMessage());
+						lblStatus.setForeground(Color.red);
+						
+						logger.error("Greska: ", e1);
+					}
+				
+					
+					
+				
+				}
+				
+					
+				}
+				
 			
-			
-		});
+		);
 		kontejner.add(btnOk);
 		
 		JButton btnOtkazi = new JButton("Nazad");
