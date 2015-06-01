@@ -855,8 +855,8 @@ public class odgovaranje {
 				"Kviz uspješno popunjen.",
 				"Odgovaranje na pitanja",
 				JOptionPane.INFORMATION_MESSAGE);
-				PocetnaKlijentZaKlijenta noviProzor = new PocetnaKlijentZaKlijenta();
-				noviProzor.setVisible(true);
+				KvizBiz noviProzor = new KvizBiz();
+				noviProzor.get_frame().setVisible(true);
 				frmPopunjavanjeAnkete.dispose();
 				frmPopunjavanjeAnkete.hide();
 				forma.dispose();
