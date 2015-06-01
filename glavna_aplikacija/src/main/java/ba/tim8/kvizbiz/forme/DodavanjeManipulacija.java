@@ -323,8 +323,10 @@ public class DodavanjeManipulacija extends JFrame {
 				
 				//((KreiranjeAnkete) proslaForma).refresh();
 				//proslaForma.setVisible(true);
-				setVisible(false);
+				ModifikacijaAnkete m= new ModifikacijaAnkete();
 				dispose();
+				m.setVisible(true);
+				
 			}
 		});
 		kontejner.add(btnNazad, "cell 1 2,growx");		
